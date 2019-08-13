@@ -49,11 +49,11 @@
                                             <td>0987654321</td>
                                             <td>lennore@gmail.com</td> -->
                                             <td class="action-link">
-                                                <a class="edit" asp-action="EditRoles" asp-controller="UserRoles"
-                                                asp-route-Id="@roles.Id" title="Edit" data-toggle="modal" data-target="#editDetailModal"><i class="fa fa-edit"></i></a>
+                                                <a class="edit" href="#" onclick="modalPopUp()"><i class="fa fa-edit"></i></a>
                                                 <a class="delete" href="#" title="Delete" data-toggle="modal" data-target="#deleteDetailModal"><i class="fa fa-remove"></i></a>
                                             </td>
                                         </tr>
+                                        <input id="roleId" value="@roles.Id" hidden />
                                     } 
                                 </tbody>
                             </table>
@@ -86,7 +86,7 @@
     
     <!--Edit details modal-->
     <div id="editDetailModal" class="modal fade" role="dialog"> 
-        <partial name="~/Views/PartialViews/UserRoles/_EditRolePartialView.cshtml" /> 
+        <!-- <partial name="~/Views/UserRoles/_EditRolePartialView.cshtml" />  -->
     </div>
 
 }
@@ -103,3 +103,22 @@ else
  <div class="menu-togggle-btn">
         <a href="#menu-toggle" id="menu-toggle"><i class="fa fa-bars"></i></a>
     </div>
+
+
+@section Scripts{
+    <script>
+        function modalPopUp(e)
+        { 
+            e.preventDefault();
+            var Id = $('#roleId').val();
+            $.ajax({
+                type: "GET",
+                url: "/UserRoles/EditRole",
+                data: Id,
+                success: function(data){
+                    $('#editDetailModal').modal('show');
+                }
+            });
+        }
+    </script>
+}

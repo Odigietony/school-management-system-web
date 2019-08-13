@@ -1,7 +1,9 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace SchoolManagementSystem.ViewModels
 {
@@ -26,5 +28,7 @@ namespace SchoolManagementSystem.ViewModels
 
         public IFormFile Image { get; set; }
         public IdentityRole Role { get; set; }
+
+        public List<SelectListItem> Roles { get; set; }
     }
 }

@@ -1,3 +1,5 @@
+@model CreateAdminViewModel
+
 @{
     ViewBag.Title = "Add Admin";
 }
@@ -19,49 +21,38 @@
 					<div class="inner-item">
 						<div class="dash-form">
 							<div class="col-sm-3">
-								<label class="clear-top-margin"><i class="fa fa-user-circle-o"></i>FIRST NAME</label>
-								<input type="text" placeholder="JOHN" />
+								<label asp-for="@Model.Firstname" class="clear-top-margin"><i class="fa fa-user-circle-o"></i>FIRST NAME</label>
+								<input  asp-for="@Model.Firstname" placeholder="FIRST NAME" />
+								<span asp-validation-for="@Model.Firstname"></span>
 							</div>
 							<div class="col-sm-3">
-								<label class="clear-top-margin"><i class="fa fa-user-circle-o"></i>MIDDLE NAME</label>
-								<input type="text" placeholder="FIDLER" />
+								<label asp-for="@Model.Lastname" class="clear-top-margin"><i class="fa fa-user-circle-o"></i>LAST NAME</label>
+								<input asp-for="@Model.Lastname" placeholder="LAST NAME" />
+								<span asp-validation-for="@Model.Lastname"></span>
 							</div>
 							<div class="col-sm-3">
-								<label class="clear-top-margin"><i class="fa fa-user-circle-o"></i>LAST NAME</label>
-								<input type="text" placeholder="DOE" />
-							</div>
-							<div class="col-sm-3">
-								<label class="clear-top-margin"><i class="fa fa-venus"></i>GENDER</label>
-								<select>
-									<option>-- Select --</option>
-									<option>Male</option>
-									<option>Female</option>
+								<label class="clear-top-margin"><i class="fa fa-venus"></i>ROLE</label>
+								<select asp-for="@Model.Role.Id" asp-items = "@(new SelectList(@ViewBag.List, "Id", "Name"))">
+								 
 								</select>
 							</div>
 							<div class="clearfix"></div>
 							
 
 							<div class="col-sm-3">
-								<label><i class="fa fa-phone"></i>PHONE #</label>
-								<input type="text" placeholder="1234567890" />
+								<label asp-for="@Model.PhoneNumber"><i class="fa fa-phone"></i>PHONE #</label>
+								<input asp-for="@Model.PhoneNumber" placeholder="PHONE NUMBER" />
+								<span asp-validation-for="@Model.PhoneNumber"></span>
 							</div>
 							<div class="col-sm-3">
-								<label><i class="fa fa-envelope-o"></i>EMAIL</label>
-								<input type="text" placeholder="john@pathshala.com" />
+								<label asp-for="EmailAddress"><i class="fa fa-envelope-o" ></i>EMAIL ADDRESS</label>
+								<input asp-for="EmailAddress" placeholder="john@pathshala.com" />
 							</div>
-							<div class="col-sm-3">
-								<label><i class="fa fa-bell-o"></i>RELIGION</label>
-								<select>
-									<option>-- Select --</option>
-									<option>Buddhism</option>
-									<option>Christian</option>
-									<option>Hinduism</option>
-								</select>
-							</div>
+							
 							<div class="clearfix"></div>
 							<div class="col-sm-3">
-								<label><i class="fa fa-file-picture-o"></i>UPLOAD PHOTO</label>
-								<input type="file" placeholder="90890" />
+								<label asp-for="Image"><i class="fa fa-file-picture-o"></i>UPLOAD PHOTO</label>
+								<input asp-for="Image" placeholder="Upload admin photo" />
 							</div>
 							<div class="clearfix"></div>
 						<div class="col-sm-12">

@@ -58,7 +58,32 @@ namespace SchoolManagementSystem.Controllers
                 Id = roles.Id,
                 RoleName = roles.Name
             };
-            return PartialView("~/Views/PartialViews/UserRoles/_EditRolePartialView.cshtml", model);
+            return PartialView("_EditRolePartialView", model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditRoles(EditRoleViewModel model, string Id)
+        {
+            var role = await roleManager.FindByIdAsync(Id);
+            if(role == null)
+            {
+                ViewBag.ErrorMessage = $"The requested Role with Id = { Id } Cannot be found";
+                return View("Not Found");
+            }
+            else
+            {
+                role.Name = model.RoleName;
+                var result = await roleManager.UpdateAsync(role);
+                if(result.Succeeded)
+                {
+                    return RedirectToAction("allroles");
+                }
+                foreach(var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+            }
+            return Json(model);
         }
     }
 }

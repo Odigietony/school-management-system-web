@@ -1,0 +1,60 @@
+@model EditRoleViewModel
+
+<div class="modal-dialog">
+    <!-- Modal content-->
+   
+        <div class="modal-content">
+             
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title"><i class="fa fa-edit"></i>EDIT ROLE DETAILS</h4>
+        </div>
+        <form asp-controller="UserRoles" asp-action="EditRoles" method="post">
+        <div class="modal-body dash-form">
+            <div class="col-sm-6">
+                <label asp-for="Id" class="clear-top-margin" id="roleId"><i class="fa fa-user"></i>ROLE ID</label>
+                <input asp-for="Id" value="@Model.Id" disabled />
+            </div> 
+            <div class="col-sm-6">
+                <label asp-for="RoleName" class="clear-top-margin" id="rolename"><i class="fa fa-user"></i>ROLE NAME</label>
+                <input asp-for="RoleName" value="@Model.RoleName" />
+                <span asp-validation-for="RoleName" id="validation-message"></span>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="clearfix"></div>
+        <div class="modal-footer">
+            <div class="table-action-box">
+                <button type="button" class="save" onclick="editFunction()"><i class="fa fa-check"></i>SAVE</button>
+                <a href="#" class="cancel" data-dismiss="modal"><i class="fa fa-ban"></i>CLOSE</a>
+            </div>
+        </div>
+        </form>
+        <div class="clearfix"></div>
+        
+    </div>
+    
+</div>
+
+@section Scripts
+{
+    <script>
+        function editFunction()
+        {
+            var rolename = $('#rolname').val();
+            var roleId = $('#roleId').val();
+            var updateData = { "Id": roleId, "RoleName": rolename }
+            $.post('/userroles/editrole', 
+                    updateData,
+                    function (data)
+                    {
+                        if(data == 0)
+                        {
+                            $('#validation-message').val(data);
+                        }
+                    },
+                    'json' );
+                    window.location.href = '/UserRoles/allroles';
+        }
+    </script>
+}
