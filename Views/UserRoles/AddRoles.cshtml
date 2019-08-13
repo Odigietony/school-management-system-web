@@ -1,0 +1,47 @@
+@model AddRoleViewModel
+
+@{
+    ViewBag.Title = "Add New Role";
+}
+
+<!-- MAIN CONTENT --> 
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-lg-12 clear-padding-xs">
+			<h5 class="page-title"><i class="fa fa-user-secret"></i>ADD NEW ROLE</h5>
+			<div class="section-divider"></div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-12 clear-padding-xs">
+			<div class="col-md-12">
+				<div class="dash-item first-dash-item">
+					<h6 class="item-title"><i class="fa fa-user-secret"></i>ROLE INFO</h6>
+					<div class="inner-item">
+						<form asp-controller="UserRoles" asp-action="AddRoles" method="post">
+                            <div class="dash-form">
+							<div class="col-sm-3">
+								<label class="clear-top-margin" asp-for="RoleName"><i class="fa fa-user-circle-o"></i>ROLE NAME</label>
+								<input asp-for="RoleName" placeholder="ROLE NAME" />
+                                <span asp-validation-for="RoleName" class="text-danger"></span>
+							</div>
+							<div class="clearfix"></div>
+                            <div class="col-sm-12">
+                                <button type="submit" class="btn-success"><i class="fa fa-paper-plane"></i> SAVE</button>
+                                <a asp-contoller="userroles" asp-action="allroles" 
+                                class="" style="background: rgb(174, 77, 39); width:auto; height:auto;border-radius:5px;">
+                                    <i class="fa fa-times"></i> CANCEL</a>
+                            </div> 
+					    </div> 
+                        </form>
+					</div>  
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+<div class="menu-togggle-btn">
+    <a href="#menu-toggle" id="menu-toggle"><i class="fa fa-bars"></i></a>
+</div>

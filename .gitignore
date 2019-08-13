@@ -1,0 +1,8 @@
+bin
+obj
+*.json
+*.dll
+.vscode
+*.jpg
+*.png
+*.jpeg

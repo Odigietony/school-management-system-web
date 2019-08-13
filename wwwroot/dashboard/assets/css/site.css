@@ -1,0 +1,13 @@
+.btn{
+    background: #27AE60;
+    width: auto;
+    height: auto;
+    border-radius: 5px;
+}
+
+.btn-success{
+    background: #27AE60;
+    width: 150px;
+    height: 40px;
+    border-radius: 5px;
+}
