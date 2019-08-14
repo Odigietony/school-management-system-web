@@ -25,7 +25,7 @@
         <div class="clearfix"></div>
         <div class="modal-footer">
             <div class="table-action-box">
-                <button type="button" class="save" onclick="editFunction()"><i class="fa fa-check"></i>SAVE</button>
+                <button type="button" class="btn-success"><i class="fa fa-check"></i>SAVE</button>
                 <a href="#" class="cancel" data-dismiss="modal"><i class="fa fa-ban"></i>CLOSE</a>
             </div>
         </div>
@@ -36,25 +36,3 @@
     
 </div>
 
-@section Scripts
-{
-    <script>
-        function editFunction()
-        {
-            var rolename = $('#rolname').val();
-            var roleId = $('#roleId').val();
-            var updateData = { "Id": roleId, "RoleName": rolename }
-            $.post('/userroles/editrole', 
-                    updateData,
-                    function (data)
-                    {
-                        if(data == 0)
-                        {
-                            $('#validation-message').val(data);
-                        }
-                    },
-                    'json' );
-                    window.location.href = '/UserRoles/allroles';
-        }
-    </script>
-}

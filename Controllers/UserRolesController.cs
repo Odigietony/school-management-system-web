@@ -58,32 +58,35 @@ namespace SchoolManagementSystem.Controllers
                 Id = roles.Id,
                 RoleName = roles.Name
             };
-            return PartialView("_EditRolePartialView", model);
+            return PartialView(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditRoles(EditRoleViewModel model, string Id)
+        public async Task<IActionResult> EditRoles(EditRoleViewModel model)
         {
-            var role = await roleManager.FindByIdAsync(Id);
-            if(role == null)
+            if(ModelState.IsValid)
             {
-                ViewBag.ErrorMessage = $"The requested Role with Id = { Id } Cannot be found";
-                return View("Not Found");
-            }
-            else
-            {
-                role.Name = model.RoleName;
-                var result = await roleManager.UpdateAsync(role);
-                if(result.Succeeded)
+                var role = await roleManager.FindByIdAsync(model.Id);
+                if (role == null)
                 {
-                    return RedirectToAction("allroles");
+                    ViewBag.ErrorMessage = $"The requested Role with Id = { model.Id } Cannot be found";
+                    return View("Not Found");
                 }
-                foreach(var error in result.Errors)
+                else
                 {
-                    ModelState.AddModelError(string.Empty, error.Description);
+                    role.Name = model.RoleName;
+                    var result = await roleManager.UpdateAsync(role);
+                    if (result.Succeeded)
+                    {
+                        return Json(new { success = true });
+                    }
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
                 }
             }
-            return Json(model);
+            return PartialView(model);
         }
     }
 }

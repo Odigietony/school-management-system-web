@@ -1,5 +1,5 @@
 .btn{
-    background: #27AE60;
+    background: rgb(39, 158, 174);
     width: auto;
     height: auto;
     border-radius: 5px;
@@ -10,4 +10,26 @@
     width: 150px;
     height: 40px;
     border-radius: 5px;
+}
+
+.btn-success:hover{
+    background: #ffff;
+    color: #27AE60;
+    border: 12px 5px 2px 5px;
+    border-color: #27AE60;
+}
+
+.btn-danger{
+    background: rgb(174, 39, 39);
+    color: #ffff;
+    width: 150px;
+    height: 40px;
+    border-radius: 5px;
+}
+
+.btn-danger:hover{
+    background: #ffff;
+    color: red;
+    border: 12px 5px 2px 5px;
+    border-color: rgb(174, 39, 39);
 }

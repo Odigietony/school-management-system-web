@@ -49,11 +49,15 @@
                                             <td>0987654321</td>
                                             <td>lennore@gmail.com</td> -->
                                             <td class="action-link">
-                                                <a class="edit" href="#" onclick="modalPopUp()"><i class="fa fa-edit"></i></a>
+                                                <a href="javascript:void(0)" class="edit" onclick="editUser('@roles.Id')"
+                                                    title="Edit"  >
+                                                    <i class="fa fa-edit"></i>
+                                                 </a>
                                                 <a class="delete" href="#" title="Delete" data-toggle="modal" data-target="#deleteDetailModal"><i class="fa fa-remove"></i></a>
                                             </td>
-                                        </tr>
-                                        <input id="roleId" value="@roles.Id" hidden />
+                                        </tr> 
+                                        <input id="userRoleId" hidden value="@roles.Id" />
+                                         
                                     } 
                                 </tbody>
                             </table>
@@ -86,7 +90,35 @@
     
     <!--Edit details modal-->
     <div id="editDetailModal" class="modal fade" role="dialog"> 
-        <!-- <partial name="~/Views/UserRoles/_EditRolePartialView.cshtml" />  -->
+        <div class="modal-dialog">
+        <!-- Modal content--> 
+        <div class="modal-content"> 
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title"><i class="fa fa-edit"></i>EDIT ROLE DETAILS</h4>
+        </div> 
+        <div class="modal-body dash-form">
+            <div class="col-sm-6">
+                <label  class="clear-top-margin" id="roleId"><i class="fa fa-user"></i>ROLE ID</label>
+                <input disabled />
+            </div> 
+            <div class="col-sm-6">
+                <label class="clear-top-margin" id="rolename"><i class="fa fa-user"></i>ROLE NAME</label>
+                <input />
+                <span asp-validation-for="RoleName" id="validation-message"></span>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="clearfix"></div>
+        <div class="modal-footer">
+            <div class="table-action-box">
+                <a type="button" class="btn btn-success" onclick="updateUserData()"><i class="fa fa-check-square-o"></i>SAVE</a>
+                <a href="#" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-ban"></i>CLOSE</a>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
     </div>
 
 }
@@ -104,21 +136,45 @@ else
         <a href="#menu-toggle" id="menu-toggle"><i class="fa fa-bars"></i></a>
     </div>
 
-
-@section Scripts{
+@section Scripts
+{
     <script>
-        function modalPopUp(e)
-        { 
-            e.preventDefault();
-            var Id = $('#roleId').val();
+        function editUser(id)
+        {
+            id.preventDefault; 
+            let url = '/UserRoles/EditRoles/';
+            let $modal = $("#editDetailModal");
+            $modal.find('.modal-body').load(url + id, function(){
+                $modal.modal('show');
+            });
+        } 
+    </script>
+    <script>
+          function updateUserData()
+        {
+            let id = $('#userRoleId').val();
+            let rolename = $('#userRoleName').val();  
+            let url = '/UserRoles/EditRoles/';
+            let modelData = ({'Id': id, 'RoleName': rolename}); 
             $.ajax({
-                type: "GET",
-                url: "/UserRoles/EditRole",
-                data: Id,
-                success: function(data){
-                    $('#editDetailModal').modal('show');
+                type: 'POST',
+                url: url,
+                data:  modelData, 
+                success: function(result)
+                {
+                    if(result.success == true)
+                    {
+                        setTimeout(function(){
+                            location.reload();
+                        }, 1000);
+                    }
+                    else
+                    {
+                        $('.modal-body').html(result); 
+                    }
                 }
             });
         }
     </script>
 }
+ 
