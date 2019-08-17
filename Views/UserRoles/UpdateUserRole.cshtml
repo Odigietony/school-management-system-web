@@ -1,0 +1,20 @@
+@model List<UpdateUserRoleViewModel>
+
+@{
+    var roleId = ViewBag.roleId;
+    var roleName = ViewBag.roleName;
+}
+
+<form method="post" asp-action="UpdateUserRole" asp-controller="UserRoles">
+    <h2>All users in the @roleName role</h2>
+    @for(var item = 0; item < Model.Count; item++)
+    {
+        <input type="hidden" id="userid" asp-for="@Model[item].UserId" />
+        <input type="hidden" id="username" asp-for="@Model[item].Username" />
+        <div class="form-check m-1">
+            <input id="selectValue" asp-for="@Model[item].IsSelected"   class="form-control-input"/>
+            <label class="form-check-label" asp-for="@Model[item].IsSelected">@Model[item].Username</label>
+        </div>
+    }
+
+</form>

@@ -10,13 +10,13 @@
 						</a>
 						<ul class="dropdown-menu">
 							<li>							
-								<a href="admin-add-teacher.html"><i class="fa fa-caret-right"></i>ADD</a>
+								<a asp-action="create" asp-controller="admin"><i class="fa fa-caret-right"></i>ADD</a>
 							</li>
 							<li>							
-								<a href="admin-add-teacher.html"><i class="fa fa-caret-right"></i>UPDATE DATA</a>
+								<a asp-action="update" asp-controller="admin"><i class="fa fa-caret-right"></i>UPDATE DATA</a>
 							</li>
 							<li>
-								<a href="admin-teacher-list.html"><i class="fa fa-caret-right"></i>ALL Administrators</a>
+								<a asp-action="index" asp-controller="admin"><i class="fa fa-caret-right"></i>ALL Administrators</a>
 							</li>
 						</ul>
 						<div class="clearfix"></div>
@@ -28,13 +28,10 @@
 						</a>
 						<ul class="dropdown-menu">
 							<li>							
-								<a href="admin-add-teacher.html"><i class="fa fa-caret-right"></i>ADD</a>
-							</li>
-							<li>							
-								<a href="admin-add-teacher.html"><i class="fa fa-caret-right"></i>UPDATE DATA</a>
-							</li>
+								<a asp-action="addroles" asp-controller="userroles"><i class="fa fa-caret-right"></i>ADD</a>
+							</li> 
 							<li>
-								<a href="admin-teacher-list.html"><i class="fa fa-caret-right"></i>ALL ROLES</a>
+								<a asp-action="allroles" asp-controller="userroles"><i class="fa fa-caret-right"></i>ALL ROLES</a>
 							</li>
 						</ul>
 						<div class="clearfix"></div>

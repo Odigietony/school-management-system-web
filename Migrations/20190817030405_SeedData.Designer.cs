@@ -10,8 +10,8 @@ using SchoolManagementSystem.Data;
 namespace SchoolManagementSystem.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190810012247_SeedAdminData")]
-    partial class SeedAdminData
+    [Migration("20190817030405_SeedData")]
+    partial class SeedData
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -120,12 +120,15 @@ namespace SchoolManagementSystem.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "7af2cafb-2e4b-4da3-89ae-d52f71d48a3e",
+                            ConcurrencyStamp = "564ed7d9-ac24-43e0-9334-c2efd539c01a",
                             Email = "superadmin@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
+                            NormalizedEmail = "SUPERADMIN@GMAIL.COM",
+                            NormalizedUserName = "SUPERADMIN",
                             PasswordHash = "SuperAdmin",
                             PhoneNumberConfirmed = false,
+                            SecurityStamp = "e4465a99-a1d7-468c-a592-f48ff2d1dd4c",
                             TwoFactorEnabled = false,
                             UserName = "SuperAdmin"
                         });
@@ -220,15 +223,6 @@ namespace SchoolManagementSystem.Migrations
                     b.HasIndex("IdentityUserId");
 
                     b.ToTable("Admins");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1L,
-                            Firstname = "Anthony",
-                            IdentityUserId = "1",
-                            Lastname = "Russo"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

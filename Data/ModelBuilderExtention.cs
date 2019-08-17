@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SchoolManagementSystem.Models;
@@ -14,7 +15,10 @@ namespace SchoolManagementSystem.Data
                     Id = "1",
                     UserName = "SuperAdmin",
                     Email = "superadmin@gmail.com",
-                    PasswordHash = "SuperAdmin"
+                    PasswordHash = "SuperAdmin",
+                    NormalizedEmail = "SUPERADMIN@GMAIL.COM",
+                    NormalizedUserName = "SUPERADMIN",
+                    SecurityStamp = Guid.NewGuid().ToString(),
                 }
             );
         }
