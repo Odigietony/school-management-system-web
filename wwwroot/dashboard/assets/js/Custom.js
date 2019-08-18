@@ -71,3 +71,22 @@ function updateUserRoleData()
         }
     });
 }
+
+function ConfirmDelete(uniqueId)
+{
+    url = "/UserRoles/DeleteRole/" + uniqueId;
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: {'Id': uniqueId},
+        success: function(result)
+        {
+            if(result.success == true)
+            {
+                setTimeout(function(){
+                    location.reload(); 
+                }, 500);
+            }
+        }
+    });
+}

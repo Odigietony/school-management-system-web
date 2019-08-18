@@ -1,9 +1,7 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using SchoolManagementSystem.ViewModels;
 
 namespace SchoolManagementSystem.Controllers
@@ -55,10 +53,14 @@ namespace SchoolManagementSystem.Controllers
         }
 
         [HttpGet]
-        public async Task<PartialViewResult> EditRoles(string Id)
+        public async Task<IActionResult> EditRoles(string Id)
         {
             var roles = await roleManager.FindByIdAsync(Id);
-            //Check if the id/role exists.
+            if (roles == null)
+            {
+                ViewBag.ErrorMessage = $"The requested Role with Id = { Id } Cannot be found";
+                return View("NotFound");
+            }
             EditRoleViewModel model = new EditRoleViewModel
             {
                 Id = roles.Id,
@@ -163,6 +165,30 @@ namespace SchoolManagementSystem.Controllers
                 } 
             }
             return Json( new {success = false} );
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteRole(string Id)
+        {
+            IdentityRole role = await roleManager.FindByIdAsync(Id);
+            if(role == null)
+            {
+                ViewBag.ErrorMessage = $"The Role with Id = { Id } could not be found";
+                return View("NotFound");
+            }
+            else
+            {
+                IdentityResult result = await roleManager.DeleteAsync(role);
+                if(result.Succeeded)
+                {
+                    return Json(new { success = true });
+                }
+                foreach(var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+                return RedirectToAction("allroles");
+            }
         }
     }
 }
