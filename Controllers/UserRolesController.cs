@@ -143,13 +143,12 @@ namespace SchoolManagementSystem.Controllers
                 IdentityResult result = null;
                 if(model[i].IsSelected && !(await userManager.IsInRoleAsync(user, role.Name)))
                 {
-                    result = await userManager.AddToRoleAsync(user, role.Name);
-                    var r = user;
+                    result = await userManager.AddToRoleAsync(user, role.Name); 
                 }
                 else if(!model[i].IsSelected && await userManager.IsInRoleAsync(user, role.Name))
                 {
                     result = await userManager.RemoveFromRoleAsync(user, role.Name);
-                }
+                } 
                 else { continue; }
 
                 if(result.Succeeded)
@@ -158,13 +157,12 @@ namespace SchoolManagementSystem.Controllers
                     {
                         continue;
                     }else
-                    { 
-                        ViewBag.success = "The Update was successful!";
+                    {  
                         return Json( new {success = true} );
                     }
                 } 
             }
-            return PartialView(model);
+            return Json( new {success = false} );
         }
     }
 }

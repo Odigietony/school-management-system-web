@@ -5,7 +5,7 @@
     ViewBag.Title = "All Roles";
 }
 <style>
-    .alert{
+    #alert{
         position: fixed;
         top: 60px;
         right: -120px;
@@ -13,7 +13,7 @@
         opacity: 0;
     }
 
-    .alert.on{
+    #alert.on{
         top: 60px;
         right: 60px;
         opacity: 1;
@@ -47,6 +47,13 @@
                     <div class="dash-item first-dash-item">
                         <h6 class="item-title"><i class="fa fa-tags"></i>ROLES</h6>
                         <div class="inner-item">
+                            <div class="chart">
+		                        <a class="save btn btn-success" asp-action="addroles" asp-controller="userroles">
+                                    <i class="fa fa-plus"> </i>
+                                    <span><strong>  ADD NEW ROLE </strong></span>
+                                </a>
+                            </div>
+                            <div class="clearfix" style="margin-bottom: 25px;"></div>
                             <table id="attendenceDetailedTable" class="display responsive nowrap" cellspacing="0" width="100%">
                                 <thead>
                                     <tr>
@@ -80,7 +87,7 @@
                                                 <a class="delete" href="#" title="Delete" data-toggle="modal" data-target="#deleteDetailModal">
                                                 <i class="fa fa-remove"></i></a>
 
-                                                <a href="javascript:void(0)" onclick="editUserRole('@roles.Id')" class="edit" title="Edit User in Roles"  >
+                                                <a href="javascript:void(0)" onclick="editUserRole('@roles.Id')" class="edit" title="Add or Remove user from role"  >
                                                     <i class="fa fa-pencil"></i>
                                                  </a>
                                             </td>
@@ -116,7 +123,7 @@
         </div>
     </div>
 
-    <!-- Delete Modal -->
+    <!--Update User role Modal -->
     <div id="editUserRole" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
@@ -195,79 +202,6 @@ else
 
 @section Scripts
 {
-    <script>
-        function editUser(id)
-        { 
-            let url = '/UserRoles/EditRoles/';
-            let $modal = $("#editDetailModal");
-            $modal.find('.modal-body').load(url + id, function(){
-                $modal.modal('show');
-            });
-        } 
-
-        function editUserRole(roleId)
-        {
-            let url1 = '/UserRoles/UpdateUserRole/'; 
-            let $modal1 = $("#editUserRole");
-            $modal1.find('.modal-body').load(url1 + roleId, function(){
-                $modal1.modal('show');
-            });
-        }
-    </script>
-    <script>
-          function updateUserData()
-         {
-            let id = $('#userRoleId').val();
-            let rolename = $('#userRoleName').val();  
-            let url = '/UserRoles/EditRoles/';
-            let modelData = ({'Id': id, 'RoleName': rolename}); 
-            $.ajax({
-                type: 'POST',
-                url: url,
-                data:  modelData, 
-                success: function(result)
-                {
-                    if(result.success == true)
-                    {  
-                        setTimeout(function(){
-                           location.reload(); 
-                        }, 200);
-                    }
-                    else
-                    {
-                        $('.modal-body').html(result); 
-                    }
-                }
-            });
-         } 
-
-         function updateUserRoleData()
-         {
-            let id = $('#userRoleId').val();
-            let rolename = $('#userRoleName').val(); 
-            let userid = $('#userid').val();
-            let username = $('#username').val(); 
-            let selected_value = ($('#selectValue').is(':checked')) ? true : false; 
-            let url = '/UserRoles/UpdateUserRole/';
-            let model = {'model': [{'UserId': userid, 'Username': username, 'IsSelected': selected_value}], 'Id': id};  
-            $.ajax({
-                type: 'POST',
-                url: url,
-                data: model, 
-                success: function(result)
-                {
-                    if(result.success == true)
-                    {  
-                        $('.modal').modal('hide');
-                        $('.alert').addClass('on');
-                    }
-                    else
-                    {
-                        $('.modal-body').html(result); 
-                    }
-                }
-            });
-         }
-    </script>
+    <script src="~/dashboard/assets/js/Custom.js"></script> 
 }
  
