@@ -1,3 +1,11 @@
+$(document).ready(function () {
+    $('.custom-file-input').on("change", function () {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).next('.custom-file-label').html(fileName);
+    });
+}); 
+
+
 function editUser(id)
 { 
     let url = '/UserRoles/EditRoles/';
@@ -22,6 +30,8 @@ function updateUserData()
     let rolename = $('#userRoleName').val();  
     let url = '/UserRoles/EditRoles/';
     let modelData = ({'Id': id, 'RoleName': rolename}); 
+    
+    
     $.ajax({
         type: 'POST',
         url: url,

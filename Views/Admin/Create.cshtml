@@ -19,46 +19,45 @@
 				<div class="dash-item first-dash-item">
 					<h6 class="item-title"><i class="fa fa-user-secret"></i>ADMIN INFO</h6>
 					<div class="inner-item">
+					<form asp-action="Create" asp-controller="Admin" method="post"> 
 						<div class="dash-form">
 							<div class="col-sm-3">
-								<label asp-for="@Model.Firstname" class="clear-top-margin"><i class="fa fa-user-circle-o"></i>FIRST NAME</label>
-								<input  asp-for="@Model.Firstname" placeholder="FIRST NAME" />
-								<span asp-validation-for="@Model.Firstname"></span>
+								<label asp-for="Firstname" class="clear-top-margin"><i class="fa fa-user-circle-o"></i>FIRST NAME</label>
+								<input  asp-for="Firstname" placeholder="FIRST NAME" />
+								<span asp-validation-for="Firstname" class="text-danger"></span>
 							</div>
 							<div class="col-sm-3">
-								<label asp-for="@Model.Lastname" class="clear-top-margin"><i class="fa fa-user-circle-o"></i>LAST NAME</label>
-								<input asp-for="@Model.Lastname" placeholder="LAST NAME" />
-								<span asp-validation-for="@Model.Lastname"></span>
+								<label asp-for="Lastname" class="clear-top-margin"><i class="fa fa-user-circle-o"></i>LAST NAME</label>
+								<input asp-for="Lastname" placeholder="LAST NAME" />
+								<span asp-validation-for="Lastname" class="text-danger"></span>
 							</div>
 							<div class="col-sm-3">
 								<label class="clear-top-margin"><i class="fa fa-venus"></i>ROLE</label>
-								<select asp-for="@Model.Role.Id" asp-items = "@(new SelectList(@ViewBag.List, "Id", "Name"))">
+								<select asp-for="Role.Id" asp-items = "@(new SelectList(@ViewBag.List, "Id", "Name"))">
 								 
 								</select>
 							</div>
-							<div class="clearfix"></div>
-							
-
+							<div class="clearfix"></div> 
 							<div class="col-sm-3">
-								<label asp-for="@Model.PhoneNumber"><i class="fa fa-phone"></i>PHONE #</label>
-								<input asp-for="@Model.PhoneNumber" placeholder="PHONE NUMBER" />
-								<span asp-validation-for="@Model.PhoneNumber"></span>
+								<label asp-for="PhoneNumber"><i class="fa fa-phone"></i>PHONE #</label>
+								<input asp-for="PhoneNumber" placeholder="PHONE NUMBER" />
+								<span asp-validation-for="PhoneNumber" class="text-danger"></span>
 							</div>
 							<div class="col-sm-3">
 								<label asp-for="EmailAddress"><i class="fa fa-envelope-o" ></i>EMAIL ADDRESS</label>
 								<input asp-for="EmailAddress" placeholder="john@pathshala.com" />
-							</div>
-							
+								<span asp-validation-for="EmailAddress" class="text-danger"></span>
+							</div> 
 							<div class="clearfix"></div>
 							<div class="col-sm-3">
 								<label asp-for="Image"><i class="fa fa-file-picture-o"></i>UPLOAD PHOTO</label>
-								<input asp-for="Image" placeholder="Upload admin photo" />
+								<input asp-for="Image" placeholder="Upload admin photo" class="custom-file-input"/>
 							</div>
 							<div class="clearfix"></div>
-						<div class="col-sm-12">
-						<a href="#"><i class="fa fa-paper-plane"></i> SAVE</a>
+							<div class="col-sm-12"> 
 						</div>
-						
+						<button type="submit" class="btn btn-success"><i class="fa fa-paper-plane"></i> SAVE</button>
+					</form>
 					</div> 
 					</div>
 					<div class="clearfix"></div>
@@ -72,3 +71,9 @@
  <div class="menu-togggle-btn">
         <a href="#menu-toggle" id="menu-toggle"><i class="fa fa-bars"></i></a>
     </div>
+
+
+
+@section Scripts{
+	<script src="~/dashboard/assets/js/Custom.js"></script>
+}

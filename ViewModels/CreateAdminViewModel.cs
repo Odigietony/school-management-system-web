@@ -20,8 +20,7 @@ namespace SchoolManagementSystem.ViewModels
         public string Lastname { get; set; }
 
         [Required]
-        [EmailAddress]
-        [Remote(action: "IsEmailInUse", controller: "Admin")]
+        [EmailAddress] 
         public string EmailAddress { get; set; }
         [Phone]
         public string PhoneNumber { get; set; }

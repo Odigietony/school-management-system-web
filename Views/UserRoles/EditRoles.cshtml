@@ -1,8 +1,7 @@
 @model EditRoleViewModel
-<form method="post" asp-controller="UserRoles" asp-action="EditRoles">
+<form method="post" asp-controller="UserRoles" asp-action="EditRoles" id="editForm">
     <div class="form-group row">
-        <label asp-for="@Model.Id" class="col-sm-2 form-label"><i class="fa fa-hashtag"></i>ID</label>
-        <!-- <label  class="clear-top-margin" id="roleId"><i class="fa fa-user"></i>ROLE ID</label>  -->
+        <label asp-for="@Model.Id" class="col-sm-2 form-label"><i class="fa fa-hashtag"></i>ID</label> 
         <div class="col-sm-12">
             <input asp-for="@Model.Id" class="col-sm-4 form-control" disabled />
         </div>
@@ -11,8 +10,8 @@
     <div class="form-group row">
         <label asp-for="@Model.RoleName" class="col-sm-2 form-label"><i class="fa fa-user"></i>ROLE NAME</label>
         <div class="col-sm-12">
-            <input id="userRoleName" asp-for="@Model.RoleName" class="col-sm-4 form-control" />
-        </div>
-        <span asp-validation-for="@Model.RoleName" class="text-danger"></span> 
+            <input id="userRoleName" asp-for="@Model.RoleName" class="col-sm-4 form-control" required/>
+            <span asp-validation-for="@Model.RoleName" class="text-danger"></span> 
+        </div> 
     </div>
 </form> 

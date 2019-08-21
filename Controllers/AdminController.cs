@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SchoolManagementSystem.Data.Repository;
+using SchoolManagementSystem.Helpers;
 using SchoolManagementSystem.Models;
 using SchoolManagementSystem.ViewModels;
 
@@ -18,13 +19,16 @@ namespace SchoolManagementSystem.Controllers
         private readonly UserManager<IdentityUser> userManager;
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly IHostingEnvironment hostingEnvironment;
+        private readonly IPasswordGenerator passwordGenerator;
+        Random random = new Random();
         public AdminController(IEntityRepository<Admin> entityRepository,
         UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, 
-        IHostingEnvironment hostingEnvironment)
+        IHostingEnvironment hostingEnvironment, IPasswordGenerator passwordGenerator)
         {
             this.hostingEnvironment = hostingEnvironment;
             this.roleManager = roleManager;
             this.userManager = userManager;
+            this.passwordGenerator = passwordGenerator;
             _entityRepository = entityRepository;
         }
     public ViewResult Index()
@@ -46,18 +50,20 @@ namespace SchoolManagementSystem.Controllers
         if (ModelState.IsValid)
         {
             string uniqueFileName = ProcessFileThenUpload(model);
-            string[] username = model.EmailAddress.ToString().Split("@");
-            string generatedPassword = Guid.NewGuid().ToString().Substring(0, 8);
+            string[] usernameChars = model.EmailAddress.ToString().Split("@");
+            string username = usernameChars[0].ToString();
+            string generatedPassword = passwordGenerator.GeneratePassword(15);
+            var role = await roleManager.FindByIdAsync(model.Role.Id);
             IdentityUser user = new IdentityUser 
             { 
-                UserName = username[1], 
+                UserName = username + random.Next(100, 999), 
                 Email = model.EmailAddress, 
                 PhoneNumber = model.PhoneNumber,
             };
             IdentityResult result = await userManager.CreateAsync(user, generatedPassword);
             if(result.Succeeded)
             {
-                IdentityResult roleAddedResult =await userManager.AddToRoleAsync(user, model.Role.Name);
+                IdentityResult roleAddedResult =await userManager.AddToRoleAsync(user, role.Name);
                 if(roleAddedResult.Succeeded)
                 {
                     Admin admin = new Admin
@@ -69,6 +75,7 @@ namespace SchoolManagementSystem.Controllers
                     };
                     _entityRepository.Insert(admin);
                     _entityRepository.Save();
+                    return RedirectToAction("index");
                 }
                foreach (var error in roleAddedResult.Errors)
                {
@@ -99,18 +106,6 @@ namespace SchoolManagementSystem.Controllers
         return uniqueFileName;
     }
 
-    [AcceptVerbs("Get", "Post")]
-    public async Task<IActionResult> IsEmailInUse(string email)
-    {
-        var user = await userManager.FindByEmailAsync(email);
-        if (user == null)
-        {
-            return Json(true);
-        }
-        else
-        {
-            return Json(false);
-        }
-    }
+    
 }
 }

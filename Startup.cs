@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SchoolManagementSystem.Data;
 using SchoolManagementSystem.Data.Repository;
+using SchoolManagementSystem.Helpers;
 using SchoolManagementSystem.Models;
 
 namespace SchoolManagementSystem
@@ -34,6 +35,7 @@ namespace SchoolManagementSystem
             services.AddIdentity<IdentityUser, IdentityRole>()
             .AddEntityFrameworkStores<AppDbContext>();
             services.AddTransient<IEntityRepository<Admin>, EntityRepository<Admin>>();
+            services.AddScoped<IPasswordGenerator, PasswordGenerator>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
