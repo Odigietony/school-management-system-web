@@ -21,7 +21,7 @@ namespace SchoolManagementSystem.Data.Repository
            _context.Remove(data); 
         }
 
-        public IEnumerable<TEntity> GetAll()
+        public IQueryable<TEntity> GetAll()
         {
             return entity;
         }

@@ -5,10 +5,11 @@
     var roleName = ViewBag.roleName;
 }
 
-<form method="post" asp-action="UpdateUserRole" asp-controller="UserRoles">
+<form method="post" asp-action="UpdateUserRole" asp-controller="UserRoles" id="UserRoleForm">
     <h2>All users in the @roleName role</h2>
     @for(var item = 0; item < Model.Count; item++)
     {
+        <input type="hidden" id="roleId" asp-for="@roleId" />
         <input type="hidden" id="userid" asp-for="@Model[item].UserId" />
         <input type="hidden" id="username" asp-for="@Model[item].Username" />
         <div class="form-check m-1">

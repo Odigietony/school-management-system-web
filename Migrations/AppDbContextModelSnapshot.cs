@@ -118,7 +118,7 @@ namespace SchoolManagementSystem.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "564ed7d9-ac24-43e0-9334-c2efd539c01a",
+                            ConcurrencyStamp = "aeec0491-041c-4f84-bc97-3b774d6424c3",
                             Email = "superadmin@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
@@ -126,7 +126,7 @@ namespace SchoolManagementSystem.Migrations
                             NormalizedUserName = "SUPERADMIN",
                             PasswordHash = "SuperAdmin",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "e4465a99-a1d7-468c-a592-f48ff2d1dd4c",
+                            SecurityStamp = "ccb5aaa0-0716-4cc6-bd96-23bf2fa1dcaf",
                             TwoFactorEnabled = false,
                             UserName = "SuperAdmin"
                         });
@@ -221,6 +221,15 @@ namespace SchoolManagementSystem.Migrations
                     b.HasIndex("IdentityUserId");
 
                     b.ToTable("Admins");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            Firstname = "Anthony",
+                            IdentityUserId = "1",
+                            Lastname = "Russo"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

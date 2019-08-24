@@ -12,6 +12,7 @@ namespace SchoolManagementSystem.Data
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.SeedUser();
+            modelBuilder.SeedAdmin();
         }
 
         public DbSet<Admin> Admins {get; set;}

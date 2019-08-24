@@ -33,3 +33,13 @@
     border: 12px 5px 2px 5px;
     border-color: rgb(174, 39, 39);
 }
+
+.Thumbnail{
+    height: 40px;
+    border-radius: 50%;
+    vertical-align: baseline;
+}
+
+.action-link .details {
+    background: rgb(7, 127, 182);
+}

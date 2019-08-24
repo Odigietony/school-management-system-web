@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -33,7 +34,8 @@ namespace SchoolManagementSystem.Controllers
         }
     public ViewResult Index()
     {
-        return View();
+        var model = _entityRepository.GetAll().Include(a => a.IdentityUser);
+        return View(model);
     }
 
     public IActionResult Create()
@@ -49,14 +51,12 @@ namespace SchoolManagementSystem.Controllers
     {
         if (ModelState.IsValid)
         {
-            string uniqueFileName = ProcessFileThenUpload(model);
-            string[] usernameChars = model.EmailAddress.ToString().Split("@");
-            string username = usernameChars[0].ToString();
+            string uniqueFileName = ProcessFileThenUpload(model); 
             string generatedPassword = passwordGenerator.GeneratePassword(15);
             var role = await roleManager.FindByIdAsync(model.Role.Id);
             IdentityUser user = new IdentityUser 
             { 
-                UserName = username + random.Next(100, 999), 
+                UserName = Username(model), 
                 Email = model.EmailAddress, 
                 PhoneNumber = model.PhoneNumber,
             };
@@ -90,6 +90,127 @@ namespace SchoolManagementSystem.Controllers
         return View(model);
     }
 
+    [HttpGet]
+    public async  Task<IActionResult> Edit(long Id)
+    {
+        var admin = _entityRepository.GetById(Id);
+        var adminIdentityUser = await userManager.FindByIdAsync(admin.IdentityUserId);
+        admin.IdentityUser = adminIdentityUser;
+        
+        if(admin == null)
+        {
+            ViewBag.ErrorMessage = $"The Admin with Id = { Id  } could not be found.";
+            return View("NotFound");
+        }
+        EditAdminViewModel model = new EditAdminViewModel
+        {
+            Id = admin.Id,
+            Firstname = admin.Firstname,
+            Lastname = admin.Lastname,
+            EmailAddress = admin.IdentityUser.Email,
+            ExistingPhotoPath = admin.ImagePath, 
+            PhoneNumber = admin.IdentityUser.PhoneNumber,
+            Username = admin.IdentityUser.UserName,
+        };
+        return View(model);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Edit(EditAdminViewModel model)
+    {
+        if(ModelState.IsValid)
+        {
+            Admin admin = _entityRepository.GetById(model.Id);
+            IdentityUser user = await userManager.FindByIdAsync(admin.IdentityUserId);
+            if(admin == null || user == null)
+            {
+                ViewBag.ErrorMessage = "The Resource couldn't be found";
+                return View("NotFound");
+            }
+            admin.Firstname = model.Firstname;
+            admin.Lastname = model.Lastname;
+            user.Email = model.EmailAddress;
+            user.PhoneNumber = model.PhoneNumber;
+            user.UserName = Username(model);
+            if(model.Image != null)
+            {
+                if(model.ExistingPhotoPath != null)
+                {
+                    string filePath = Path.Combine(hostingEnvironment.WebRootPath, "uploads", model.ExistingPhotoPath);
+                    System.IO.File.Delete(filePath);
+                }
+                admin.ImagePath = ProcessFileThenUpload(model);
+            }
+            IdentityResult result = await userManager.UpdateAsync(user);
+            if(result.Succeeded)
+            {
+                _entityRepository.Update(admin);
+                _entityRepository.Save();
+                return RedirectToAction("index");
+            }
+            foreach(var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            } 
+        }
+        return View(model);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Details(long Id)
+    {
+        Admin admin = _entityRepository.GetById(Id);
+        IdentityUser adminUser = await userManager.FindByIdAsync(admin.IdentityUserId);
+        admin.IdentityUser = adminUser;
+        if(admin == null)
+        {
+            ViewBag.ErrorMessage = $"The admin with Id = { Id } could not be found";
+            return View("NotFound");
+        }
+        AdminDetailsViewModel model = new AdminDetailsViewModel(); 
+        model.Admin = admin; 
+         foreach(var role in roleManager.Roles)
+         {
+             if(await userManager.IsInRoleAsync(admin.IdentityUser, role.Name))
+             {
+                model.Roles.Add(role.Name);
+             }
+         }
+        return View(model);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Delete(long Id)
+    {
+        Admin admin = _entityRepository.GetById(Id);
+        ViewBag.AdminName = admin.Firstname + " " + admin.Lastname;
+        if(admin == null)
+        {
+            ViewBag.ErrorMessage = $"The admin resource with Id = { Id } could not be found";
+            return View("NotFound");
+        }
+        IdentityUser adminUser = await userManager.FindByIdAsync(admin.IdentityUserId);
+        if(adminUser == null)
+        {
+            ViewBag.ErrorMessage = $"The admin resource with Id = { admin.IdentityUserId } could not be found";
+            return View("NotFound");
+        }
+        _entityRepository.Delete(admin.Id);
+        IdentityResult result = await userManager.DeleteAsync(adminUser);
+        if(result.Succeeded)
+        {
+            return Json(new { success = true });
+        }
+        else
+        {
+            foreach(var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description); 
+            }
+            return View("index");
+        } 
+    }
+
     private string ProcessFileThenUpload(CreateAdminViewModel model)
     {
         string uniqueFileName = null;
@@ -104,6 +225,13 @@ namespace SchoolManagementSystem.Controllers
             }
         }
         return uniqueFileName;
+    }
+
+    private string Username(CreateAdminViewModel model)
+    {
+        string[] usernameChars = model.EmailAddress.ToString().Split("@");
+        string username = usernameChars[0].ToString();
+        return username + random.Next(1000, 9999);
     }
 
     

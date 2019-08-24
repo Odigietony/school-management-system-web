@@ -1,0 +1,82 @@
+@model AdminDetailsViewModel
+
+@{
+    ViewData["Title"] = "Details";
+    var photoPath = "/uploads/" + (Model.Admin.ImagePath ?? "default-user.png");
+}
+
+
+<!-- MAIN CONTENT --> 
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-lg-12 clear-padding-xs">
+			<h5 class="page-title"><i class="fa fa-user-secret"></i>ADMIN DETAILS</h5>
+			<div class="section-divider"></div>
+		</div>
+	</div>
+    <div class="row">
+        <div class="col-lg-12 clear-padding-xs">
+            <div class="col-sm-4">
+                <div class="my-msg dash-item">
+                    <h6 class="item-title"><i class="fa fa-address-book-o"></i>PROFILE</h6>
+                    <div class="inner-item">
+                        <div class="profile-intro">
+                            <div class="col-xs-4 col-sm-12 col-md-4 clear-padding">
+                                <img src="@photoPath" alt="user" />
+                            </div>
+                            <div class="col-xs-8 col-sm-12 col-md-8">
+                                <strong><h6>ID#: @Model.Admin.Id</h6></strong>
+                                <h5>USERNAME: <strong>@Model.Admin.IdentityUser.UserName</strong></h5>
+                                <h5>EMAIL ADDRESS: @Model.Admin.IdentityUser.Email</h5> 
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="profile-details">
+                            <div class="detail-row">
+                                <div class="col-md-6 col-sm-12 col-xs-6 clear-padding">
+                                    <strong><span>FIRST NAME</span></strong>
+                                    <p>@Model.Admin.Firstname</p>
+                                </div>
+                                <div class="col-md-6 col-sm-12 col-xs-6 clear-padding">
+                                    <strong><span>LAST NAME </span></strong>
+                                    <p>@Model.Admin.Lastname</p>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="clearfix"></div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div>
+                    <div class="my-msg dash-item">
+                        <h6 class="item-title"><i class="fa fa-tags"></i>ADMIN ROLES</h6>
+                        <div class="inner-item">
+                            
+                                 @foreach(var role in Model.Roles)
+                                {
+                                    <div class="msg-item">
+                                        <div class="col-xs-2 clear-padding">
+                                            <i class="fa fa-tags"></i>
+                                        </div>
+                                        <div class="col-xs-10">
+                                            <p class="title">Role ID: @Model.Admin.IdentityUser.Id</p> 
+                                            <p class="title">Role Name: @role</p> 
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                } 
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+
+</div>
+
+<div class="menu-togggle-btn">
+    <a href="#menu-toggle" id="menu-toggle"><i class="fa fa-bars"></i></a>
+</div>

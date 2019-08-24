@@ -1,14 +1,14 @@
-@model CreateAdminViewModel
+@model EditAdminViewModel
 
 @{
-    ViewBag.Title = "Add Admin";
+    ViewData["Title"] = "Edit";
 }
 
 <!-- MAIN CONTENT --> 
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-lg-12 clear-padding-xs">
-			<h5 class="page-title"><i class="fa fa-user-secret"></i>ADD NEW ADMIN</h5>
+			<h5 class="page-title"><i class="fa fa-user-secret"></i>UPDATE ADMIN DATA</h5>
 			<div class="section-divider"></div>
 		</div>
 	</div>
@@ -17,50 +17,46 @@
 		<div class="col-lg-12 clear-padding-xs">
 			<div class="col-md-12">
 				<div class="dash-item first-dash-item">
-					<h6 class="item-title"><i class="fa fa-user-secret"></i>ADMIN INFO</h6>
+					<h6 class="item-title"><i class="fa fa-user-secret"></i>ADMIN DATA</h6>
 					<div class="inner-item">
-					<form enctype="multipart/form-data" asp-action="Create" asp-controller="Admin" method="post"> 
+					<form enctype="multipart/form-data" asp-action="edit" asp-controller="admin" method="post"> 
+                        <input type="hidden" asp-for="Id" />
 						<div class="dash-form">
 							<div class="col-sm-3">
 								<label asp-for="Firstname" class="clear-top-margin"><i class="fa fa-user-circle-o"></i>FIRST NAME</label>
-								<input  asp-for="Firstname" placeholder="FIRST NAME" />
+								<input  asp-for="Firstname"  />
 								<span asp-validation-for="Firstname" class="text-danger"></span>
 							</div>
 							<div class="col-sm-3">
 								<label asp-for="Lastname" class="clear-top-margin"><i class="fa fa-user-circle-o"></i>LAST NAME</label>
-								<input asp-for="Lastname" placeholder="LAST NAME" />
+								<input asp-for="Lastname"  />
 								<span asp-validation-for="Lastname" class="text-danger"></span>
 							</div>
-							<div class="col-sm-3">
-								<label class="clear-top-margin"><i class="fa fa-venus"></i>ROLE</label>
-								<select asp-for="Role.Id" asp-items = "@(new SelectList(@ViewBag.List, "Id", "Name"))">
-								 
-								</select>
-							</div>
+							 
 							<div class="clearfix"></div> 
-							<div class="col-sm-3">
-								<label asp-for="PhoneNumber"><i class="fa fa-phone"></i>PHONE #</label>
-								<input asp-for="PhoneNumber" placeholder="PHONE NUMBER" />
+                            <div class="col-sm-3">
+								<label asp-for="PhoneNumber"><i class="fa fa-phone"></i>PHONE NUMNBER</label>
+								<input asp-for="PhoneNumber"   />
 								<span asp-validation-for="PhoneNumber" class="text-danger"></span>
 							</div>
 							<div class="col-sm-3">
 								<label asp-for="EmailAddress"><i class="fa fa-envelope-o" ></i>EMAIL ADDRESS</label>
-								<input asp-for="EmailAddress" placeholder="john@pathshala.com" />
+								<input asp-for="EmailAddress"   />
 								<span asp-validation-for="EmailAddress" class="text-danger"></span>
 							</div> 
 							<div class="clearfix"></div>
 							<div class="col-sm-3">
-								<label asp-for="Image" ><i class="fa fa-file-picture-o"></i>UPLOAD PHOTO</label>
-								
-								<div class="custom-file">
-									<input asp-for="Image"  class="custom-file-input"/>
-									<label class="custom-file-label">Choose another image</label>
-           						 </div>
+								<label><i class="fa fa-file-picture-o"></i>CHANGE EXISTING PHOTO...</label>
+								<input asp-for="Image"  class="custom-file-input"/>
 							</div>
 							<div class="clearfix"></div>
 							<div class="col-sm-12"> 
 						</div>
-						<button type="submit" class="btn btn-success"><i class="fa fa-paper-plane"></i> SAVE</button>
+                        
+						<div class="col-sm-3" style="margin-top: 25px;">
+                            <button type="submit" class="btn btn-success"><i class="fa fa-check-square-o"></i> Update </button>
+                            <button asp-controller="admin" asp-action="index" class="btn btn-danger"><i class="fa fa-ban"></i> Cancel </button>
+                        </div>
 					</form>
 					</div> 
 					</div>
@@ -72,9 +68,9 @@
 	</div>
 </div>
 </div>
-<div class="menu-togggle-btn">
-    <a href="#menu-toggle" id="menu-toggle"><i class="fa fa-bars"></i></a>
-</div>
+ <div class="menu-togggle-btn">
+        <a href="#menu-toggle" id="menu-toggle"><i class="fa fa-bars"></i></a>
+    </div>
 
 
 

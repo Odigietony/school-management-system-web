@@ -56,17 +56,14 @@ function updateUserData()
 
 function updateUserRoleData()
 {
-    let id = $('#userRoleId').val();
-    let rolename = $('#userRoleName').val(); 
-    let userid = $('#userid').val();
-    let username = $('#username').val(); 
-    let selected_value = ($('#selectValue').is(':checked')) ? true : false; 
+    let id = $('#roleId').val();  
     let url = '/UserRoles/UpdateUserRole/';
-    let model = {'model': [{'UserId': userid, 'Username': username, 'IsSelected': selected_value}], 'Id': id};  
+    let model = $('#UserRoleForm').serializeArray();
+    model.push({name: 'Id', value: id}); 
     $.ajax({
         type: 'POST',
         url: url,
-        data: model, 
+        data: $.param(model), 
         success: function(result)
         {
             if(result.success == true)
@@ -85,6 +82,25 @@ function updateUserRoleData()
 function ConfirmDelete(uniqueId)
 {
     url = "/UserRoles/DeleteRole/" + uniqueId;
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: {'Id': uniqueId},
+        success: function(result)
+        {
+            if(result.success == true)
+            {
+                setTimeout(function(){
+                    location.reload(); 
+                }, 500);
+            }
+        }
+    });
+}
+
+function ConfirmAdminDelete(uniqueId)
+{
+    url = "/Admin/Delete/" + uniqueId;
     $.ajax({
         type: "POST",
         url: url,
