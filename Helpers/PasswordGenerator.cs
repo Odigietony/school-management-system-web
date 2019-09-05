@@ -5,6 +5,7 @@ namespace SchoolManagementSystem.Helpers
 {
     public class PasswordGenerator : IPasswordGenerator
     {
+        Random random = new Random();
         private string Uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         private string Lowercase = "abcdefghijklmnopqrstuvwxyz";
         private string Digits = "0123456789";
@@ -15,8 +16,7 @@ namespace SchoolManagementSystem.Helpers
             char[] lowercase = Lowercase.ToCharArray();
             char[] digits = Digits.ToCharArray();
             char[] symbols =  Symbols.ToCharArray(); 
-            List<char> password = new List<char>();
-            Random random = new Random();
+            List<char> password = new List<char>(); 
             password.Insert(random.Next(0, password.Count), uppercase[random.Next(0, uppercase.Length)]);
             password.Insert(random.Next(0, password.Count), lowercase[random.Next(0, lowercase.Length)]);
             password.Insert(random.Next(0, password.Count), digits[random.Next(0, digits.Length)]);
@@ -30,6 +30,13 @@ namespace SchoolManagementSystem.Helpers
                 password.Insert(random.Next(0, password.Count), randomStrings[random.Next(0, randomStrings.Length)]);
             }
             return new string(password.ToArray());
+        }
+
+        public string GenerateUsernameFromEmail(string emailAddress)
+        {
+            string[] usernameChars = emailAddress.ToString().Split("@");
+            string username = usernameChars[0].ToString();
+            return username + random.Next(1000, 9999);
         }
     }
 }

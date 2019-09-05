@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SchoolManagementSystem.Migrations
 {
-    public partial class TeachersCountriesRefereesStatesAndSeedCountry : Migration
+    public partial class AddCascadingTeacherTables : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -37,42 +37,6 @@ namespace SchoolManagementSystem.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Referees", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TeacherHighestDegrees",
-                columns: table => new
-                {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    NameOfInstitution = table.Column<string>(nullable: true),
-                    YearEnrolled = table.Column<string>(nullable: true),
-                    YearOfGraduation = table.Column<string>(nullable: true),
-                    DegreeAttained = table.Column<string>(nullable: true),
-                    CGPA = table.Column<double>(nullable: false),
-                    TeacherId = table.Column<long>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TeacherHighestDegrees", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TeacherOtherDegrees",
-                columns: table => new
-                {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    NameOfInstitution = table.Column<string>(nullable: true),
-                    YearOfEnrollement = table.Column<string>(nullable: true),
-                    YearOfGraduation = table.Column<string>(nullable: true),
-                    DegreeAttained = table.Column<string>(nullable: true),
-                    CGPA = table.Column<double>(nullable: false),
-                    TeacherId = table.Column<long>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TeacherOtherDegrees", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -131,7 +95,7 @@ namespace SchoolManagementSystem.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Address1 = table.Column<string>(maxLength: 100, nullable: false),
                     Address2 = table.Column<string>(maxLength: 100, nullable: true),
-                    ZipCode = table.Column<int>(maxLength: 6, nullable: false),
+                    ZipCode = table.Column<int>(nullable: false),
                     HomePhone = table.Column<string>(nullable: false),
                     MobilePhone = table.Column<string>(nullable: true),
                     AlternateEmailAddress = table.Column<string>(nullable: true),
@@ -193,6 +157,31 @@ namespace SchoolManagementSystem.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TeacherHighestDegrees",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    NameOfInstitution = table.Column<string>(nullable: true),
+                    YearEnrolled = table.Column<string>(nullable: true),
+                    YearOfGraduation = table.Column<string>(nullable: true),
+                    DegreeAttained = table.Column<string>(nullable: true),
+                    CGPA = table.Column<double>(nullable: false),
+                    TeacherContactInfoId = table.Column<long>(nullable: false),
+                    TeacherContactInformationId = table.Column<long>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TeacherHighestDegrees", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TeacherHighestDegrees_TeacherContactInformations_TeacherContactInformationId",
+                        column: x => x.TeacherContactInformationId,
+                        principalTable: "TeacherContactInformations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TeacherCertificates",
                 columns: table => new
                 {
@@ -214,12 +203,36 @@ namespace SchoolManagementSystem.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "TeacherOtherDegrees",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    NameOfInstitution = table.Column<string>(nullable: true),
+                    YearOfEnrollement = table.Column<string>(nullable: true),
+                    YearOfGraduation = table.Column<string>(nullable: true),
+                    DegreeAttained = table.Column<string>(nullable: true),
+                    CGPA = table.Column<double>(nullable: false),
+                    TeacherHighestDegreeId = table.Column<long>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TeacherOtherDegrees", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TeacherOtherDegrees_TeacherHighestDegrees_TeacherHighestDegreeId",
+                        column: x => x.TeacherHighestDegreeId,
+                        principalTable: "TeacherHighestDegrees",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.UpdateData(
                 table: "AspNetUsers",
                 keyColumn: "Id",
                 keyValue: "1",
                 columns: new[] { "ConcurrencyStamp", "SecurityStamp" },
-                values: new object[] { "5b238292-943c-4f67-bfaa-5afe5fcdbe5f", "5a9da243-688f-4702-8a52-c3d065004ab9" });
+                values: new object[] { "4475e8be-7a6a-4d70-ade3-d3afc69c5faf", "2f261e83-79e4-4d2f-be75-0175a1d8919b" });
 
             migrationBuilder.InsertData(
                 table: "Countries",
@@ -328,6 +341,133 @@ namespace SchoolManagementSystem.Migrations
                     { 100L, "Oman" }
                 });
 
+            migrationBuilder.InsertData(
+                table: "States",
+                columns: new[] { "Id", "CountryId", "StateName" },
+                values: new object[,]
+                {
+                    { 1L, 1L, "Kabul" },
+                    { 88L, 9L, "Canberra–Queanbeyan" },
+                    { 87L, 9L, "Newcastle–Maitland" },
+                    { 86L, 9L, "Gold Coast–Tweed Heads" },
+                    { 85L, 9L, "Adelaide" },
+                    { 84L, 9L, "Perth" },
+                    { 83L, 9L, "Brisbane" },
+                    { 82L, 9L, "Melbourne" },
+                    { 81L, 9L, "Sydney" },
+                    { 80L, 8L, "Vayots Dzor" },
+                    { 79L, 8L, "Tavush" },
+                    { 78L, 8L, "Syunik" },
+                    { 77L, 8L, "Shirak" },
+                    { 89L, 9L, "Sunshine Coast" },
+                    { 76L, 8L, "Lori" },
+                    { 74L, 8L, "Gegharkunik" },
+                    { 73L, 8L, "Armavir" },
+                    { 72L, 8L, "Ararat" },
+                    { 71L, 8L, "Aragatsotn" },
+                    { 70L, 7L, "La Pampa" },
+                    { 69L, 7L, "Jujuy" },
+                    { 68L, 7L, "Formosa" },
+                    { 67L, 7L, "Between Rivers" },
+                    { 66L, 7L, "Currents" },
+                    { 65L, 7L, "Cordoba" },
+                    { 64L, 7L, "Chubut" },
+                    { 63L, 7L, "Chaco" },
+                    { 75L, 8L, "Kotayk" },
+                    { 62L, 7L, "Catamarca" },
+                    { 90L, 9L, "Wollongong" },
+                    { 92L, 10L, "Graz" },
+                    { 118L, 12L, "Andros Town" },
+                    { 117L, 12L, "Bahamas City" },
+                    { 116L, 12L, "Freetown" },
+                    { 115L, 12L, "Marsh Harbour" },
+                    { 114L, 12L, "Coopers Town" },
+                    { 113L, 12L, "West End" },
+                    { 112L, 12L, "Freeport" },
+                    { 111L, 12L, "Nassau" },
+                    { 110L, 11L, "Beylagan" },
+                    { 109L, 11L, "Barda" },
+                    { 108L, 11L, "Balakən" },
+                    { 107L, 11L, "Baku" },
+                    { 91L, 10L, "Vienna" },
+                    { 106L, 11L, "Babek" },
+                    { 104L, 11L, "Agsu" },
+                    { 103L, 11L, "Agstafa" },
+                    { 102L, 11L, "Agjabadi" },
+                    { 101L, 11L, "Agdash" },
+                    { 100L, 10L, "Dornbirn" },
+                    { 99L, 10L, "Sankt Pölten" },
+                    { 98L, 10L, "Wels" },
+                    { 97L, 10L, "Villach" },
+                    { 96L, 10L, "Klagenfurt" },
+                    { 95L, 10L, "Innsbruck" },
+                    { 94L, 10L, "Salzburg" },
+                    { 93L, 10L, "Linz" },
+                    { 105L, 11L, "Astara" },
+                    { 61L, 7L, "Buenos Aires" },
+                    { 60L, 6L, "Falmouth" },
+                    { 59L, 6L, "English Harbour" },
+                    { 27L, 3L, "Djelfa" },
+                    { 26L, 3L, "Batna" },
+                    { 25L, 3L, "Blida" },
+                    { 24L, 3L, "Annaba" },
+                    { 23L, 3L, "Constantine" },
+                    { 22L, 3L, "Oran" },
+                    { 21L, 3L, "Algiers" },
+                    { 20L, 2L, "Lushnjë" },
+                    { 19L, 2L, "Berat" },
+                    { 18L, 2L, "Korçë" },
+                    { 17L, 2L, "Kamëz" },
+                    { 16L, 2L, "Fier" },
+                    { 28L, 3L, "Sétif" },
+                    { 15L, 2L, "Shkodër" },
+                    { 13L, 2L, "Vlorë" },
+                    { 12L, 2L, "Durrës" },
+                    { 11L, 2L, "Tirana" },
+                    { 10L, 1L, "Taloqan" },
+                    { 9L, 1L, "Lashkargah" },
+                    { 8L, 1L, "Ghazni" },
+                    { 7L, 1L, "Kunduz" },
+                    { 6L, 1L, "Jalalabad" },
+                    { 5L, 1L, "Kabul" },
+                    { 4L, 1L, "Mazar-i-Sharif" },
+                    { 3L, 1L, "Herat" },
+                    { 2L, 1L, "Kandahar" },
+                    { 14L, 2L, "Elbasan" },
+                    { 29L, 3L, "Sidi Bel Abbès" },
+                    { 30L, 3L, "Biskra" },
+                    { 31L, 4L, "Canillo" },
+                    { 58L, 6L, "Dickenson Bay" },
+                    { 57L, 6L, "Codrington" },
+                    { 56L, 6L, "Cedar Grove" },
+                    { 55L, 6L, "Clare Hall" },
+                    { 54L, 6L, "Carlisle, Saint Philip" },
+                    { 53L, 6L, "Carlisle, Saint George" },
+                    { 52L, 6L, "Bolans" },
+                    { 51L, 6L, "All Saints" },
+                    { 50L, 5L, "Bungo" },
+                    { 49L, 5L, "Biula" },
+                    { 48L, 5L, "Bimbe" },
+                    { 47L, 5L, "Bibala (Vila Arriaga)" },
+                    { 46L, 5L, "Benguela" },
+                    { 45L, 5L, "Baía Farta" },
+                    { 44L, 5L, "Balombo" },
+                    { 43L, 5L, "Bailundo" },
+                    { 42L, 5L, "Andulo" },
+                    { 41L, 5L, "Ambriz" },
+                    { 40L, 4L, "Prats" },
+                    { 39L, 4L, "Els Plans" },
+                    { 38L, 4L, "Molleres" },
+                    { 37L, 4L, "Meritxell" },
+                    { 36L, 4L, "Incles" },
+                    { 35L, 4L, "El Forn" },
+                    { 34L, 4L, "Bordes d'Envalira" },
+                    { 33L, 4L, "L'Armiana" },
+                    { 32L, 4L, "L'Aldosa" },
+                    { 119L, 12L, "Clarence Town" },
+                    { 120L, 12L, "Dunmore Town" }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_States_CountryId",
                 table: "States",
@@ -347,6 +487,16 @@ namespace SchoolManagementSystem.Migrations
                 name: "IX_TeacherContactInformations_TeacherId",
                 table: "TeacherContactInformations",
                 column: "TeacherId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TeacherHighestDegrees_TeacherContactInformationId",
+                table: "TeacherHighestDegrees",
+                column: "TeacherContactInformationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TeacherOtherDegrees_TeacherHighestDegreeId",
+                table: "TeacherOtherDegrees",
+                column: "TeacherHighestDegreeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Teachers_IdentityUserId",
@@ -373,22 +523,22 @@ namespace SchoolManagementSystem.Migrations
                 name: "TeacherCertificates");
 
             migrationBuilder.DropTable(
-                name: "TeacherContactInformations");
-
-            migrationBuilder.DropTable(
-                name: "TeacherHighestDegrees");
-
-            migrationBuilder.DropTable(
                 name: "TeacherOtherDegrees");
 
             migrationBuilder.DropTable(
                 name: "TeachersProffesionalInformations");
 
             migrationBuilder.DropTable(
-                name: "Countries");
+                name: "TeacherHighestDegrees");
 
             migrationBuilder.DropTable(
                 name: "Referees");
+
+            migrationBuilder.DropTable(
+                name: "TeacherContactInformations");
+
+            migrationBuilder.DropTable(
+                name: "Countries");
 
             migrationBuilder.DropTable(
                 name: "Teachers");

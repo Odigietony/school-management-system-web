@@ -35,9 +35,10 @@ namespace SchoolManagementSystem
             services.AddIdentity<IdentityUser, IdentityRole>()
             .AddEntityFrameworkStores<AppDbContext>();
             services.AddTransient<IEntityRepository<Admin>, EntityRepository<Admin>>();
-            services.AddTransient<IEntityRepository<Teacher>, EntityRepository<Teacher>>();
+            services.AddTransient<ITeacherRepository, TeacherRepository>();
             services.AddTransient<ICountryRepository, CountryRepository>();
             services.AddScoped<IPasswordGenerator, PasswordGenerator>();
+            services.AddScoped<IProcessFileUpload, ProcessUploadFile>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

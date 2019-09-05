@@ -1,42 +1,26 @@
-@model IEnumerable<Admin>
-
+@model IEnumerable<TeacherContactInformation>
 
 @{
-    ViewBag.Title = "All Administrators";
+    ViewBag.Title = "All Teachers";
 }
-<style>
-    #alert{
-        position: fixed;
-        top: 60px;
-        right: -120px;
-        transition: all 1s ease;
-        opacity: 0;
-    }
-
-    #alert.on{
-        top: 60px;
-        right: 60px;
-        opacity: 1;
-    }
-</style>
 
 <!-- MAIN CONTENT --> 
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12 clear-padding-xs">
-                <h5 class="page-title"><i class="fa fa-user-secret"></i>ALL ADMINNISTRATORS</h5>
+                <h5 class="page-title"><i class="fa fa-user-secret"></i>ALL TEACHERS</h5>
                 <div class="section-divider"></div>
             </div>
         </div>
         
 
  
-    <div class="alert alert-success alert-dismissable" id="alert" role="alert">
+    <!-- <div class="alert alert-success alert-dismissable" id="alert" role="alert">
        <strong>Deleted Successfully!</strong>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
-    </div>
+    </div> -->
 
 
  
@@ -47,12 +31,12 @@
             <div class="col-lg-12 clear-padding-xs">
                 <div class="col-lg-12">
                     <div class="dash-item first-dash-item">
-                        <h6 class="item-title"><i class="fa fa-user-secret"></i>ADMINNISTRATORS</h6>
+                        <h6 class="item-title"><i class="fa fa-user"></i>TEACHERS</h6>
                         <div class="inner-item">
                             <div class="chart">
-		                        <a class="save btn btn-success" style="width:auto;" asp-action="create" asp-controller="admin">
+		                        <a class="save btn btn-success" style="width:auto;" asp-action="create" asp-controller="teacher">
                                     <i class="fa fa-plus"> </i>
-                                    <span><strong>  ADD NEW ADMINNISTRATOR </strong></span>
+                                    <span><strong>  ADD NEW TEACHER </strong></span>
                                 </a>
                             </div>
                             <div class="clearfix" style="margin-bottom: 25px;"></div>
@@ -61,57 +45,65 @@
                                     <tr>
                                         <th><i class="fa fa-hashtag"></i>ID</th>
                                         <th><i class="fa fa-id-card"></i>FIRST NAME</th>
+                                        <th><i class="fa fa-id-card"></i>MIDDLE NAME</th>
                                         <th><i class="fa fa-id-card"></i>LAST NAME</th>
                                         <th><i class="fa fa-user"></i>USERNAME</th>
                                         <th><i class="fa fa-envelope"></i>EMAIL ADDRESS</th>
+                                        <th><i class="fa fa-id-phone"></i>PHONE NUMBER</th>
+                                        <th><i class="fa fa-user"></i>GENDER</th>
+                                        <th><i class="fa fa-envelope"></i>CONTACT ADDRESS</th>
                                         <th><i class="fa fa-photo"></i>IMAGE</th>
                                         
                                         <th><i class="fa fa-tasks"></i>ACTION</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach(var admin in Model)
+                                    @foreach(var teacher in Model)
                                     {
-										var photoPath = "~/uploads/" + (admin.ImagePath ?? "default-user.png");
+										var photoPath = "~/uploads/" + (teacher.Teacher.ProfilePhotoPath ?? "default-user.png");
                                         <tr>
-                                            <td>@admin.Id</td>
-                                            <td>@admin.Firstname</td>
-                                            <td>@admin.Lastname</td>
-                                            <td>@admin.IdentityUser.UserName.</td>
-                                            <td>@admin.IdentityUser.Email</td>
-                                            <td><img class="Thumbnail" src="@photoPath" alt="admin image"  asp-append-version="true" /></td> 
+                                            <td>@teacher.Id</td>
+                                            <td>@teacher.Teacher.Firstname</td>
+                                            <td>@teacher.Teacher.Middlename</td>
+                                            <td>@teacher.Teacher.Lastname</td>
+                                            <td>@teacher.Teacher.IdentityUser.UserName</td>
+                                            <td>@teacher.Teacher.IdentityUser.Email</td>
+                                            <td>@teacher.Teacher.PhoneNumber</td>
+                                            <td>@teacher.Teacher.Gender</td>
+                                            <td>@teacher.Address1</td>
+                                            <td><img class="Thumbnail" src="@photoPath" alt="teacher image"  asp-append-version="true" /></td> 
                                             <td class="action-link">
-                                                <a asp-controller="admin" asp-action="edit" asp-route-Id="@admin.Id" class="edit"
+                                                <a asp-controller="teacher" asp-action="edit" asp-route-Id="@teacher.Id" class="edit"
                                                     title="Edit"  >
                                                     <i class="fa fa-edit"></i>
                                                  </a>
                                                 <a class="delete" href="javascript:void(0)" title="Delete" 
-                                                data-toggle="modal" data-target="#deleteDetailModal_@admin.Id">
+                                                data-toggle="modal" data-target="#deleteDetailModal_@teacher.Id">
                                                 <i class="fa fa-remove"></i></a>
 
-                                                <a asp-controller="admin" asp-action="details" asp-route-Id="@admin.Id" class="details" title="Details"  >
+                                                <a asp-controller="teacher" asp-action="details" asp-route-Id="@teacher.Id" class="details" title="Details"  >
                                                     <i class="fa fa fa-vcard"></i>
                                                  </a>
                                             </td>
                                         </tr>  
  
                                          <!-- Delete Modal -->
-                                        <div id="deleteDetailModal_@admin.Id" class="modal fade" role="dialog">
+                                        <div id="deleteDetailModal_@teacher.Id" class="modal fade" role="dialog">
                                             <div class="modal-dialog">
                                                 <!-- Modal content-->
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                        <h4 class="modal-title"><i class="fa fa-trash"></i>DELETE STUDENT</h4>
+                                                        <h4 class="modal-title"><i class="fa fa-trash"></i>DELETE TEACHER RECORD</h4>
                                                     </div>
                                                     <div class="modal-body">
                                                         <h3 class="text-danger text-center"><i class="fa fa-exclamation-triangle"></i>
-                                                             Are you sure you want to<strong> Delete @admin.Firstname  @admin.Lastname</strong>??
+                                                             Are you sure you want to<strong> Delete @teacher.Teacher.Firstname  @teacher.Teacher.Lastname</strong>??
                                                         </h3> 
                                                     </div>
                                                     <div class="modal-footer">
                                                         <div class="table-action-box">
-                                                            <a type="button" class="btn btn-success" onclick="ConfirmAdminDelete('@admin.Id')"><i class="fa fa-check"></i>YES</a>
+                                                            <a type="button" class="btn btn-success" onclick="ConfirmAdminDelete('@teacher.Id')"><i class="fa fa-check"></i>YES</a>
                                                             <a href="#" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-ban"></i>CLOSE</a>
                                                         </div>
                                                     </div> 
@@ -130,10 +122,10 @@
 else
 {
     <div class="chart-title">
-		<h4 class="bottom-title">NO ROLES TO DISPLAY</h4>
+		<h4 class="bottom-title">NO TEACHER DATA TO DISPLAY</h4>
 	</div>
     <div class="chart-legends">
-		<a class="btn btn-large" asp-action="addroles" asp-controller="userroles"><span>ADD NEW ROLE</span></a> 
+		<a class="btn btn-large" asp-action="addteacher" asp-controller="teacher"><span>ADD NEW TEACHER</span></a> 
 	</div>
 }
  

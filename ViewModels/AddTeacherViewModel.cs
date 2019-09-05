@@ -55,11 +55,16 @@ namespace SchoolManagementSystem.ViewModels
 
         //Contact Information
         [Required]
-        public List<SelectListItem> Countries { get; set; }     
+        public List<SelectListItem> Countries { get; set; }   
+
+        [Required]  
         public List<SelectListItem> States { get; set; }
 
         [Required(ErrorMessage = "The Country field is required")]
         public long CountryId { get; set; }
+
+        [Required(ErrorMessage = "The State field is required")]
+
         public long StateId { get; set; }
 
         [Required]
@@ -73,7 +78,6 @@ namespace SchoolManagementSystem.ViewModels
 
 
         [Required]
-        [StringLength(6)]
         [Display(Name = "ZIPCODE")]
         public int ZipCode { get; set; }
 
@@ -125,36 +129,36 @@ namespace SchoolManagementSystem.ViewModels
 
 
         //Teacher Preofessional Work experience 
-        [Required]
-        public int YearsOfExperience { get; set; }
+        // [Required]
+        // public int YearsOfExperience { get; set; }
 
-        [Required]
-        [StringLength(50)]
-        [Display(Name = "FORMER PLACE OF EMPLOYMENT")]
-        public string FormerPlaceOfEmployment { get; set; }
+        // [Required]
+        // [StringLength(50)]
+        // [Display(Name = "FORMER PLACE OF EMPLOYMENT")]
+        // public string FormerPlaceOfEmployment { get; set; }
 
-        [Required]
-        [StringLength(100)]
-        [Display(Name = "ADDRESS OF FORMER PLACEMENT")]
-        public string FormerPlaceOfEmploymentAddress { get; set; }
+        // [Required]
+        // [StringLength(100)]
+        // [Display(Name = "ADDRESS OF FORMER PLACEMENT")]
+        // public string FormerPlaceOfEmploymentAddress { get; set; }
 
-        [Required]
-        public string Designation { get; set; }
+        // [Required]
+        // public string Designation { get; set; }
 
-        [Required]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{dd-MM-yyy}")]
-        public DateTime YearOfEmployement { get; set; }
+        // [Required]
+        // [DataType(DataType.Date)]
+        // [DisplayFormat(DataFormatString = "{dd-MM-yyy}")]
+        // public DateTime YearOfEmployement { get; set; }
 
-        [Required]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{dd-MM-yyy}")]
-        public DateTime YearOfDeparture { get; set; } 
+        // [Required]
+        // [DataType(DataType.Date)]
+        // [DisplayFormat(DataFormatString = "{dd-MM-yyy}")]
+        // public DateTime YearOfDeparture { get; set; } 
 
-        [Required]
-        [StringLength(8)]
-        [Display(Name = "REGISTRATION NUMBER")]
-        public string TeacherRegistrationNumber { get; set; } 
+        // [Required]
+        // [StringLength(8)]
+        // [Display(Name = "REGISTRATION NUMBER")]
+        // public string TeacherRegistrationNumber { get; set; } 
 
 
         //Other Degree
@@ -176,10 +180,6 @@ namespace SchoolManagementSystem.ViewModels
 
         [Required]
         public double OtherCGPA { get; set; }
-
-        //Certificates
-        public string CertificateTitle { get; set; }
-        public List<IFormFile> Certificates { get; set; }
 
     }
 }

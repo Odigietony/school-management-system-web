@@ -118,7 +118,7 @@ namespace SchoolManagementSystem.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "5b238292-943c-4f67-bfaa-5afe5fcdbe5f",
+                            ConcurrencyStamp = "4475e8be-7a6a-4d70-ade3-d3afc69c5faf",
                             Email = "superadmin@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
@@ -126,7 +126,7 @@ namespace SchoolManagementSystem.Migrations
                             NormalizedUserName = "SUPERADMIN",
                             PasswordHash = "SuperAdmin",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "5a9da243-688f-4702-8a52-c3d065004ab9",
+                            SecurityStamp = "2f261e83-79e4-4d2f-be75-0175a1d8919b",
                             TwoFactorEnabled = false,
                             UserName = "SuperAdmin"
                         });
@@ -797,6 +797,728 @@ namespace SchoolManagementSystem.Migrations
                     b.HasIndex("CountryId");
 
                     b.ToTable("States");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            CountryId = 1L,
+                            StateName = "Kabul"
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            CountryId = 1L,
+                            StateName = "Kandahar"
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            CountryId = 1L,
+                            StateName = "Herat"
+                        },
+                        new
+                        {
+                            Id = 4L,
+                            CountryId = 1L,
+                            StateName = "Mazar-i-Sharif"
+                        },
+                        new
+                        {
+                            Id = 5L,
+                            CountryId = 1L,
+                            StateName = "Kabul"
+                        },
+                        new
+                        {
+                            Id = 6L,
+                            CountryId = 1L,
+                            StateName = "Jalalabad"
+                        },
+                        new
+                        {
+                            Id = 7L,
+                            CountryId = 1L,
+                            StateName = "Kunduz"
+                        },
+                        new
+                        {
+                            Id = 8L,
+                            CountryId = 1L,
+                            StateName = "Ghazni"
+                        },
+                        new
+                        {
+                            Id = 9L,
+                            CountryId = 1L,
+                            StateName = "Lashkargah"
+                        },
+                        new
+                        {
+                            Id = 10L,
+                            CountryId = 1L,
+                            StateName = "Taloqan"
+                        },
+                        new
+                        {
+                            Id = 11L,
+                            CountryId = 2L,
+                            StateName = "Tirana"
+                        },
+                        new
+                        {
+                            Id = 12L,
+                            CountryId = 2L,
+                            StateName = "Durrës"
+                        },
+                        new
+                        {
+                            Id = 13L,
+                            CountryId = 2L,
+                            StateName = "Vlorë"
+                        },
+                        new
+                        {
+                            Id = 14L,
+                            CountryId = 2L,
+                            StateName = "Elbasan"
+                        },
+                        new
+                        {
+                            Id = 15L,
+                            CountryId = 2L,
+                            StateName = "Shkodër"
+                        },
+                        new
+                        {
+                            Id = 16L,
+                            CountryId = 2L,
+                            StateName = "Fier"
+                        },
+                        new
+                        {
+                            Id = 17L,
+                            CountryId = 2L,
+                            StateName = "Kamëz"
+                        },
+                        new
+                        {
+                            Id = 18L,
+                            CountryId = 2L,
+                            StateName = "Korçë"
+                        },
+                        new
+                        {
+                            Id = 19L,
+                            CountryId = 2L,
+                            StateName = "Berat"
+                        },
+                        new
+                        {
+                            Id = 20L,
+                            CountryId = 2L,
+                            StateName = "Lushnjë"
+                        },
+                        new
+                        {
+                            Id = 21L,
+                            CountryId = 3L,
+                            StateName = "Algiers"
+                        },
+                        new
+                        {
+                            Id = 22L,
+                            CountryId = 3L,
+                            StateName = "Oran"
+                        },
+                        new
+                        {
+                            Id = 23L,
+                            CountryId = 3L,
+                            StateName = "Constantine"
+                        },
+                        new
+                        {
+                            Id = 24L,
+                            CountryId = 3L,
+                            StateName = "Annaba"
+                        },
+                        new
+                        {
+                            Id = 25L,
+                            CountryId = 3L,
+                            StateName = "Blida"
+                        },
+                        new
+                        {
+                            Id = 26L,
+                            CountryId = 3L,
+                            StateName = "Batna"
+                        },
+                        new
+                        {
+                            Id = 27L,
+                            CountryId = 3L,
+                            StateName = "Djelfa"
+                        },
+                        new
+                        {
+                            Id = 28L,
+                            CountryId = 3L,
+                            StateName = "Sétif"
+                        },
+                        new
+                        {
+                            Id = 29L,
+                            CountryId = 3L,
+                            StateName = "Sidi Bel Abbès"
+                        },
+                        new
+                        {
+                            Id = 30L,
+                            CountryId = 3L,
+                            StateName = "Biskra"
+                        },
+                        new
+                        {
+                            Id = 31L,
+                            CountryId = 4L,
+                            StateName = "Canillo"
+                        },
+                        new
+                        {
+                            Id = 32L,
+                            CountryId = 4L,
+                            StateName = "L'Aldosa"
+                        },
+                        new
+                        {
+                            Id = 33L,
+                            CountryId = 4L,
+                            StateName = "L'Armiana"
+                        },
+                        new
+                        {
+                            Id = 34L,
+                            CountryId = 4L,
+                            StateName = "Bordes d'Envalira"
+                        },
+                        new
+                        {
+                            Id = 35L,
+                            CountryId = 4L,
+                            StateName = "El Forn"
+                        },
+                        new
+                        {
+                            Id = 36L,
+                            CountryId = 4L,
+                            StateName = "Incles"
+                        },
+                        new
+                        {
+                            Id = 37L,
+                            CountryId = 4L,
+                            StateName = "Meritxell"
+                        },
+                        new
+                        {
+                            Id = 38L,
+                            CountryId = 4L,
+                            StateName = "Molleres"
+                        },
+                        new
+                        {
+                            Id = 39L,
+                            CountryId = 4L,
+                            StateName = "Els Plans"
+                        },
+                        new
+                        {
+                            Id = 40L,
+                            CountryId = 4L,
+                            StateName = "Prats"
+                        },
+                        new
+                        {
+                            Id = 41L,
+                            CountryId = 5L,
+                            StateName = "Ambriz"
+                        },
+                        new
+                        {
+                            Id = 42L,
+                            CountryId = 5L,
+                            StateName = "Andulo"
+                        },
+                        new
+                        {
+                            Id = 43L,
+                            CountryId = 5L,
+                            StateName = "Bailundo"
+                        },
+                        new
+                        {
+                            Id = 44L,
+                            CountryId = 5L,
+                            StateName = "Balombo"
+                        },
+                        new
+                        {
+                            Id = 45L,
+                            CountryId = 5L,
+                            StateName = "Baía Farta"
+                        },
+                        new
+                        {
+                            Id = 46L,
+                            CountryId = 5L,
+                            StateName = "Benguela"
+                        },
+                        new
+                        {
+                            Id = 47L,
+                            CountryId = 5L,
+                            StateName = "Bibala (Vila Arriaga)"
+                        },
+                        new
+                        {
+                            Id = 48L,
+                            CountryId = 5L,
+                            StateName = "Bimbe"
+                        },
+                        new
+                        {
+                            Id = 49L,
+                            CountryId = 5L,
+                            StateName = "Biula"
+                        },
+                        new
+                        {
+                            Id = 50L,
+                            CountryId = 5L,
+                            StateName = "Bungo"
+                        },
+                        new
+                        {
+                            Id = 51L,
+                            CountryId = 6L,
+                            StateName = "All Saints"
+                        },
+                        new
+                        {
+                            Id = 52L,
+                            CountryId = 6L,
+                            StateName = "Bolans"
+                        },
+                        new
+                        {
+                            Id = 53L,
+                            CountryId = 6L,
+                            StateName = "Carlisle, Saint George"
+                        },
+                        new
+                        {
+                            Id = 54L,
+                            CountryId = 6L,
+                            StateName = "Carlisle, Saint Philip"
+                        },
+                        new
+                        {
+                            Id = 55L,
+                            CountryId = 6L,
+                            StateName = "Clare Hall"
+                        },
+                        new
+                        {
+                            Id = 56L,
+                            CountryId = 6L,
+                            StateName = "Cedar Grove"
+                        },
+                        new
+                        {
+                            Id = 57L,
+                            CountryId = 6L,
+                            StateName = "Codrington"
+                        },
+                        new
+                        {
+                            Id = 58L,
+                            CountryId = 6L,
+                            StateName = "Dickenson Bay"
+                        },
+                        new
+                        {
+                            Id = 59L,
+                            CountryId = 6L,
+                            StateName = "English Harbour"
+                        },
+                        new
+                        {
+                            Id = 60L,
+                            CountryId = 6L,
+                            StateName = "Falmouth"
+                        },
+                        new
+                        {
+                            Id = 61L,
+                            CountryId = 7L,
+                            StateName = "Buenos Aires"
+                        },
+                        new
+                        {
+                            Id = 62L,
+                            CountryId = 7L,
+                            StateName = "Catamarca"
+                        },
+                        new
+                        {
+                            Id = 63L,
+                            CountryId = 7L,
+                            StateName = "Chaco"
+                        },
+                        new
+                        {
+                            Id = 64L,
+                            CountryId = 7L,
+                            StateName = "Chubut"
+                        },
+                        new
+                        {
+                            Id = 65L,
+                            CountryId = 7L,
+                            StateName = "Cordoba"
+                        },
+                        new
+                        {
+                            Id = 66L,
+                            CountryId = 7L,
+                            StateName = "Currents"
+                        },
+                        new
+                        {
+                            Id = 67L,
+                            CountryId = 7L,
+                            StateName = "Between Rivers"
+                        },
+                        new
+                        {
+                            Id = 68L,
+                            CountryId = 7L,
+                            StateName = "Formosa"
+                        },
+                        new
+                        {
+                            Id = 69L,
+                            CountryId = 7L,
+                            StateName = "Jujuy"
+                        },
+                        new
+                        {
+                            Id = 70L,
+                            CountryId = 7L,
+                            StateName = "La Pampa"
+                        },
+                        new
+                        {
+                            Id = 71L,
+                            CountryId = 8L,
+                            StateName = "Aragatsotn"
+                        },
+                        new
+                        {
+                            Id = 72L,
+                            CountryId = 8L,
+                            StateName = "Ararat"
+                        },
+                        new
+                        {
+                            Id = 73L,
+                            CountryId = 8L,
+                            StateName = "Armavir"
+                        },
+                        new
+                        {
+                            Id = 74L,
+                            CountryId = 8L,
+                            StateName = "Gegharkunik"
+                        },
+                        new
+                        {
+                            Id = 75L,
+                            CountryId = 8L,
+                            StateName = "Kotayk"
+                        },
+                        new
+                        {
+                            Id = 76L,
+                            CountryId = 8L,
+                            StateName = "Lori"
+                        },
+                        new
+                        {
+                            Id = 77L,
+                            CountryId = 8L,
+                            StateName = "Shirak"
+                        },
+                        new
+                        {
+                            Id = 78L,
+                            CountryId = 8L,
+                            StateName = "Syunik"
+                        },
+                        new
+                        {
+                            Id = 79L,
+                            CountryId = 8L,
+                            StateName = "Tavush"
+                        },
+                        new
+                        {
+                            Id = 80L,
+                            CountryId = 8L,
+                            StateName = "Vayots Dzor"
+                        },
+                        new
+                        {
+                            Id = 81L,
+                            CountryId = 9L,
+                            StateName = "Sydney"
+                        },
+                        new
+                        {
+                            Id = 82L,
+                            CountryId = 9L,
+                            StateName = "Melbourne"
+                        },
+                        new
+                        {
+                            Id = 83L,
+                            CountryId = 9L,
+                            StateName = "Brisbane"
+                        },
+                        new
+                        {
+                            Id = 84L,
+                            CountryId = 9L,
+                            StateName = "Perth"
+                        },
+                        new
+                        {
+                            Id = 85L,
+                            CountryId = 9L,
+                            StateName = "Adelaide"
+                        },
+                        new
+                        {
+                            Id = 86L,
+                            CountryId = 9L,
+                            StateName = "Gold Coast–Tweed Heads"
+                        },
+                        new
+                        {
+                            Id = 87L,
+                            CountryId = 9L,
+                            StateName = "Newcastle–Maitland"
+                        },
+                        new
+                        {
+                            Id = 88L,
+                            CountryId = 9L,
+                            StateName = "Canberra–Queanbeyan"
+                        },
+                        new
+                        {
+                            Id = 89L,
+                            CountryId = 9L,
+                            StateName = "Sunshine Coast"
+                        },
+                        new
+                        {
+                            Id = 90L,
+                            CountryId = 9L,
+                            StateName = "Wollongong"
+                        },
+                        new
+                        {
+                            Id = 91L,
+                            CountryId = 10L,
+                            StateName = "Vienna"
+                        },
+                        new
+                        {
+                            Id = 92L,
+                            CountryId = 10L,
+                            StateName = "Graz"
+                        },
+                        new
+                        {
+                            Id = 93L,
+                            CountryId = 10L,
+                            StateName = "Linz"
+                        },
+                        new
+                        {
+                            Id = 94L,
+                            CountryId = 10L,
+                            StateName = "Salzburg"
+                        },
+                        new
+                        {
+                            Id = 95L,
+                            CountryId = 10L,
+                            StateName = "Innsbruck"
+                        },
+                        new
+                        {
+                            Id = 96L,
+                            CountryId = 10L,
+                            StateName = "Klagenfurt"
+                        },
+                        new
+                        {
+                            Id = 97L,
+                            CountryId = 10L,
+                            StateName = "Villach"
+                        },
+                        new
+                        {
+                            Id = 98L,
+                            CountryId = 10L,
+                            StateName = "Wels"
+                        },
+                        new
+                        {
+                            Id = 99L,
+                            CountryId = 10L,
+                            StateName = "Sankt Pölten"
+                        },
+                        new
+                        {
+                            Id = 100L,
+                            CountryId = 10L,
+                            StateName = "Dornbirn"
+                        },
+                        new
+                        {
+                            Id = 101L,
+                            CountryId = 11L,
+                            StateName = "Agdash"
+                        },
+                        new
+                        {
+                            Id = 102L,
+                            CountryId = 11L,
+                            StateName = "Agjabadi"
+                        },
+                        new
+                        {
+                            Id = 103L,
+                            CountryId = 11L,
+                            StateName = "Agstafa"
+                        },
+                        new
+                        {
+                            Id = 104L,
+                            CountryId = 11L,
+                            StateName = "Agsu"
+                        },
+                        new
+                        {
+                            Id = 105L,
+                            CountryId = 11L,
+                            StateName = "Astara"
+                        },
+                        new
+                        {
+                            Id = 106L,
+                            CountryId = 11L,
+                            StateName = "Babek"
+                        },
+                        new
+                        {
+                            Id = 107L,
+                            CountryId = 11L,
+                            StateName = "Baku"
+                        },
+                        new
+                        {
+                            Id = 108L,
+                            CountryId = 11L,
+                            StateName = "Balakən"
+                        },
+                        new
+                        {
+                            Id = 109L,
+                            CountryId = 11L,
+                            StateName = "Barda"
+                        },
+                        new
+                        {
+                            Id = 110L,
+                            CountryId = 11L,
+                            StateName = "Beylagan"
+                        },
+                        new
+                        {
+                            Id = 111L,
+                            CountryId = 12L,
+                            StateName = "Nassau"
+                        },
+                        new
+                        {
+                            Id = 112L,
+                            CountryId = 12L,
+                            StateName = "Freeport"
+                        },
+                        new
+                        {
+                            Id = 113L,
+                            CountryId = 12L,
+                            StateName = "West End"
+                        },
+                        new
+                        {
+                            Id = 114L,
+                            CountryId = 12L,
+                            StateName = "Coopers Town"
+                        },
+                        new
+                        {
+                            Id = 115L,
+                            CountryId = 12L,
+                            StateName = "Marsh Harbour"
+                        },
+                        new
+                        {
+                            Id = 116L,
+                            CountryId = 12L,
+                            StateName = "Freetown"
+                        },
+                        new
+                        {
+                            Id = 117L,
+                            CountryId = 12L,
+                            StateName = "Bahamas City"
+                        },
+                        new
+                        {
+                            Id = 118L,
+                            CountryId = 12L,
+                            StateName = "Andros Town"
+                        },
+                        new
+                        {
+                            Id = 119L,
+                            CountryId = 12L,
+                            StateName = "Clarence Town"
+                        },
+                        new
+                        {
+                            Id = 120L,
+                            CountryId = 12L,
+                            StateName = "Dunmore Town"
+                        });
                 });
 
             modelBuilder.Entity("SchoolManagementSystem.Models.Teacher", b =>
@@ -902,8 +1624,7 @@ namespace SchoolManagementSystem.Migrations
 
                     b.Property<long>("TeacherId");
 
-                    b.Property<int>("ZipCode")
-                        .HasMaxLength(6);
+                    b.Property<int>("ZipCode");
 
                     b.HasKey("Id");
 
@@ -926,13 +1647,17 @@ namespace SchoolManagementSystem.Migrations
 
                     b.Property<string>("NameOfInstitution");
 
-                    b.Property<long>("TeacherId");
+                    b.Property<long>("TeacherContactInfoId");
+
+                    b.Property<long?>("TeacherContactInformationId");
 
                     b.Property<string>("YearEnrolled");
 
                     b.Property<string>("YearOfGraduation");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("TeacherContactInformationId");
 
                     b.ToTable("TeacherHighestDegrees");
                 });
@@ -949,13 +1674,15 @@ namespace SchoolManagementSystem.Migrations
 
                     b.Property<string>("NameOfInstitution");
 
-                    b.Property<long>("TeacherId");
+                    b.Property<long>("TeacherHighestDegreeId");
 
                     b.Property<string>("YearOfEnrollement");
 
                     b.Property<string>("YearOfGraduation");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("TeacherHighestDegreeId");
 
                     b.ToTable("TeacherOtherDegrees");
                 });
@@ -1075,6 +1802,21 @@ namespace SchoolManagementSystem.Migrations
                     b.HasOne("SchoolManagementSystem.Models.Teacher", "Teacher")
                         .WithMany()
                         .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("SchoolManagementSystem.Models.TeacherHighestDegree", b =>
+                {
+                    b.HasOne("SchoolManagementSystem.Models.TeacherContactInformation", "TeacherContactInformation")
+                        .WithMany()
+                        .HasForeignKey("TeacherContactInformationId");
+                });
+
+            modelBuilder.Entity("SchoolManagementSystem.Models.TeacherOtherDegree", b =>
+                {
+                    b.HasOne("SchoolManagementSystem.Models.TeacherHighestDegree", "TeacherHighestDegree")
+                        .WithMany()
+                        .HasForeignKey("TeacherHighestDegreeId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

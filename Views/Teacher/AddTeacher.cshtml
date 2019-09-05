@@ -1,5 +1,6 @@
 @model AddTeacherViewModel
 @using SchoolManagementSystem.Enums
+@using System;
 
 @{
     ViewData["Title"] = "Add Teacher";
@@ -46,7 +47,7 @@
                                     <div class="clearfix"></div>
                                     <div class="col-sm-3">
                                         <label asp-for="DateOfBirth"><i class="fa fa-calendar"></i>DATE OF BIRTH</label>
-                                        <input asp-for="DateOfBirth" />
+                                        <input asp-for="DateOfBirth" value = "@DateTime.Now.ToString()"/>
                                         <span asp-validation-for="DateOfBirth" class="text-danger"></span>
                                     </div>
                                     <div class="col-sm-3">
@@ -92,18 +93,17 @@
                                     </div>
                                     <div class="col-sm-3">
                                         <label asp-for="CountryId" class="clear-top-margin"><i class="fa fa-flag"></i>COUNTRY</label>
-                                        <select asp-for="CountryId" asp-items="Model.Countries">
+                                        <select asp-for="CountryId" asp-items="Model.Countries" id="countryId">
                                             <option value="">----- Select a Country -----</option>
                                         </select> 
                                         <span asp-validation-for="CountryId" class="text-danger"></span>
                                     </div>
                                     <div class="col-sm-3">
-                                        <label class="clear-top-margin"><i class="fa fa-id-card"></i>STATE</label>
-                                        <select>
-                                            <option>-- Select --</option>
-                                            <option>British Columbia</option>
-                                            <option>Ontario</option>
+                                        <label class="clear-top-margin" asp-for="StateId"><i class="fa fa-id-card"></i>STATE</label>
+                                        <select disabled asp-for="StateId" asp-items="Model.States" id="stateId">
+                                            <option value="">----- Select a State -----</option>
                                         </select>
+                                        <span asp-validation-for="StateId" class="text-danger"></span>
                                     </div>
                                     <div class="clearfix"></div>
                                     <div class="col-sm-3">
@@ -243,7 +243,7 @@
                                         <input asp-for="OtherCGPA" placeholder="08.65" />
                                         <span asp-validation-for="OtherCGPA" class="text-danger"></span>
                                     </div>
-
+                                    <div asp-validation-summary="All" class="text-danger"></div>
                                     <div class="clearfix"></div> 
                                     <div class="col-sm-12" style="margin-top: 30px;">
                                         <button type="submit" class="btn btn-success"><i class="fa fa-paper-plane"></i> SAVE</button>
@@ -265,3 +265,31 @@
         <p>Copyright New Haven</p>
     </div>
 </div>
+
+@section Scripts
+{
+    <script>
+        $(() => {
+            $('#countryId').on('change', () => {
+                if($('#countryId').val() != 0)
+                {
+                    let url = "/teacher/AjaxGetStates/";
+                    let countryId = $('#countryId').val();
+                    $.getJSON(url, { countryId: countryId }, (data)=> {
+                        var items = "";
+                        $('#stateId').empty();
+                        $('#stateId').removeAttr('disabled');
+                        $.each(data, function(index, name){
+                            items += "<option value='" + name.value + "'>"+ name.text + "</option>";
+                        });
+                        $('#stateId').html(items);
+                    });
+                }
+                else {
+                    $("#stateId").empty();
+                    $("#stateId").prop("disabled", true);
+                }
+            });
+        })
+    </script>
+}

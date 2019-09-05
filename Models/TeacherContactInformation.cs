@@ -11,8 +11,7 @@ namespace SchoolManagementSystem.Models
         public string Address1 { get; set; }
         [StringLength(100)]
         public string Address2 { get; set; }
-        [Required]
-        [StringLength(6)]
+        [Required] 
         public int ZipCode { get; set; }
         [Required]
         [Phone]

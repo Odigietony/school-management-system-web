@@ -14,6 +14,7 @@ namespace SchoolManagementSystem.Data
             modelBuilder.SeedUser();
             modelBuilder.SeedAdmin();
             modelBuilder.SeedCountry();
+            modelBuilder.SeedStates();
         }
 
         public DbSet<Admin> Admins {get; set;}

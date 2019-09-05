@@ -21,11 +21,13 @@ namespace SchoolManagementSystem.Controllers
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly IHostingEnvironment hostingEnvironment;
         private readonly IPasswordGenerator passwordGenerator;
+        private readonly IProcessFileUpload processFileUpload;
         Random random = new Random();
         public AdminController(IEntityRepository<Admin> entityRepository,
-        UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, 
-        IHostingEnvironment hostingEnvironment, IPasswordGenerator passwordGenerator)
+        UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager,
+        IHostingEnvironment hostingEnvironment, IPasswordGenerator passwordGenerator, IProcessFileUpload processFileUpload)
         {
+            this.processFileUpload = processFileUpload;
             this.hostingEnvironment = hostingEnvironment;
             this.roleManager = roleManager;
             this.userManager = userManager;
@@ -51,20 +53,20 @@ namespace SchoolManagementSystem.Controllers
     {
         if (ModelState.IsValid)
         {
-            string uniqueFileName = ProcessFileThenUpload(model); 
+            string uniqueFileName = processFileUpload.UploadImage(model.Image);
             string generatedPassword = passwordGenerator.GeneratePassword(15);
             var role = await roleManager.FindByIdAsync(model.Role.Id);
-            IdentityUser user = new IdentityUser 
-            { 
-                UserName = Username(model), 
-                Email = model.EmailAddress, 
+            IdentityUser user = new IdentityUser
+            {
+                UserName = passwordGenerator.GenerateUsernameFromEmail(model.EmailAddress),
+                Email = model.EmailAddress,
                 PhoneNumber = model.PhoneNumber,
             };
             IdentityResult result = await userManager.CreateAsync(user, generatedPassword);
-            if(result.Succeeded)
+            if (result.Succeeded)
             {
-                IdentityResult roleAddedResult =await userManager.AddToRoleAsync(user, role.Name);
-                if(roleAddedResult.Succeeded)
+                IdentityResult roleAddedResult = await userManager.AddToRoleAsync(user, role.Name);
+                if (roleAddedResult.Succeeded)
                 {
                     Admin admin = new Admin
                     {
@@ -77,10 +79,10 @@ namespace SchoolManagementSystem.Controllers
                     _entityRepository.Save();
                     return RedirectToAction("index");
                 }
-               foreach (var error in roleAddedResult.Errors)
-               {
-                   ModelState.AddModelError(string.Empty, error.Description);
-               }   
+                foreach (var error in roleAddedResult.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
             }
             foreach (var error in result.Errors)
             {
@@ -91,13 +93,13 @@ namespace SchoolManagementSystem.Controllers
     }
 
     [HttpGet]
-    public async  Task<IActionResult> Edit(long Id)
+    public async Task<IActionResult> Edit(long Id)
     {
         var admin = _entityRepository.GetById(Id);
         var adminIdentityUser = await userManager.FindByIdAsync(admin.IdentityUserId);
         admin.IdentityUser = adminIdentityUser;
-        
-        if(admin == null)
+
+        if (admin == null)
         {
             ViewBag.ErrorMessage = $"The Admin with Id = { Id  } could not be found.";
             return View("NotFound");
@@ -108,7 +110,7 @@ namespace SchoolManagementSystem.Controllers
             Firstname = admin.Firstname,
             Lastname = admin.Lastname,
             EmailAddress = admin.IdentityUser.Email,
-            ExistingPhotoPath = admin.ImagePath, 
+            ExistingPhotoPath = admin.ImagePath,
             PhoneNumber = admin.IdentityUser.PhoneNumber,
             Username = admin.IdentityUser.UserName,
         };
@@ -118,40 +120,46 @@ namespace SchoolManagementSystem.Controllers
     [HttpPost]
     public async Task<IActionResult> Edit(EditAdminViewModel model)
     {
-        if(ModelState.IsValid)
+        if (ModelState.IsValid)
         {
             Admin admin = _entityRepository.GetById(model.Id);
             IdentityUser user = await userManager.FindByIdAsync(admin.IdentityUserId);
-            if(admin == null || user == null)
+            if (admin == null || user == null)
             {
                 ViewBag.ErrorMessage = "The Resource couldn't be found";
                 return View("NotFound");
             }
+
             admin.Firstname = model.Firstname;
             admin.Lastname = model.Lastname;
             user.Email = model.EmailAddress;
             user.PhoneNumber = model.PhoneNumber;
-            user.UserName = Username(model);
-            if(model.Image != null)
+            if(user.Email != model.EmailAddress)
             {
-                if(model.ExistingPhotoPath != null)
+                user.UserName = passwordGenerator.GenerateUsernameFromEmail(model.EmailAddress);
+            } 
+            
+            
+            if (model.Image != null)
+            {
+                if (model.ExistingPhotoPath != null)
                 {
                     string filePath = Path.Combine(hostingEnvironment.WebRootPath, "uploads", model.ExistingPhotoPath);
                     System.IO.File.Delete(filePath);
                 }
-                admin.ImagePath = ProcessFileThenUpload(model);
+                admin.ImagePath = processFileUpload.UploadImage(model.Image);
             }
             IdentityResult result = await userManager.UpdateAsync(user);
-            if(result.Succeeded)
+            if (result.Succeeded)
             {
                 _entityRepository.Update(admin);
                 _entityRepository.Save();
                 return RedirectToAction("index");
             }
-            foreach(var error in result.Errors)
+            foreach (var error in result.Errors)
             {
                 ModelState.AddModelError(string.Empty, error.Description);
-            } 
+            }
         }
         return View(model);
     }
@@ -162,20 +170,20 @@ namespace SchoolManagementSystem.Controllers
         Admin admin = _entityRepository.GetById(Id);
         IdentityUser adminUser = await userManager.FindByIdAsync(admin.IdentityUserId);
         admin.IdentityUser = adminUser;
-        if(admin == null)
+        if (admin == null)
         {
             ViewBag.ErrorMessage = $"The admin with Id = { Id } could not be found";
             return View("NotFound");
         }
-        AdminDetailsViewModel model = new AdminDetailsViewModel(); 
-        model.Admin = admin; 
-         foreach(var role in roleManager.Roles)
-         {
-             if(await userManager.IsInRoleAsync(admin.IdentityUser, role.Name))
-             {
+        AdminDetailsViewModel model = new AdminDetailsViewModel();
+        model.Admin = admin;
+        foreach (var role in roleManager.Roles)
+        {
+            if (await userManager.IsInRoleAsync(admin.IdentityUser, role.Name))
+            {
                 model.Roles.Add(role.Name);
-             }
-         }
+            }
+        }
         return View(model);
     }
 
@@ -184,56 +192,33 @@ namespace SchoolManagementSystem.Controllers
     {
         Admin admin = _entityRepository.GetById(Id);
         ViewBag.AdminName = admin.Firstname + " " + admin.Lastname;
-        if(admin == null)
+        if (admin == null)
         {
             ViewBag.ErrorMessage = $"The admin resource with Id = { Id } could not be found";
             return View("NotFound");
         }
         IdentityUser adminUser = await userManager.FindByIdAsync(admin.IdentityUserId);
-        if(adminUser == null)
+        if (adminUser == null)
         {
             ViewBag.ErrorMessage = $"The admin resource with Id = { admin.IdentityUserId } could not be found";
             return View("NotFound");
         }
         _entityRepository.Delete(admin.Id);
         IdentityResult result = await userManager.DeleteAsync(adminUser);
-        if(result.Succeeded)
+        if (result.Succeeded)
         {
             return Json(new { success = true });
         }
         else
         {
-            foreach(var error in result.Errors)
+            foreach (var error in result.Errors)
             {
-                ModelState.AddModelError(string.Empty, error.Description); 
+                ModelState.AddModelError(string.Empty, error.Description);
             }
             return View("index");
-        } 
-    }
-
-    private string ProcessFileThenUpload(CreateAdminViewModel model)
-    {
-        string uniqueFileName = null;
-        if (model.Image != null)
-        {
-            string folderPath = Path.Combine(hostingEnvironment.WebRootPath, "uploads");
-            uniqueFileName = Guid.NewGuid() + "_" + model.Image.FileName;
-            string filePath = Path.Combine(folderPath, uniqueFileName);
-            using(var filestream = new FileStream(filePath, FileMode.Create))
-            {
-                model.Image.CopyTo(filestream);
-            }
         }
-        return uniqueFileName;
-    }
+    } 
 
-    private string Username(CreateAdminViewModel model)
-    {
-        string[] usernameChars = model.EmailAddress.ToString().Split("@");
-        string username = usernameChars[0].ToString();
-        return username + random.Next(1000, 9999);
-    }
 
-    
 }
 }

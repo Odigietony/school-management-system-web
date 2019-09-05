@@ -10,6 +10,7 @@ namespace SchoolManagementSystem.Models
         public double CGPA { get; set; }
 
         //Foreign Key
-        public long TeacherId { get; set; }
+        public long TeacherHighestDegreeId { get; set; }
+        public TeacherHighestDegree TeacherHighestDegree { get; set; }
     }
 }
