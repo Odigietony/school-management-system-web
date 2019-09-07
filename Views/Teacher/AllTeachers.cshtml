@@ -34,7 +34,7 @@
                         <h6 class="item-title"><i class="fa fa-user"></i>TEACHERS</h6>
                         <div class="inner-item">
                             <div class="chart">
-		                        <a class="save btn btn-success" style="width:auto;" asp-action="create" asp-controller="teacher">
+		                        <a class="save btn btn-success" style="width:auto;" asp-action="addteacher" asp-controller="teacher">
                                     <i class="fa fa-plus"> </i>
                                     <span><strong>  ADD NEW TEACHER </strong></span>
                                 </a>
@@ -49,9 +49,9 @@
                                         <th><i class="fa fa-id-card"></i>LAST NAME</th>
                                         <th><i class="fa fa-user"></i>USERNAME</th>
                                         <th><i class="fa fa-envelope"></i>EMAIL ADDRESS</th>
-                                        <th><i class="fa fa-id-phone"></i>PHONE NUMBER</th>
-                                        <th><i class="fa fa-user"></i>GENDER</th>
-                                        <th><i class="fa fa-envelope"></i>CONTACT ADDRESS</th>
+                                        <th><i class="fa fa-phone-square"></i>PHONE NUMBER</th>
+                                        <th><i class="fa fa-venus"></i>GENDER</th>
+                                        <th><i class="fa fa-home"></i>CONTACT ADDRESS</th>
                                         <th><i class="fa fa-photo"></i>IMAGE</th>
                                         
                                         <th><i class="fa fa-tasks"></i>ACTION</th>
@@ -62,7 +62,7 @@
                                     {
 										var photoPath = "~/uploads/" + (teacher.Teacher.ProfilePhotoPath ?? "default-user.png");
                                         <tr>
-                                            <td>@teacher.Id</td>
+                                            <td>@teacher.Teacher.Id</td>
                                             <td>@teacher.Teacher.Firstname</td>
                                             <td>@teacher.Teacher.Middlename</td>
                                             <td>@teacher.Teacher.Lastname</td>
@@ -72,16 +72,17 @@
                                             <td>@teacher.Teacher.Gender</td>
                                             <td>@teacher.Address1</td>
                                             <td><img class="Thumbnail" src="@photoPath" alt="teacher image"  asp-append-version="true" /></td> 
+
                                             <td class="action-link">
-                                                <a asp-controller="teacher" asp-action="edit" asp-route-Id="@teacher.Id" class="edit"
-                                                    title="Edit"  >
+                                                <a asp-controller="teacher" asp-action="editteacherdata" asp-route-Id="@teacher.Teacher.Id" class="edit" title="Edit Teacher Data"  >
                                                     <i class="fa fa-edit"></i>
                                                  </a>
-                                                <a class="delete" href="javascript:void(0)" title="Delete" 
-                                                data-toggle="modal" data-target="#deleteDetailModal_@teacher.Id">
-                                                <i class="fa fa-remove"></i></a>
 
-                                                <a asp-controller="teacher" asp-action="details" asp-route-Id="@teacher.Id" class="details" title="Details"  >
+                                                <a class="delete" href="javascript:void(0)" title="Delete Teacher" data-toggle="modal" data-target="#deleteDetailModal_@teacher.Id">
+                                                    <i class="fa fa-remove"></i>
+                                                </a>
+
+                                                <a asp-controller="teacher" asp-action="details" asp-route-Id="@teacher.Id" class="details" title="teacher Details"  >
                                                     <i class="fa fa fa-vcard"></i>
                                                  </a>
                                             </td>

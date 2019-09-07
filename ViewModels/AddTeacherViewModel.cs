@@ -64,7 +64,6 @@ namespace SchoolManagementSystem.ViewModels
         public long CountryId { get; set; }
 
         [Required(ErrorMessage = "The State field is required")]
-
         public long StateId { get; set; }
 
         [Required]

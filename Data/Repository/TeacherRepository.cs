@@ -38,6 +38,22 @@ namespace SchoolManagementSystem.Data.Repository
             return context.Teachers.Find(Id);
         }
 
+        public TeacherContactInformation GetTeacherContactInfoById(long Id)
+        {
+            var contactInfo = context.TeacherContactInformations.FirstOrDefault(t => t.TeacherId == Id);
+            return contactInfo;
+        }
+
+        public TeacherHighestDegree GetTeacherHighestDegree(long Id)
+        {
+            return context.TeacherHighestDegrees.FirstOrDefault(h => h.TeacherContactInfoId == Id);
+        }
+
+        public TeacherOtherDegree GetTeacherOtherDegree(long Id)
+        {
+            return context.TeacherOtherDegrees.FirstOrDefault(o => o.TeacherHighestDegreeId == Id);
+        }
+
         public TeacherHighestDegree InsertAndSaveHighestDegree(TeacherHighestDegree highestDegree)
         {
             context.TeacherHighestDegrees.Add(highestDegree);

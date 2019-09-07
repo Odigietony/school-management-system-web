@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SchoolManagementSystem.Models;
@@ -15,8 +16,7 @@ namespace SchoolManagementSystem.Data
             modelBuilder.SeedAdmin();
             modelBuilder.SeedCountry();
             modelBuilder.SeedStates();
-        }
-
+        } 
         public DbSet<Admin> Admins {get; set;}
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<Country> Countries { get; set; }

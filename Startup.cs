@@ -39,6 +39,7 @@ namespace SchoolManagementSystem
             services.AddTransient<ICountryRepository, CountryRepository>();
             services.AddScoped<IPasswordGenerator, PasswordGenerator>();
             services.AddScoped<IProcessFileUpload, ProcessUploadFile>();
+            services.AddTransient<IStateRepository, StateRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

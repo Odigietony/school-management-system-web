@@ -33,5 +33,14 @@ namespace SchoolManagementSystem.Data.Repository
 
         // Get all Teacher related data
         IEnumerable<TeacherContactInformation> GetAllTeacherData();
+
+        // Get Teacher contact information
+        TeacherContactInformation GetTeacherContactInfoById(long Id);
+
+        // Get the highest degree of a teacher
+        TeacherHighestDegree GetTeacherHighestDegree(long Id);
+
+        // Get the other degree of a teacher
+        TeacherOtherDegree GetTeacherOtherDegree(long Id);
     }
 }
