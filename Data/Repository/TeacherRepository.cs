@@ -44,12 +44,12 @@ namespace SchoolManagementSystem.Data.Repository
             return contactInfo;
         }
 
-        public TeacherHighestDegree GetTeacherHighestDegree(long Id)
+        public TeacherHighestDegree GetTeacherHighestDegreeById(long Id)
         {
             return context.TeacherHighestDegrees.FirstOrDefault(h => h.TeacherContactInfoId == Id);
         }
 
-        public TeacherOtherDegree GetTeacherOtherDegree(long Id)
+        public TeacherOtherDegree GetTeacherOtherDegreeById(long Id)
         {
             return context.TeacherOtherDegrees.FirstOrDefault(o => o.TeacherHighestDegreeId == Id);
         }
@@ -92,11 +92,33 @@ namespace SchoolManagementSystem.Data.Repository
             context.SaveChanges();
         }
 
+        public void UpdateTeacherContactData(TeacherContactInformation contactInformation)
+        {
+            context.TeacherContactInformations.Attach(contactInformation);
+            context.Entry(contactInformation).State = EntityState.Modified; 
+            context.SaveChanges();
+        }
+
         public Teacher UpdateTeacherData(Teacher teacher)
         {
             context.Teachers.Attach(teacher);
             context.Entry(teacher).State = EntityState.Modified;
+            context.SaveChanges();
             return teacher;
+        }
+
+        public void UpdateTeacherHighestDegreeData(TeacherHighestDegree highestDegree)
+        {
+            context.TeacherHighestDegrees.Attach(highestDegree);
+            context.Entry(highestDegree).State = EntityState.Modified;
+            context.SaveChanges();
+        }
+
+        public void UpdateTeacherOtherDegreeData(TeacherOtherDegree otherDegree)
+        {
+            context.TeacherOtherDegrees.Attach(otherDegree);
+            context.Entry(otherDegree).State = EntityState.Modified;
+            context.SaveChanges();
         }
     }
 }

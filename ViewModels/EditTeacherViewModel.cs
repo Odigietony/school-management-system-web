@@ -6,5 +6,6 @@ namespace SchoolManagementSystem.ViewModels
     {
         public long Id { get; set; }
         public IdentityUser IdentityUser { get; set; }
+        public string ExistingPhotoPath { get; internal set; }
     }
 }

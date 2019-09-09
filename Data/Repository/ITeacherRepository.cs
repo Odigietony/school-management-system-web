@@ -38,9 +38,18 @@ namespace SchoolManagementSystem.Data.Repository
         TeacherContactInformation GetTeacherContactInfoById(long Id);
 
         // Get the highest degree of a teacher
-        TeacherHighestDegree GetTeacherHighestDegree(long Id);
+        TeacherHighestDegree GetTeacherHighestDegreeById(long Id);
 
         // Get the other degree of a teacher
-        TeacherOtherDegree GetTeacherOtherDegree(long Id);
+        TeacherOtherDegree GetTeacherOtherDegreeById(long Id);
+
+        // Update Teacher contact information
+        void UpdateTeacherContactData(TeacherContactInformation contactInformation);
+
+        // Update Teacher Highest degree information
+        void UpdateTeacherHighestDegreeData(TeacherHighestDegree highestDegree);
+
+        // Update teacher other degree information
+        void UpdateTeacherOtherDegreeData(TeacherOtherDegree otherDegree);
     }
 }
