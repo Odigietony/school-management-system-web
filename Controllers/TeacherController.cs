@@ -274,7 +274,29 @@ namespace SchoolManagementSystem.Controllers
         return View(model);
     }
 
-
+    [HttpGet]
+    public async Task<IActionResult> TeacherDetails(long Id)
+    {
+        Teacher teacher = _teacherRepository.GetTeacherById(Id);
+        IdentityUser user = await userManager.FindByIdAsync(teacher.IdentityUserId);
+        teacher.IdentityUser = user;
+        if(teacher == null)
+        {
+            ViewBag.ErrorMessage = $"The Teacher with Id = { Id } could not be found.";
+            return View("NotFound");
+        }
+        var contactInformation = _teacherRepository.GetTeacherContactInfoById(teacher.Id);
+        var highestDegree = _teacherRepository.GetTeacherHighestDegreeById(contactInformation.Id);
+        var otherDegree = _teacherRepository.GetTeacherOtherDegreeById(highestDegree.Id);
+        TeacherDetailsViewModel model = new TeacherDetailsViewModel
+        {
+            Teacher = teacher,
+            TeacherContactInformation = contactInformation,
+            TeacherHighestDegree = highestDegree,
+            TeacherOtherDegree = otherDegree
+        };
+        return View(model); 
+    }
 
     public JsonResult AjaxGetStates(long countryId)
     {
