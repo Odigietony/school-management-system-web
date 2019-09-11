@@ -116,3 +116,22 @@ function ConfirmAdminDelete(uniqueId)
         }
     });
 }
+
+function DeleteData(uniqueId)
+{
+    url = $('#deleteForm').attr('action'); 
+    $.ajax({
+        type: "POST",
+        url: url + "/"+ uniqueId,
+        data: {'Id': uniqueId},
+        success: function(result)
+        {
+            if(result.success == true)
+            {
+                setTimeout(function(){
+                    location.reload();
+                }, 500);
+            }
+        }
+    });
+}

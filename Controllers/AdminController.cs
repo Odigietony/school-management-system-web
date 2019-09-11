@@ -190,8 +190,7 @@ namespace SchoolManagementSystem.Controllers
     [HttpPost]
     public async Task<IActionResult> Delete(long Id)
     {
-        Admin admin = _entityRepository.GetById(Id);
-        ViewBag.AdminName = admin.Firstname + " " + admin.Lastname;
+        Admin admin = _entityRepository.GetById(Id); 
         if (admin == null)
         {
             ViewBag.ErrorMessage = $"The admin resource with Id = { Id } could not be found";
@@ -202,11 +201,16 @@ namespace SchoolManagementSystem.Controllers
         {
             ViewBag.ErrorMessage = $"The admin resource with Id = { admin.IdentityUserId } could not be found";
             return View("NotFound");
-        }
-        _entityRepository.Delete(admin.Id);
+        } 
         IdentityResult result = await userManager.DeleteAsync(adminUser);
         if (result.Succeeded)
         {
+            if(admin.ImagePath != null)
+            {
+                string filePath = Path.Combine(hostingEnvironment.WebRootPath, "uploads", admin.ImagePath);
+                System.IO.File.Delete(filePath);
+            }
+            _entityRepository.Delete(admin.Id);
             return Json(new { success = true });
         }
         else

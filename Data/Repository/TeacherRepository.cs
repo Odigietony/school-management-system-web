@@ -14,12 +14,10 @@ namespace SchoolManagementSystem.Data.Repository
             this.context = context;
         }
 
-        public Teacher DeleteTeacher(long Id)
+        public void DeleteTeacher(Teacher teacher)
         {
-            Teacher teacher = context.Teachers.FirstOrDefault(t => t.Id == Id);
             context.Remove(teacher);
-            context.SaveChanges();
-            return teacher;
+            context.SaveChanges(); 
         }
 
         public IEnumerable<TeacherContactInformation> GetAllTeacherData()

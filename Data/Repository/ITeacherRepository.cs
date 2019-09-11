@@ -13,7 +13,7 @@ namespace SchoolManagementSystem.Data.Repository
         //Edit teacher data
         Teacher UpdateTeacherData(Teacher teacher);
         //Delete teacher data
-        Teacher DeleteTeacher(long Id);
+        void DeleteTeacher(Teacher teacher);
 
         //Get all teachers
         IQueryable<Teacher> GetAllTeachers();

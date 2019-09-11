@@ -303,6 +303,37 @@ namespace SchoolManagementSystem.Controllers
         return View(model); 
     }
 
+    [HttpPost]
+    public async Task<IActionResult> DeleteTeacherData(long Id)
+    {
+        Teacher teacher = _teacherRepository.GetTeacherById(Id);
+        if(teacher == null)
+        {
+            ViewBag.ErrorMessage = $"The Teacher with ID = { Id } could not be found.";
+            return View("NotFound");
+        }
+        IdentityUser user = await userManager.FindByIdAsync(teacher.IdentityUserId);
+        IdentityResult result = await userManager.DeleteAsync(user);
+        if(result.Succeeded)
+        {
+            if(teacher.ProfilePhotoPath != null)
+            {
+                string filePath = Path.Combine(hostingEnvironment.WebRootPath, "uploads", teacher.ProfilePhotoPath);
+                System.IO.File.Delete(filePath);
+            }
+            _teacherRepository.DeleteTeacher(teacher);
+            return Json(new {success = true });
+        }
+        else
+        {
+            foreach(var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+            return View("allteachers");
+        }
+    }
+
     public JsonResult AjaxGetStates(long countryId)
     {
         List<State> states = new List<State>(countryRepository.GetRelatedStates(countryId));
