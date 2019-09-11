@@ -50,5 +50,10 @@ namespace SchoolManagementSystem.Data.Repository
             context.Attach(country);
             context.Entry(country).State = EntityState.Modified;
         }
+
+        public Country GetCountryById(long countryId)
+        {
+            return context.Countries.FirstOrDefault(c => c.Id == countryId);
+        }
     }
 }

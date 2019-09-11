@@ -8,5 +8,6 @@ namespace SchoolManagementSystem.ViewModels
         public TeacherContactInformation TeacherContactInformation { get; set; }
         public TeacherHighestDegree TeacherHighestDegree { get; set; }
         public TeacherOtherDegree TeacherOtherDegree { get; set; }
+        public string State { get; set; }
     }
 }

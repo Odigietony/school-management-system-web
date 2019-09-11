@@ -12,5 +12,6 @@ namespace SchoolManagementSystem.Data.Repository
         void SaveCountry();
         ICollection<State> GetRelatedStates(long Id);
         ICollection<Country> GetAllCountries();
+        Country GetCountryById(long countryId);
     }
 }

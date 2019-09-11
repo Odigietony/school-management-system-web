@@ -91,17 +91,135 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-4">
-                <div>
+            <div class="col-sm-4"> 
                     <div class="my-msg dash-item">
-                        <h6 class="item-title"><i class="fa fa-tags"></i>ADMIN ROLES</h6>
+                        <h6 class="item-title"><i class="fa fa-home"></i>CONTACT INFORMATION</h6>
                         <div class="inner-item">
-                            
+                            <div class="profile-intro">
+                            <div class="col-xs-4 col-sm-12 col-md-4 clear-padding">
+                                <!-- <img src="@photoPath" alt="user" asp-append-version="true"/> --> 
+                                <i class="fa fa-home" style="font-size:100px"></i>
+                            </div>
+                            <div class="col-xs-8 col-sm-12 col-md-8">
+                                <h5>@Model.TeacherContactInformation.Address1</h5>
+                                <strong><h6>Zip Code#: @Model.TeacherContactInformation.ZipCode</h6></strong>
+                                <h6>Home Phone: @Model.TeacherContactInformation.HomePhone</h6>
+                                <h6>Alternate Email: @Model.TeacherContactInformation.AlternateEmailAddress</h6> 
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="profile-details">
+                            <div class="detail-row">
+                                <div class="col-md-6 col-sm-12 col-xs-6 clear-padding">
+                                    <strong><span>NEXT OF KIN FIRST NAME</span></strong>
+                                    <p>@Model.TeacherContactInformation.NextOfKinFirstname</p>
+                                </div>
+                                <div class="col-md-6 col-sm-12 col-xs-6 clear-padding">
+                                    <strong><span>NEXT OF KIN LAST NAME </span></strong>
+                                    <p>@Model.TeacherContactInformation.NextOfKinLastname</p>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+
+                            <div class="clearfix"></div>
+
+                            <div class="detail-row">
+                                <div class="col-md-6 col-sm-12 col-xs-6 clear-padding">
+                                    <strong><span>RELATION TO NEXT OF KIN</span></strong>
+                                    <p>@Model.TeacherContactInformation.RelationToNextOfKin</p>
+                                </div>
+                                <div class="col-md-6 col-sm-12 col-xs-6 clear-padding">
+                                    <strong><span>NEXT OF KIN PHONE NUMBER </span></strong>
+                                    <p>@Model.TeacherContactInformation.PhoneOfNextOfKin</p>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+
+                            <div class="clearfix"></div>
+
+
+                            <div class="detail-row">
+                                <div class="col-md-6 col-sm-12 col-xs-6 clear-padding">
+                                    <strong><span>NEXT OF KIN EMAIL</span></strong>
+                                    <p>@Model.TeacherContactInformation.EmailOfNextOfKin</p>
+                                </div>
+                                <div class="col-md-6 col-sm-12 col-xs-6 clear-padding">
+                                    <strong><span>COUNTRY </span></strong>
+                                    <p>@Model.TeacherContactInformation.Country.CountryName</p>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+
+                            <div class="clearfix"></div>
+
+                            <div class="detail-row">
+                                <div class="col-md-6 col-sm-12 col-xs-6 clear-padding">
+                                    <strong><span>STATE </span></strong>
+                                    <p>@Model.State</p>
+                                </div>
+                                <div class="col-md-6 col-sm-12 col-xs-6 clear-padding">
+                                    <strong><span>DATE OF BIRTH </span></strong>
+                                    <p>@dob.ToString("D") </p>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
                                 
                         </div>
                     </div>
                 </div>
-            </div> 
+              
+
+            <!-- Higher Education -->
+             <div class="col-sm-4"> 
+                    <div class="my-msg dash-item">
+                        <h6 class="item-title"><i class="fa fa-mortar-board"></i>HIGHER EDUCATION INFORMATION</h6>
+                        <div class="inner-item">
+                            <div class="profile-intro">
+                                <div class="col-xs-4 col-sm-12 col-md-4 clear-padding">
+                                    <!-- <img src="@photoPath" alt="user" asp-append-version="true"/> --> 
+                                    <i class="fa fa-graduation-cap" style="font-size:100px"></i>
+                                </div>
+                                <div class="col-xs-8 col-sm-12 col-md-8">
+                                    <h5>@Model.TeacherHighestDegree.DegreeAttained</h5>
+                                    <strong><h6>CGPA#: @Model.TeacherHighestDegree.CGPA</h6></strong>
+                                    <h6>Name of Institution: @Model.TeacherHighestDegree.NameOfInstitution</h6>
+                                    <h6>From:  @Convert.ToDateTime(Model.TeacherHighestDegree.YearEnrolled).ToString("D") </h6>
+                                    <h6>To:  @Convert.ToDateTime(Model.TeacherHighestDegree.YearOfGraduation).ToString("D")</h6> 
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                                <div class="profile-details"> 
+                                <!-- Other Degrees -->
+                
+                                    <div class="my-msg dash-item">
+                                        <h6 class="item-title"><i class="fa fa-mortar-board"></i>OTHER DEGREES</h6>
+                                        <div class="inner-item">
+                                            <div class="profile-intro">
+                                                <div class="col-xs-4 col-sm-12 col-md-4 clear-padding">
+                                                    <!-- <img src="@photoPath" alt="user" asp-append-version="true"/> --> 
+                                                    <i class="fa fa-graduation-cap" style="font-size:100px"></i>
+                                                </div>
+                                                <div class="col-xs-8 col-sm-12 col-md-8">
+                                                    <h5>@Model.TeacherOtherDegree.DegreeAttained</h5>
+                                                    <strong><h6>CGPA#: @Model.TeacherOtherDegree.CGPA</h6></strong>
+                                                    <h6>Name of Institution: @Model.TeacherOtherDegree.NameOfInstitution</h6>
+                                                    <h6>From:  @Convert.ToDateTime(Model.TeacherOtherDegree.YearOfEnrollement).ToString("D") </h6>
+                                                    <h6>To:  @Convert.ToDateTime(Model.TeacherOtherDegree.YearOfGraduation).ToString("D")</h6>  
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>    
+                                            </div>
+                                        </div> 
+                                <!-- Other Degrees -->
+                                     
+                                </div>     
+                            </div>
+                    </div>
+             </div> 
+            <!-- End Higher  Education -->
+
+            
         </div>
     </div>
 

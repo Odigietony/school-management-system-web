@@ -285,15 +285,20 @@ namespace SchoolManagementSystem.Controllers
             ViewBag.ErrorMessage = $"The Teacher with Id = { Id } could not be found.";
             return View("NotFound");
         }
+        
         var contactInformation = _teacherRepository.GetTeacherContactInfoById(teacher.Id);
         var highestDegree = _teacherRepository.GetTeacherHighestDegreeById(contactInformation.Id);
         var otherDegree = _teacherRepository.GetTeacherOtherDegreeById(highestDegree.Id);
+        Country country = countryRepository.GetCountryById(contactInformation.CountryId);
+        State state = stateRepository.GetRelatedCountry(contactInformation.CountryId);
+        contactInformation.Country = country;
         TeacherDetailsViewModel model = new TeacherDetailsViewModel
         {
             Teacher = teacher,
             TeacherContactInformation = contactInformation,
             TeacherHighestDegree = highestDegree,
-            TeacherOtherDegree = otherDegree
+            TeacherOtherDegree = otherDegree,
+            State = state.StateName
         };
         return View(model); 
     }
