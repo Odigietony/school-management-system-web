@@ -1,0 +1,120 @@
+@model AllFacultiesViewModel
+@{
+    ViewData["Title"] = "AllFaculties";
+}
+
+<div class="main-content" id="content-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 clear-padding-xs">
+                <h5 class="page-title"><i class="fa fa-institution"></i>ALL FACULTIES</h5>
+                <div class="section-divider"></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12 clear-padding-xs">
+                <!-- Add Faculty -->
+                <div class="col-sm-4">
+                    <partial name="AddFaculty"  > 
+                </div>
+                <!-- Add Faculty -->
+
+                <!-- All Faculties -->
+                <div class="col-sm-8">
+                    <div class="dash-item first-dash-item">
+                        <h6 class="item-title"><i class="fa fa-institution"></i>ALL FACULTIES</h6>
+                        <div class="inner-item">
+                            <table id="attendenceDetailedTable" class="display responsive nowrap" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th><i class="fa fa-hashtag"></i>ID</th>
+                                        <th><i class="fa fa-barcode"></i>FACULTY CODE</th>
+                                        <th><i class="fa fa-institution"></i>FACULTY NAME</th> 
+                                        <th><i class="fa fa-briefcase"></i>ACTION</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if(Model.Faculty.Any())
+                                    {
+                                        foreach(var faculty in Model.Faculty)
+                                        {
+                                            <tr>
+                                                <td>@faculty.Id</td>
+                                                <td>@faculty.FacultyCode</td>
+                                                <td>@faculty.FacultyName</td>
+                                                <td class="action-link">
+                                                    <a class="edit" href="javascript:void(0)" onclick="GetFacultyDataById('@faculty.Id')" title="Edit Faculty Data"><i class="fa fa-edit"></i></a>
+                                                    <a class="delete" href="#" title="Delete" data-toggle="modal" data-target="#deleteDetailModal"><i class="fa fa-remove"></i></a>
+                                                </td>
+                                            </tr>  
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <td colspan="4"><h4 class="text-center"><b>No Faculty Data to Display</b></h4></td>
+                                        </tr>
+                                    } 
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="menu-togggle-btn">
+        <a href="#menu-toggle" id="menu-toggle"><i class="fa fa-bars"></i></a>
+    </div>
+     
+    
+    <!-- Delete Modal -->
+    <div id="deleteDetailModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"><i class="fa fa-trash"></i>DELETE SECTION</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="table-action-box">
+                        <a href="#" class="save"><i class="fa fa-check"></i>YES</a>
+                        <a href="#" class="cancel" data-dismiss="modal"><i class="fa fa-ban"></i>CLOSE</a>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!--Edit faculty modal-->     
+            <div id="editFacultyData" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title"><i class="fa fa-edit"></i>EDIT FACULTY DATA</h4>
+                        </div>
+                        <div class="modal-body dash-form">
+                            
+                        </div>
+                        <div class="modal-footer">
+                            <div class="table-action-box">
+                                <a type="button" class="btn btn-success" onclick="EditData()"><i class="fa fa-check"></i>SAVE</a>
+                                <a href="#" class="cancel" data-dismiss="modal"><i class="fa fa-ban"></i>CLOSE</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+    <!-- Edit Faculty modal	-->
+</div>
+
+@section Scripts
+{
+    <script src="~/dashboard/assets/js/Custom.js"></script> 
+}
+ 

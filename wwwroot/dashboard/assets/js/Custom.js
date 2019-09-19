@@ -135,3 +135,37 @@ function DeleteData(uniqueId)
         }
     });
 }
+
+function GetFacultyDataById(Id)
+{
+    url = '/faculty/editfacultydata/';
+    let $modal = $('#editFacultyData')
+    $modal.find('.modal-body').load(url + Id, function(){
+        $modal.modal('show');
+    }); 
+}
+
+function EditData()
+{
+    let id = $('#facultyId').val();
+    url = '/faculty/editfacultydata/';  
+    let model = $('#editForm').serializeArray(); 
+    // model.push({name: 'Id', value: id}); 
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: $.param(model),
+        success: function(result)
+        {
+            if(result.success == true)
+            {
+                setTimeout(function(){
+                    location.reload();
+                }, 500);
+            }
+            else{
+                $('.modal-body').html(result); 
+            }
+        }
+    });
+}

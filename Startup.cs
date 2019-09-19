@@ -35,6 +35,7 @@ namespace SchoolManagementSystem
             services.AddIdentity<IdentityUser, IdentityRole>()
             .AddEntityFrameworkStores<AppDbContext>();
             services.AddTransient<IEntityRepository<Admin>, EntityRepository<Admin>>();
+            services.AddTransient<IEntityRepository<Faculty>, EntityRepository<Faculty>>();
             services.AddTransient<ITeacherRepository, TeacherRepository>();
             services.AddTransient<ICountryRepository, CountryRepository>();
             services.AddScoped<IPasswordGenerator, PasswordGenerator>();

@@ -26,7 +26,7 @@ namespace SchoolManagementSystem.Data
         public DbSet<Country> Countries { get; set; }
         public DbSet<Referee> Referees { get; set; }
         public DbSet<State> States { get; set; }
-        public DbSet<StudentCourse> StudentCourses { get; set;}
+        // public DbSet<StudentCourse> StudentCourses { get; set;}
         public DbSet<TeacherCertificate> TeacherCertificates { get; set; }
         public DbSet<TeacherContactInformation> TeacherContactInformations { get; set; }
         public DbSet<TeacherHighestDegree> TeacherHighestDegrees { get; set; }

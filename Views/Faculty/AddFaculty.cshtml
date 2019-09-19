@@ -1,0 +1,29 @@
+@model AddFacultyViewModel
+
+@{
+    ViewBag.Title = "Add Faculty";
+}
+
+<div class="dash-item first-dash-item">
+        <h6 class="item-title"><i class="fa fa-plus-circle"></i>ADD FACULTY</h6>
+        <form asp-action="addfaculty" asp-controller="faculty" method="post">
+            <div class="inner-item">
+            <div class="dash-form">
+                <label class="clear-top-margin" asp-for="FacultyCode"><i class="fa fa-barcode"></i>FACULTY CODE</label>
+                <input asp-for="FacultyCode" placeholder="04" />
+                <span class="text-danger" asp-validation-for="FacultyCode"></span>
+                
+                <label asp-for="FacultyName"><i class="fa fa-institution"></i>FACULTY NAME</label>
+                <input asp-for="FacultyName" placeholder="Faculty of Science and Tech" />
+                <span class="text-danger" asp-validation-for="FacultyName"></span>
+               
+                <div style="margin-top:20px;">
+                    <button type="submit" class="btn btn-success"><i class="fa fa-paper-plane"></i> CREATE</button>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        </form>
+     <div class="clearfix"></div>
+ </div>
+ 

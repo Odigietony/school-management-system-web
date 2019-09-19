@@ -118,7 +118,7 @@ namespace SchoolManagementSystem.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "4475e8be-7a6a-4d70-ade3-d3afc69c5faf",
+                            ConcurrencyStamp = "2ff06f86-1731-44a1-8218-eb0604d9c93f",
                             Email = "superadmin@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
@@ -126,7 +126,7 @@ namespace SchoolManagementSystem.Migrations
                             NormalizedUserName = "SUPERADMIN",
                             PasswordHash = "SuperAdmin",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "2f261e83-79e4-4d2f-be75-0175a1d8919b",
+                            SecurityStamp = "808b68c2-6962-40e1-9a3c-8b0f5618a1f4",
                             TwoFactorEnabled = false,
                             UserName = "SuperAdmin"
                         });
@@ -745,6 +745,78 @@ namespace SchoolManagementSystem.Migrations
                             Id = 100L,
                             CountryName = "Oman"
                         });
+                });
+
+            modelBuilder.Entity("SchoolManagementSystem.Models.Course", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CourseCode");
+
+                    b.Property<string>("CourseName");
+
+                    b.Property<long>("CourseYearId");
+
+                    b.Property<long>("DepartmentId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseYearId");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.ToTable("Courses");
+                });
+
+            modelBuilder.Entity("SchoolManagementSystem.Models.CourseYear", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("YearNumberRepresentation");
+
+                    b.Property<string>("YearTitle");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CourseYears");
+                });
+
+            modelBuilder.Entity("SchoolManagementSystem.Models.Department", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("DepartmentCode");
+
+                    b.Property<string>("DepartmentName");
+
+                    b.Property<long>("FacultyId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FacultyId");
+
+                    b.ToTable("Departments");
+                });
+
+            modelBuilder.Entity("SchoolManagementSystem.Models.Faculty", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("FacultyCode");
+
+                    b.Property<string>("FacultyName");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Faculties");
                 });
 
             modelBuilder.Entity("SchoolManagementSystem.Models.Referee", b =>
@@ -1530,6 +1602,8 @@ namespace SchoolManagementSystem.Migrations
                     b.Property<string>("DateOfBirth")
                         .IsRequired();
 
+                    b.Property<long>("DepartmentId");
+
                     b.Property<string>("EmailAddress")
                         .IsRequired();
 
@@ -1557,6 +1631,8 @@ namespace SchoolManagementSystem.Migrations
                     b.Property<int>("Religion");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DepartmentId");
 
                     b.HasIndex("IdentityUserId");
 
@@ -1770,6 +1846,27 @@ namespace SchoolManagementSystem.Migrations
                         .HasForeignKey("IdentityUserId");
                 });
 
+            modelBuilder.Entity("SchoolManagementSystem.Models.Course", b =>
+                {
+                    b.HasOne("SchoolManagementSystem.Models.CourseYear", "CourseYear")
+                        .WithMany()
+                        .HasForeignKey("CourseYearId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("SchoolManagementSystem.Models.Department", "Department")
+                        .WithMany()
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("SchoolManagementSystem.Models.Department", b =>
+                {
+                    b.HasOne("SchoolManagementSystem.Models.Faculty", "Faculty")
+                        .WithMany()
+                        .HasForeignKey("FacultyId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("SchoolManagementSystem.Models.State", b =>
                 {
                     b.HasOne("SchoolManagementSystem.Models.Country", "Country")
@@ -1780,6 +1877,11 @@ namespace SchoolManagementSystem.Migrations
 
             modelBuilder.Entity("SchoolManagementSystem.Models.Teacher", b =>
                 {
+                    b.HasOne("SchoolManagementSystem.Models.Department", "Department")
+                        .WithMany()
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
                         .WithMany()
                         .HasForeignKey("IdentityUserId");
