@@ -6,7 +6,6 @@ namespace SchoolManagementSystem.Models
 {
     public class Teacher
     {
-        
         public long Id { get; set; }
         [Required]
         [StringLength(20)]
@@ -34,5 +33,8 @@ namespace SchoolManagementSystem.Models
         //Foreign Key
         public string IdentityUserId { get; set; }
         public IdentityUser IdentityUser { get; set; }
+
+        public long DepartmentId { get; set; }
+        public Department Department { get; set; }
     }
 }
