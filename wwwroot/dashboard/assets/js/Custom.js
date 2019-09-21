@@ -172,3 +172,39 @@ function EditData()
         }
     });
 }
+
+function UpdateData(Id)
+{
+    let url = $('#editForm').attr('action');
+    let $modal = $('#editdepartmentData')
+    $modal.find('.modal-body').load(url +"/"+ Id, function(){
+        $modal.modal('show');
+    }); 
+}
+
+function UpdatePostData()
+{
+    let id = $('#departmentId').val();
+    url =  $('#editForm').attr('action');  
+    let model = $('#editForm').serializeArray(); 
+    model.push({name: 'Id', value: id});  
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: model,
+        success: function(result)
+        {
+            if(result.success == true)
+            {
+                setTimeout(function(){
+                    location.reload();
+                }, 500);
+            } 
+            else
+            {
+                $('#editForm').html(result); 
+            }
+            
+        }
+    });
+}

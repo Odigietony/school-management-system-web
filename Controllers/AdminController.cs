@@ -211,6 +211,7 @@ namespace SchoolManagementSystem.Controllers
                 System.IO.File.Delete(filePath);
             }
             _entityRepository.Delete(admin.Id);
+            _entityRepository.Save();
             return Json(new { success = true });
         }
         else

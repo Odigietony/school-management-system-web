@@ -1,0 +1,22 @@
+ @model UpdateDepartmentViewModel
+<form asp-action="updatedepartmentdata" asp-controller="department" method="post" id="editForm">  
+    <div class="col-sm-4">
+        <input type="hidden" value="@Model.Id" id="departmentId">
+        <label  class="clear-top-margin"><i class="fa fa-barcode"></i>DEPARTMENT CODE</label>
+        <input asp-for="DepartmentCode" value="@Model.DepartmentCode"  id="DepartmentCode" />
+        <span class="text-danger" asp-validation-for="DepartmentCode"></span>
+    </div>
+    <div class="col-sm-4">
+        <label   class="clear-top-margin"><i class="fa fa-institution"></i>DEPARTMENT NAME</label>
+        <input asp-for="DepartmentName" value="@Model.DepartmentName"  id="DepartmentName"/>
+        <span class="text-danger" asp-validation-for="DepartmentName"></span>
+    </div> 
+    <div class="col-sm-4">
+        <label   class="clear-top-margin"><i class="fa fa-institution"></i>FACULTY</label>
+        <select asp-for="FacultyId" asp-items="@Model.Faculties">
+             
+        </select>
+        <span class="text-danger" asp-validation-for="FacultyId"></span>
+    </div> 
+    <div class="clearfix"></div> 
+</form>
