@@ -1,10 +1,5 @@
 @model EditFacultyViewModel
-<form asp-action="editfacultydata" asp-controller="faculty" method="post" id="editForm"> 
-      <div class="col-sm-4"> 
-        <label  class="clear-top-margin"><i class="fa fa-hashtag"></i>ID</label>
-        <input asp-for="FacultyCode" value="@Model.Id"  id="facultyCode" disabled/>
-        <span class="text-danger" asp-validation-for="FacultyCode"></span>
-    </div>
+<form asp-action="editfacultydata" asp-controller="faculty" method="post" id="editForm">  
     <div class="col-sm-4">
         <input type="hidden" value="@Model.Id" id="facultyId">
         <label  class="clear-top-margin"><i class="fa fa-barcode"></i>FACULTY CODE</label>

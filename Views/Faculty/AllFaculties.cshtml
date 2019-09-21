@@ -45,9 +45,36 @@
                                                 <td>@faculty.FacultyName</td>
                                                 <td class="action-link">
                                                     <a class="edit" href="javascript:void(0)" onclick="GetFacultyDataById('@faculty.Id')" title="Edit Faculty Data"><i class="fa fa-edit"></i></a>
-                                                    <a class="delete" href="#" title="Delete" data-toggle="modal" data-target="#deleteDetailModal"><i class="fa fa-remove"></i></a>
+                                                    <a class="delete" href="#" title="Delete" data-toggle="modal" data-target="#deleteDetailModal_@faculty.Id"><i class="fa fa-remove"></i></a>
                                                 </td>
                                             </tr>  
+
+                                            <!-- Delete Modal -->
+                                            <div id="deleteDetailModal_@faculty.Id" class="modal fade" role="dialog">
+                                                <div class="modal-dialog">
+                                                    <!-- Modal content-->
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                            <h4 class="modal-title"><i class="fa fa-trash"></i>DELETE FACULTY</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form asp-action="deletefacultydata" asp-controller="faculty" id="deleteForm">
+                                                                    <h3 class="text-danger text-center"><i class="fa fa-exclamation-triangle"> </i>
+                                                                         Are you sure you want to<strong> Delete @faculty.FacultyName? </strong>
+                                                                    </h3>
+                                                            </form> 
+                                                            <div class="clearfix"></div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                             <div class="table-action-box">
+                                                                <a href="#" class="save" onclick="DeleteData('@faculty.Id')"><i class="fa fa-check"></i>YES</a>
+                                                                <a href="#" class="cancel" data-dismiss="modal"><i class="fa fa-ban"></i>CLOSE</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         }
                                     }
                                     else
@@ -69,25 +96,7 @@
     </div>
      
     
-    <!-- Delete Modal -->
-    <div id="deleteDetailModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title"><i class="fa fa-trash"></i>DELETE SECTION</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="table-action-box">
-                        <a href="#" class="save"><i class="fa fa-check"></i>YES</a>
-                        <a href="#" class="cancel" data-dismiss="modal"><i class="fa fa-ban"></i>CLOSE</a>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-            </div>
-        </div>
-    </div>
+    
     
     <!--Edit faculty modal-->     
             <div id="editFacultyData" class="modal fade" role="dialog">

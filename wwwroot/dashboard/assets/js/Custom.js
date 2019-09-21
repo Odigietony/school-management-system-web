@@ -46,7 +46,7 @@ function updateUserData()
             }
             else
             {
-                $('.modal-body').html(result); 
+                $('#editForm').html(result); 
             }
         }
     });
@@ -150,11 +150,12 @@ function EditData()
     let id = $('#facultyId').val();
     url = '/faculty/editfacultydata/';  
     let model = $('#editForm').serializeArray(); 
-    // model.push({name: 'Id', value: id}); 
+    model.push({name: 'Id', value: id}); 
+     alert($.param(model));
     $.ajax({
         type: "POST",
         url: url,
-        data: $.param(model),
+        data: model,
         success: function(result)
         {
             if(result.success == true)
@@ -162,10 +163,12 @@ function EditData()
                 setTimeout(function(){
                     location.reload();
                 }, 500);
+            } 
+            else
+            {
+                $('#editForm').html(result); 
             }
-            else{
-                $('.modal-body').html(result); 
-            }
+            
         }
     });
 }

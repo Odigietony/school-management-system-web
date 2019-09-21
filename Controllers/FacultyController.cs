@@ -58,11 +58,11 @@ namespace SchoolManagementSystem.Controllers
                 FacultyCode = faculty.FacultyCode,
                 FacultyName = faculty.FacultyName
             };
-            return PartialView(model);
+            return PartialView("EditFacultyData", model);
         }
 
         [HttpPost]
-        public IActionResult EditFacultyData(EditFacultyViewModel model, long Id)
+        public IActionResult EditFacultyData(EditFacultyViewModel model)
         { 
             if(ModelState.IsValid)
             { 
@@ -78,21 +78,29 @@ namespace SchoolManagementSystem.Controllers
                 entityRepository.Save();
                return Json( new {success = true} );
             }
-           return PartialView(model);
+           return PartialView("EditFacultyData", model);
         }
 
         [HttpPost]
         public IActionResult DeleteFacultyData(long Id)
         {
-            Faculty faculty = entityRepository.GetById(Id);
-            if(faculty == null)
+            if(Id.Equals(0))
             {
-                ViewBag.ErrorMessage = $"The Faculty with Reference Id = { Id } could not be found";
-                return View("NotFound");
+               ViewBag.ErrorMessage = $"The Faculty with Reference Id = { Id } could not be found";
+               return View("NotFound");
+            } 
+            else
+            {
+                Faculty faculty = entityRepository.GetById(Id);
+                if(faculty == null)
+                {
+                    ViewBag.ErrorMessage = $"The Faculty with Reference Id = { Id } could not be found";
+                    return View("NotFound");
+                }
+                entityRepository.Delete(faculty.Id);
+                entityRepository.Save();
+                return Json(new {success = true });
             }
-            entityRepository.Delete(faculty);
-            entityRepository.Save();
-            return RedirectToAction("allfaculties");
         }
     }
 }
