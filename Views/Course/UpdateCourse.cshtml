@@ -1,0 +1,28 @@
+@model UpdateCourseViewModel
+<form asp-action="updatecourse" asp-controller="course" method="post" id="editForm">  
+    <div class="col-sm-6">
+        <input type="hidden" value="@Model.Id" id="resourceId">
+        <label  class="clear-top-margin"><i class="fa fa-barcode"></i>COURSE CODE</label>
+        <input asp-for="CourseCode" value="@Model.CourseCode"  id="CourseCode" />
+        <span class="text-danger" asp-validation-for="CourseCode"></span>
+    </div>
+    <div class="col-sm-6">
+        <label   class="clear-top-margin"><i class="fa fa-book"></i>COURSE NAME</label>
+        <input asp-for="CourseName" value="@Model.CourseName"  id="CourseName"/>
+        <span class="text-danger" asp-validation-for="CourseName"></span>
+    </div> 
+    <hr>
+    <div class="col-sm-6" style="margin-top:15px;">
+        <label   class="clear-top-margin"><i class="fa fa-institution"></i>COURSE YEAR</label>
+        <select asp-for="CourseYearId" asp-items="@Model.CourseYears">  
+        </select>
+        <span class="text-danger" asp-validation-for="CourseYearId"></span>
+    </div> 
+    <div class="col-sm-6" style="margin-top:15px;">
+        <label class="clear-top-margin"><i class="fa fa-institution"></i>DEPARTMENT</label>
+        <select asp-for="DepartmentId" asp-items="@Model.Departments">  
+        </select>
+        <span class="text-danger" asp-validation-for="DepartmentId"></span>
+    </div> 
+    <div class="clearfix"></div> 
+</form>

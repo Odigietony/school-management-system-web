@@ -1,0 +1,41 @@
+@model RegisterCourseViewModel
+@{
+    ViewData["Title"] = "Register Course";
+}
+
+
+<div class="dash-item first-dash-item">
+        <h6 class="item-title"><i class="fa fa-plus-circle"></i>REGISTER COURSE</h6>
+        <form asp-action="registercourse" asp-controller="course" method="post">
+            <div class="inner-item">
+            <div class="dash-form">
+                <label class="clear-top-margin" asp-for="CourseCode"><i class="fa fa-barcode"></i>Course CODE</label>
+                <input asp-for="CourseCode" placeholder="CMP 104" />
+                <span class="text-danger" asp-validation-for="CourseCode"></span>
+                
+                <label asp-for="CourseName"><i class="fa fa-book"></i>COURSE NAME</label>
+                <input asp-for="CourseName" placeholder="Algorithm and Complexity" />
+                <span class="text-danger" asp-validation-for="CourseName"></span>
+               
+                <label asp-for="CourseYearId"><i class="fa fa-calendar"></i>COURSE YEAR</label>
+                <select asp-for="CourseYearId" asp-items="Model.CourseYears">
+                    <option value="">----- Select Year course is to be taken -----</option>
+                </select>
+                <span class="text-danger" asp-validation-for="CourseYearId"></span>
+
+                <label asp-for="DepartmentId"><i class="fa fa-calendar"></i>DEPARTMENTS</label>
+                <select asp-for="DepartmentId" asp-items="Model.Departments">
+                    <option value="">----- Select a Department the course is under -----</option>
+                </select>
+                <span class="text-danger" asp-validation-for="DepartmentId"></span>
+
+                <div style="margin-top:20px;">
+                    <button type="submit" class="btn btn-success"><i class="fa fa-paper-plane"></i> CREATE</button>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        </form>
+     <div class="clearfix"></div>
+ </div>
+ 
