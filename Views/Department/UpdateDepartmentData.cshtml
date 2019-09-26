@@ -1,7 +1,7 @@
  @model UpdateDepartmentViewModel
 <form asp-action="updatedepartmentdata" asp-controller="department" method="post" id="editForm">  
     <div class="col-sm-4">
-        <input type="hidden" value="@Model.Id" id="departmentId">
+        <input type="hidden" value="@Model.Id" id="resourceId">
         <label  class="clear-top-margin"><i class="fa fa-barcode"></i>DEPARTMENT CODE</label>
         <input asp-for="DepartmentCode" value="@Model.DepartmentCode"  id="DepartmentCode" />
         <span class="text-danger" asp-validation-for="DepartmentCode"></span>

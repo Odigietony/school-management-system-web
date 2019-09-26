@@ -110,7 +110,7 @@
 
 						<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-							<i class="fa fa-institution menu-icon"></i> DEPARTMENTS <span class="caret"></span>
+							<i class="fa fa-industry menu-icon"></i> DEPARTMENTS <span class="caret"></span>
 						</a>
 						<ul class="dropdown-menu">
 							<li>							
@@ -118,6 +118,21 @@
 							</li>
 							<li>
 								<a asp-action="alldepartments" asp-controller="department"><i class="fa fa-caret-right"></i>ALL DEPARTMENTS</a>
+							</li>
+						</ul>
+						<div class="clearfix"></div>
+					</li>
+
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+							<i class="fa fa-calendar menu-icon"></i> COURSE YEAR <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li>							
+								<a asp-action="courseyearregistration" asp-controller="courseyear"><i class="fa fa-caret-right"></i>ADD NEW COURSE YEAR</a>
+							</li>
+							<li>
+								<a asp-action="allregisteredcourseyears" asp-controller="courseyear"><i class="fa fa-caret-right"></i>ALL REGISTERED COURSE YEARS</a>
 							</li>
 						</ul>
 						<div class="clearfix"></div>

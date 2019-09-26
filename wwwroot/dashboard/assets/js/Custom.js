@@ -175,16 +175,24 @@ function EditData()
 
 function UpdateData(Id)
 {
+    // alert(Id);
     let url = $('#editForm').attr('action');
-    let $modal = $('#editdepartmentData')
-    $modal.find('.modal-body').load(url +"/"+ Id, function(){
+    if(url.lastIndexOf("/") < 14)
+    {
+        let $modal = $('#editResourceData') 
+        $modal.find('.modal-body').load(url +"/"+ Id, function(){
+        $modal.modal('show');
+          }); 
+    } 
+    let $modal = $('#editResourceData') 
+    $modal.find('.modal-body').load(url.substring(0, url.lastIndexOf("/")) +"/"+ Id, function(){
         $modal.modal('show');
     }); 
 }
 
 function UpdatePostData()
 {
-    let id = $('#departmentId').val();
+    let id = $('#resourceId').val();
     url =  $('#editForm').attr('action');  
     let model = $('#editForm').serializeArray(); 
     model.push({name: 'Id', value: id});  

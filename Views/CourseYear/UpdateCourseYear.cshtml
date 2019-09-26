@@ -1,0 +1,15 @@
+@model UpdateCourseYearViewModel
+<form asp-action="updatecourseyear" asp-controller="courseyear" method="post" id="editForm">  
+    <div class="col-sm-4">
+        <input type="hidden" value="@Model.Id" id="resourceId">
+        <label  class="clear-top-margin"><i class="fa fa-sticky-note-o"></i>COURSE YEAR TITLE</label>
+        <input asp-for="YearTitle" value="@Model.YearTitle"  id="YearTitle" />
+        <span class="text-danger" asp-validation-for="YearTitle"></span>
+    </div>
+    <div class="col-sm-5">
+        <label   class="clear-top-margin"><i class="fa fa-sort-numeric-asc"></i>NUMERICAL REPRESENTATION OF COURSE YEAR</label>
+        <input asp-for="YearNumberRepresentation" value="@Model.YearNumberRepresentation"  id="YearNumberRepresentation"/>
+        <span class="text-danger" asp-validation-for="YearNumberRepresentation"></span>
+    </div>  
+    <div class="clearfix"></div> 
+</form>

@@ -1,76 +1,74 @@
-@model AllDepartmentsViewModel
+@model AllRegisteredCourseYearsViewModel
 @{
-    ViewData["Title"] = "All Departments";
+    ViewData["Title"] = "All Registered Course Years";
 }
 
 <div class="main-content" id="content-wrapper">
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12 clear-padding-xs">
-                <h5 class="page-title"><i class="fa fa-institution"></i>ALL DEPARTMENTS</h5>
+                <h5 class="page-title"><i class="fa fa-calendar"></i>ALL Registered Course Year</h5>
                 <div class="section-divider"></div>
             </div>
         </div>
 
         <div class="row">
             <div class="col-lg-12 clear-padding-xs">
-                <!-- Add department -->
+                <!-- Add Faculty -->
                 <div class="col-sm-4">
-                    <partial name="AddDepartment"  > 
+                    <partial name="CourseYearRegistration"  > 
                 </div>
-                <!-- Add department -->
+                <!-- Add Faculty -->
 
                 <!-- All Faculties -->
                 <div class="col-sm-8">
                     <div class="dash-item first-dash-item">
-                        <h6 class="item-title"><i class="fa fa-institution"></i>ALL DEPARTMENTS</h6>
+                        <h6 class="item-title"><i class="fa fa-calendar"></i>ALL Registered Course Year</h6>
                         <div class="inner-item">
                             <table id="attendenceDetailedTable" class="display responsive nowrap" cellspacing="0" width="100%">
                                 <thead>
                                     <tr>
                                         <th><i class="fa fa-hashtag"></i>ID</th>
-                                        <th><i class="fa fa-barcode"></i>DEPARTMENT CODE</th>
-                                        <th><i class="fa fa-institution"></i>DEPARTMENT NAME</th> 
-                                        <th><i class="fa fa-institution"></i>FACULTY</th> 
+                                        <th><i class="fa fa-sticky-note-o"></i>YEAR TITLE</th>
+                                        <th><i class="fa fa-sort-numeric-asc"></i>YEAR NUMBER REPRESENTATION</th> 
                                         <th><i class="fa fa-briefcase"></i>ACTION</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if(Model.Departments.Any())
+                                    @if(Model.CourseYears.Any())
                                     {
-                                        foreach(var department in Model.Departments)
+                                        foreach(var courseYears in Model.CourseYears)
                                         {
                                             <tr>
-                                                <td>@department.Id</td>
-                                                <td>@department.DepartmentCode</td>
-                                                <td>@department.DepartmentName</td>
-                                                <td>@department.Faculty.FacultyName</td>
+                                                <td>@courseYears.Id</td>
+                                                <td>@courseYears.YearTitle</td>
+                                                <td>@courseYears.YearNumberRepresentation</td>
                                                 <td class="action-link">
-                                                    <a class="edit" href="javascript:void(0)" onclick="UpdateData('@department.Id')" title="Edit department Data"><i class="fa fa-edit"></i></a>
-                                                    <a class="delete" href="#" title="Delete" data-toggle="modal" data-target="#deleteDetailModal_@department.Id"><i class="fa fa-remove"></i></a>
+                                                    <a class="edit" href="javascript:void(0)" onclick="UpdateData('@courseYears.Id')" title="Edit Course Years Data"><i class="fa fa-edit"></i></a>
+                                                    <a class="delete" href="#" title="Delete" data-toggle="modal" data-target="#deleteDetailModal_@courseYears.Id"><i class="fa fa-remove"></i></a>
                                                 </td>
                                             </tr>  
 
                                             <!-- Delete Modal -->
-                                            <div id="deleteDetailModal_@department.Id" class="modal fade" role="dialog">
+                                            <div id="deleteDetailModal_@courseYears.Id" class="modal fade" role="dialog">
                                                 <div class="modal-dialog">
                                                     <!-- Modal content-->
                                                     <div class="modal-content">
                                                         <div class="modal-header">
                                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                            <h4 class="modal-title"><i class="fa fa-trash"></i>DELETE DEPARTMENT</h4>
+                                                            <h4 class="modal-title"><i class="fa fa-trash"></i>DELETE COURSE YEAR</h4>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <form asp-action="deletedepartment" asp-controller="department" id="deleteForm">
+                                                            <form asp-action="deletecourseyear" asp-controller="courseyear" id="deleteForm">
                                                                     <h3 class="text-danger text-center"><i class="fa fa-exclamation-triangle"> </i>
-                                                                         Are you sure you want to<strong> Delete @department.DepartmentName? </strong>
+                                                                         Are you sure you want to<strong> Delete @courseYears.YearTitle? </strong>
                                                                     </h3>
                                                             </form> 
                                                             <div class="clearfix"></div>
                                                         </div>
                                                         <div class="modal-footer">
                                                              <div class="table-action-box">
-                                                                <a href="javascript:void(0)" class="save" onclick="DeleteData('@department.Id')"><i class="fa fa-check"></i>YES</a>
+                                                                <a href="#" class="save" onclick="DeleteData('@courseYears.Id')"><i class="fa fa-check"></i>YES</a>
                                                                 <a href="#" class="cancel" data-dismiss="modal"><i class="fa fa-ban"></i>CLOSE</a>
                                                             </div>
                                                         </div>
@@ -82,7 +80,7 @@
                                     else
                                     {
                                         <tr>
-                                            <td colspan="4"><h4 class="text-center"><b>No Department Data to Display</b></h4></td>
+                                            <td colspan="4"><h4 class="text-center"><b>No Course Year Data to Display</b></h4></td>
                                         </tr>
                                     } 
                                 </tbody>
@@ -100,19 +98,19 @@
     
     
     
-    <!--Edit department modal-->     
+    <!--Edit faculty modal-->     
             <div id="editResourceData" class="modal fade" role="dialog">
                 <div class="modal-dialog">
                     <!-- Modal content-->
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title"><i class="fa fa-edit"></i>EDIT DEPARTMENT DATA</h4>
-                        </div> 
+                            <h4 class="modal-title"><i class="fa fa-edit"></i>EDIT FACULTY DATA</h4>
+                        </div>
                         <div class="modal-body dash-form">
-                        <form asp-action="updatedepartmentdata" asp-controller="department" id="editForm">
-                        </form>
-                        </div> 
+                            <form asp-action="updatecourseyear" asp-controller="courseyear" id="editForm">
+                            </form>
+                        </div>
                         <div class="modal-footer">
                             <div class="table-action-box">
                                 <a type="button" class="btn btn-success" onclick="UpdatePostData()"><i class="fa fa-check"></i>SAVE</a>
@@ -122,7 +120,7 @@
                     </div>
                 </div>
             </div> 
-    <!-- Edit department modal	-->
+    <!-- Edit Faculty modal	-->
 </div>
 
 @section Scripts
