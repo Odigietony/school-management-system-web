@@ -185,6 +185,13 @@ html, body {
 	color: #07253F !important; 
 	padding: 15px;
 }
+
+.headline{
+	color: darkolivegreen;
+	font-family: 'Lucida Sans', Verdana, sans-serif;
+	font: caption;
+}
+
 .user li a i {
 	margin-right: 10px;
 }

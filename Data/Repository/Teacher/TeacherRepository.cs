@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq   ;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SchoolManagementSystem.Models;
 
@@ -14,10 +15,25 @@ namespace SchoolManagementSystem.Data.Repository
             this.context = context;
         }
 
+        public async Task<bool> AddTeacherToCourseAsync(TeacherCourse course)
+        { 
+            context.TeacherCourses.Add(course);
+            if(await context.SaveChangesAsync() == 1){
+                return true;
+            }
+            return false;
+        }
+
         public void DeleteTeacher(Teacher teacher)
         {
             context.Remove(teacher);
             context.SaveChanges(); 
+        }
+
+        public async Task<TeacherCourse> FindRelatedTeacherCourses(long courseId, long teacherId)
+        {
+            TeacherCourse course = await context.TeacherCourses.FirstOrDefaultAsync(c => c.CourseId == courseId && c.TeacherId == teacherId);
+            return course;
         }
 
         public IEnumerable<TeacherContactInformation> GetAllTeacherData()
@@ -80,6 +96,20 @@ namespace SchoolManagementSystem.Data.Repository
             return data;
         }
 
+        public async Task<bool> RemoveTeacherFromCourse(TeacherCourse course)
+        {
+            TeacherCourse teacherCourse = context.TeacherCourses
+                        .FirstOrDefault(c => c.CourseId == course.CourseId && c.TeacherId == course.TeacherId);
+            context.Remove(teacherCourse);
+            if(await context.SaveChangesAsync() == 1)
+            {
+                return true;
+            }
+            return false;
+
+
+        }
+
         public void SaveTeacherData(Teacher teacher, TeacherContactInformation contactInformation,
         TeacherHighestDegree highestDegree, TeacherOtherDegree otherDegree)
         {
@@ -88,6 +118,17 @@ namespace SchoolManagementSystem.Data.Repository
             context.TeacherHighestDegrees.Add(highestDegree);
             context.TeacherOtherDegrees.Add(otherDegree);
             context.SaveChanges();
+        }
+
+        public async Task<bool> TeacherTeachesCourse(Teacher teacher, string courseName)
+        { 
+           var result = await context.TeacherCourses
+                        .FirstOrDefaultAsync(t => t.Course.CourseName == courseName && t.TeacherId == teacher.Id);
+           if(result != null)
+           {
+               return true;
+           }
+           return false;
         }
 
         public void UpdateTeacherContactData(TeacherContactInformation contactInformation)

@@ -2,7 +2,21 @@
 @{
     ViewData["Title"] = "All Courses";
 }
+<style>
+    #alert{
+        position: fixed;
+        top: 60px;
+        right: -120px;
+        transition: all 1s ease;
+        opacity: 0;
+    }
 
+    #alert.on{
+        top: 60px;
+        right: 60px;
+        opacity: 1;
+    }
+</style>
 <div class="main-content" id="content-wrapper">
     <div class="container-fluid">
         <div class="row">
@@ -50,6 +64,9 @@
                                                 <td class="action-link">
                                                     <a class="edit" href="javascript:void(0)" onclick="UpdateData('@course.Id')" title="Edit course Data"><i class="fa fa-edit"></i></a>
                                                     <a class="delete" href="#" title="Delete" data-toggle="modal" data-target="#deleteDetailModal_@course.Id"><i class="fa fa-remove"></i></a>
+                                                    <a href="javascript:void(0)" onclick="updateteacherCourse('@course.Id')" class="edit" title="Add or Remove teacher from this course"  >
+                                                    <i class="fa fa-pencil"></i>
+                                                 </a>
                                                 </td>
                                             </tr>  
 
@@ -125,6 +142,30 @@
                 </div>
             </div> 
     <!-- Edit course modal	-->
+
+
+     <!--Update User role Modal -->
+    <div id="updateformdata" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"><i class="fa fa-trash"></i>UPDATE USER ROLE DATA</h4>
+                </div>
+                <div class="modal-body"> 
+                    <!-- modal goes here -->
+                </div>
+                <div class="modal-footer">
+                    <div class="table-action-box">
+                        <a type="button" class="btn btn-success" onclick="addteachertocourse()"><i class="fa fa-check-square-o"></i>UPDATE DATA</a>
+                        <a href="#" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-ban"></i>CLOSE</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </div>
 
 @section Scripts

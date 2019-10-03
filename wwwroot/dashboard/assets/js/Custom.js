@@ -216,3 +216,37 @@ function UpdatePostData()
         }
     });
 }
+
+function updateteacherCourse(Id)
+{
+    let url = "/course/addteachertocourses/";
+    let $modal = $('#updateformdata')
+    $modal.find('.modal-body').load(url +Id, function(){
+        $modal.modal('show');
+    }); 
+}
+
+function addteachertocourse()
+{
+    courseId = $('#courseId').val();
+    url = "/course/AddTeacherToCourses/";
+    model = $('#updateForm').serializeArray();
+    model.push({name: 'Id', value: courseId}); 
+    $.ajax({
+        type: 'POST',
+        url: url,
+        data: $.param(model), 
+        success: function(result)
+        {
+            if(result.success == true)
+            {  
+                $('.modal').modal('hide');
+                $('#alert').addClass('on');
+            }
+            else
+            {
+                $('.modal').modal('hide'); 
+            }
+        }
+    });
+}

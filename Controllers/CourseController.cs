@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -13,12 +14,14 @@ namespace SchoolManagementSystem.Controllers
         private readonly IEntityRepository<Course> entityRepository;
         private readonly IEntityRepository<Department> departmentRepo;
         private readonly IEntityRepository<CourseYear> courseYearRepo;
-        public CourseController(IEntityRepository<Course> entityRepository, 
+        private readonly ITeacherRepository teacherRepository;
+        public CourseController(IEntityRepository<Course> entityRepository, ITeacherRepository teacherRepository,
         IEntityRepository<Department> departmentRepo, IEntityRepository<CourseYear> courseYearRepo)
         {
             this.courseYearRepo = courseYearRepo;
             this.departmentRepo = departmentRepo;
             this.entityRepository = entityRepository;
+            this.teacherRepository = teacherRepository;
         }
 
         [HttpGet]
@@ -127,6 +130,84 @@ namespace SchoolManagementSystem.Controllers
             entityRepository.Delete(course.Id);
             entityRepository.Save();
             return Json(new { success = true });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> AddTeacherToCourses(long Id)
+        {
+            ViewBag.courseId = Id;
+            Course course = entityRepository.GetById(Id);
+            if(course == null)
+            {
+                ViewBag.ErrorMessage = $"The course resource with Id = { Id } could not be found.";
+                return View("NotFound");
+            }
+            ViewBag.courseName = course.CourseName;
+            var teachers = teacherRepository.GetAllTeachers();
+            List<AddTeacherToCoursesViewModel> model = new List<AddTeacherToCoursesViewModel>();
+            foreach(var teacher in teachers)
+            {
+                AddTeacherToCoursesViewModel addTeacherToCourses = new AddTeacherToCoursesViewModel
+                {
+                    TeacherId = teacher.Id,
+                    TeacherFirstname = teacher.Firstname,
+                    TeacherMiddlename = teacher.Middlename,
+                    TeacherLastname = teacher.Lastname
+                };
+                if(await teacherRepository.TeacherTeachesCourse(teacher, course.CourseName))
+                {
+                    addTeacherToCourses.IsSelected = true;
+                }
+                else
+                {
+                    addTeacherToCourses.IsSelected = false;
+                }
+                model.Add(addTeacherToCourses);
+            }
+            return PartialView(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddTeacherToCourses(List<AddTeacherToCoursesViewModel> model, long Id)
+        {
+            if(ModelState.IsValid)
+            {
+                Course course = entityRepository.GetById(Id);
+                if(course == null)
+                {
+                    ViewBag.ErrorMessage = $"The course resource with Id = { Id } could not be found";
+                    return View("NotFound");
+                }
+                bool result = false;
+                TeacherCourse teacherCourse = new TeacherCourse();
+                for(int index = 0; index < model.Count; index++)
+                {
+                    Teacher teacher = teacherRepository.GetTeacherById(model[index].TeacherId);
+                    if(model[index].IsSelected && !(await teacherRepository.TeacherTeachesCourse(teacher, course.CourseName)))
+                    {
+                        teacherCourse.CourseId = course.Id;
+                        teacherCourse.TeacherId = teacher.Id;
+                        result = await teacherRepository.AddTeacherToCourseAsync(teacherCourse);
+                    }
+                    else if(!model[index].IsSelected && await teacherRepository.TeacherTeachesCourse(teacher, course.CourseName))
+                    {
+                        var teacher_course = await teacherRepository.FindRelatedTeacherCourses(Id, model[index].TeacherId);
+                        result = await teacherRepository.RemoveTeacherFromCourse(teacher_course);
+                    }
+                    else{ continue; }
+                    if(result == true)
+                    {
+                        if(index < (model.Count -1))
+                        {
+                            continue;
+                        }else
+                        {  
+                            return Json( new {success = true} );
+                        }
+                    }
+                }
+            }
+            return PartialView(model);
         }
 
         private RegisterCourseViewModel GetAllDepartments(RegisterCourseViewModel model)

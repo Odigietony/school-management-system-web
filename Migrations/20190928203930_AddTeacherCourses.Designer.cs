@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SchoolManagementSystem.Data;
 
 namespace SchoolManagementSystem.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190928203930_AddTeacherCourses")]
+    partial class AddTeacherCourses
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -118,7 +120,7 @@ namespace SchoolManagementSystem.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "04305d45-73b7-4ba5-a8ac-c1b2632c71ed",
+                            ConcurrencyStamp = "932d8580-189e-4fa9-a395-65ed534a2060",
                             Email = "superadmin@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
@@ -126,7 +128,7 @@ namespace SchoolManagementSystem.Migrations
                             NormalizedUserName = "SUPERADMIN",
                             PasswordHash = "SuperAdmin",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "e93deb73-ad99-4909-96f4-2b7f07c93223",
+                            SecurityStamp = "5a45450b-5d73-4df6-8f02-4057c05669a8",
                             TwoFactorEnabled = false,
                             UserName = "SuperAdmin"
                         });
@@ -1593,174 +1595,6 @@ namespace SchoolManagementSystem.Migrations
                         });
                 });
 
-            modelBuilder.Entity("SchoolManagementSystem.Models.Student", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("AlternateEmailAddress");
-
-                    b.Property<string>("AlternatePhoneNumber");
-
-                    b.Property<string>("ContactAddress");
-
-                    b.Property<long>("CourseYearId");
-
-                    b.Property<string>("DateOfBirth")
-                        .IsRequired();
-
-                    b.Property<long>("DepartmentId");
-
-                    b.Property<string>("EmailAddress")
-                        .IsRequired();
-
-                    b.Property<string>("Firstname")
-                        .IsRequired()
-                        .HasMaxLength(20);
-
-                    b.Property<int>("Gender");
-
-                    b.Property<string>("IdentityUserId");
-
-                    b.Property<string>("Lastname")
-                        .IsRequired()
-                        .HasMaxLength(20);
-
-                    b.Property<int>("MaritalStatus");
-
-                    b.Property<string>("Middlename")
-                        .HasMaxLength(20);
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired();
-
-                    b.Property<string>("ProfilePhotoPath");
-
-                    b.Property<int>("Religion");
-
-                    b.Property<string>("ResidentialAddress")
-                        .IsRequired();
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CourseYearId");
-
-                    b.HasIndex("DepartmentId");
-
-                    b.HasIndex("IdentityUserId");
-
-                    b.ToTable("Students");
-                });
-
-            modelBuilder.Entity("SchoolManagementSystem.Models.StudentAccademicInformation", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("NameOfInstitution");
-
-                    b.Property<int>("PreviousLevel");
-
-                    b.Property<long>("StudentId");
-
-                    b.Property<string>("YearEnrolled");
-
-                    b.Property<string>("YearOfGraduation");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("StudentId");
-
-                    b.ToTable("StudentAccademicInformations");
-                });
-
-            modelBuilder.Entity("SchoolManagementSystem.Models.StudentCourse", b =>
-                {
-                    b.Property<long>("CourseId");
-
-                    b.Property<long>("StudentId");
-
-                    b.HasKey("CourseId", "StudentId");
-
-                    b.HasIndex("StudentId");
-
-                    b.ToTable("StudentCourses");
-                });
-
-            modelBuilder.Entity("SchoolManagementSystem.Models.StudentNextOfKinInformation", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("EmailOfNextOfKin")
-                        .IsRequired();
-
-                    b.Property<string>("NextOfKinFirstname")
-                        .IsRequired()
-                        .HasMaxLength(20);
-
-                    b.Property<string>("NextOfKinLastname")
-                        .IsRequired()
-                        .HasMaxLength(20);
-
-                    b.Property<string>("PhoneOfNextOfKin")
-                        .IsRequired();
-
-                    b.Property<int>("RelationToNextOfKin");
-
-                    b.Property<long>("StudentId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("StudentId");
-
-                    b.ToTable("StudentNextOfKinInformations");
-                });
-
-            modelBuilder.Entity("SchoolManagementSystem.Models.StudentSponsor", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("SponsorContactAddress")
-                        .IsRequired();
-
-                    b.Property<string>("SponsorEmailAddress")
-                        .IsRequired();
-
-                    b.Property<string>("SponsorFirstname")
-                        .IsRequired()
-                        .HasMaxLength(30);
-
-                    b.Property<string>("SponsorLastname")
-                        .IsRequired()
-                        .HasMaxLength(30);
-
-                    b.Property<string>("SponsorMiddlename")
-                        .HasMaxLength(30);
-
-                    b.Property<string>("SponsorPhoneNumber")
-                        .IsRequired();
-
-                    b.Property<string>("SponsorProffession")
-                        .IsRequired();
-
-                    b.Property<string>("SponsorWorkAddress")
-                        .IsRequired();
-
-                    b.Property<long>("StudentId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("StudentId");
-
-                    b.ToTable("StudentSponsors");
-                });
-
             modelBuilder.Entity("SchoolManagementSystem.Models.Teacher", b =>
                 {
                     b.Property<long>("Id")
@@ -2053,60 +1887,6 @@ namespace SchoolManagementSystem.Migrations
                     b.HasOne("SchoolManagementSystem.Models.Country", "Country")
                         .WithMany()
                         .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("SchoolManagementSystem.Models.Student", b =>
-                {
-                    b.HasOne("SchoolManagementSystem.Models.CourseYear", "CourseYear")
-                        .WithMany()
-                        .HasForeignKey("CourseYearId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("SchoolManagementSystem.Models.Department", "Department")
-                        .WithMany()
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
-                        .WithMany()
-                        .HasForeignKey("IdentityUserId");
-                });
-
-            modelBuilder.Entity("SchoolManagementSystem.Models.StudentAccademicInformation", b =>
-                {
-                    b.HasOne("SchoolManagementSystem.Models.Student", "Student")
-                        .WithMany()
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("SchoolManagementSystem.Models.StudentCourse", b =>
-                {
-                    b.HasOne("SchoolManagementSystem.Models.Course", "Course")
-                        .WithMany("StudentCourse")
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("SchoolManagementSystem.Models.Student", "Student")
-                        .WithMany("StudentCourse")
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("SchoolManagementSystem.Models.StudentNextOfKinInformation", b =>
-                {
-                    b.HasOne("SchoolManagementSystem.Models.Student", "Student")
-                        .WithMany()
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("SchoolManagementSystem.Models.StudentSponsor", b =>
-                {
-                    b.HasOne("SchoolManagementSystem.Models.Student", "Student")
-                        .WithMany()
-                        .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

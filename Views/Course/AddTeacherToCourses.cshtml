@@ -1,0 +1,23 @@
+@model List<AddTeacherToCoursesViewModel>
+
+@{
+    var courseId = ViewBag.courseId;
+    var courseName = ViewBag.courseName;
+}
+
+<form method="post" asp-action="addteachertocourses" asp-controller="course" id="updateForm">
+    <h3 class="text-center headline">All teachers taking the course with title  @courseName </h3>
+    @for(var item = 0; item < Model.Count; item++)
+    {
+        <input type="hidden" id="courseId" asp-for="@courseId" />
+        <input type="hidden" id="teacherId" asp-for="@Model[item].TeacherId" />
+        <input type="hidden" id="firstname" asp-for="@Model[item].TeacherFirstname" />
+        <input type="hidden" id="middlename" asp-for="@Model[item].TeacherMiddlename" />
+        <input type="hidden" id="lastname" asp-for="@Model[item].TeacherLastname" />
+        <div class="form-check m-1">
+            <input id="selectValue" asp-for="@Model[item].IsSelected" class="form-control-input"/>
+            <label class="form-check-label" asp-for="@Model[item].IsSelected"> @Model[item].TeacherFirstname @Model[item].TeacherMiddlename @Model[item].TeacherLastname</label>
+        </div>
+    }
+
+</form>

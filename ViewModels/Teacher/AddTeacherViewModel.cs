@@ -14,6 +14,7 @@ namespace SchoolManagementSystem.ViewModels
         {
             Countries = new List<SelectListItem>();
             States =  new List<SelectListItem>();
+            Departments = new List<SelectListItem>();
         }
 
         //Personal Details
@@ -65,6 +66,10 @@ namespace SchoolManagementSystem.ViewModels
 
         [Required(ErrorMessage = "The State field is required")]
         public long StateId { get; set; }
+
+        [Required(ErrorMessage = "Please Select a department")]
+        public long DepartmentId { get; set; }
+        public List<SelectListItem> Departments { get; set; }
 
         [Required]
         [StringLength(100)]

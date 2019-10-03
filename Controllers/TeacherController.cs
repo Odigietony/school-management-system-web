@@ -24,10 +24,11 @@ namespace SchoolManagementSystem.Controllers
         private readonly IProcessFileUpload processFileUpload;
         private readonly IStateRepository stateRepository;
         private readonly IHostingEnvironment hostingEnvironment;
+        private readonly IEntityRepository<Department> entityRepository;
         Random random = new Random();
         public TeacherController(ITeacherRepository teacherRepository, ICountryRepository countryRepository,
         UserManager<IdentityUser> userManager, IPasswordGenerator passwordGenerator, IProcessFileUpload processFileUpload, 
-        IStateRepository stateRepository, IHostingEnvironment hostingEnvironment)
+        IStateRepository stateRepository, IHostingEnvironment hostingEnvironment, IEntityRepository<Department> entityRepository)
         {
             this.hostingEnvironment = hostingEnvironment;
             this.processFileUpload = processFileUpload;
@@ -35,6 +36,7 @@ namespace SchoolManagementSystem.Controllers
             this.countryRepository = countryRepository;
             this.userManager = userManager;
             this.stateRepository = stateRepository;
+            this.entityRepository = entityRepository;
             _teacherRepository = teacherRepository;
         }
 
@@ -49,6 +51,7 @@ namespace SchoolManagementSystem.Controllers
     {
         AddTeacherViewModel model = new AddTeacherViewModel();
         ListOfCountries(model);
+        ListAllDepartments(model);
         return View(model);
     }
 
@@ -77,7 +80,8 @@ namespace SchoolManagementSystem.Controllers
                     EmailAddress = model.EmailAddress,
                     Religion = model.Religion,
                     ProfilePhotoPath = processFileUpload.UploadImage(model.Photo),
-                    IdentityUserId = user.Id
+                    IdentityUserId = user.Id,
+                    DepartmentId = model.DepartmentId
                 };
                 _teacherRepository.InsertAndSaveTeacherData(teacher);
                 TeacherContactInformation contactInformation = new TeacherContactInformation
@@ -125,6 +129,7 @@ namespace SchoolManagementSystem.Controllers
             }
         }
         ListOfCountries(model);
+        ListAllDepartments(model);
         return View(model);
     }
 
@@ -189,6 +194,7 @@ namespace SchoolManagementSystem.Controllers
             OtherCGPA = otherDegree.CGPA
         };
         States(model);
+        ListAllDepartments(model);
         return View(model);
     }
 
@@ -357,6 +363,16 @@ namespace SchoolManagementSystem.Controllers
         foreach (var state in states)
         {
             model.States.Add(new SelectListItem { Text = state.StateName, Value = state.Id.ToString() });
+        }
+        return model;
+    }
+
+    private AddTeacherViewModel ListAllDepartments(AddTeacherViewModel model)
+    {
+        var departments = entityRepository.GetAll();
+        foreach(var department in departments)
+        {
+            model.Departments.Add(new SelectListItem { Text = department.DepartmentName, Value = department.Id.ToString() });
         }
         return model;
     }

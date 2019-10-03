@@ -65,7 +65,15 @@
                                         <select asp-for="Religion" asp-items="Html.GetEnumSelectList<Religion>()"> </select>
                                         <span asp-validation-for="Religion" class="text-danger"></span>
                                     </div>
+                                    
                                     <div class="clearfix"></div>
+                                    <div class="col-sm-3" style="margin-top:20px;">
+                                        <label asp-for="DepartmentId" class="clear-top-margin"><i class="fa fa-industry"></i>DEPARTMENT</label>
+                                        <select asp-for="DepartmentId" asp-items="Model.Departments" id="DepartmentId">
+                                            <option value="">----- Select a Department -----</option>
+                                        </select> 
+                                        <span asp-validation-for="DepartmentId" class="text-danger"></span>
+                                    </div>
                                     <div class="col-sm-3">
                                         <label asp-for="Photo"><i class="fa fa-file-picture-o"></i>UPLOAD PHOTO</label>
                                         <input asp-for="Photo" />

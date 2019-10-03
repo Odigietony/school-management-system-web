@@ -10,8 +10,8 @@ using SchoolManagementSystem.Data;
 namespace SchoolManagementSystem.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190919024536_AddTeacherFacultyDptCourseStudentData")]
-    partial class AddTeacherFacultyDptCourseStudentData
+    [Migration("20191001223741_UpdateStudentEntityWithCourseYear")]
+    partial class UpdateStudentEntityWithCourseYear
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -120,7 +120,7 @@ namespace SchoolManagementSystem.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2ff06f86-1731-44a1-8218-eb0604d9c93f",
+                            ConcurrencyStamp = "04305d45-73b7-4ba5-a8ac-c1b2632c71ed",
                             Email = "superadmin@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
@@ -128,7 +128,7 @@ namespace SchoolManagementSystem.Migrations
                             NormalizedUserName = "SUPERADMIN",
                             PasswordHash = "SuperAdmin",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "808b68c2-6962-40e1-9a3c-8b0f5618a1f4",
+                            SecurityStamp = "e93deb73-ad99-4909-96f4-2b7f07c93223",
                             TwoFactorEnabled = false,
                             UserName = "SuperAdmin"
                         });
@@ -1595,6 +1595,174 @@ namespace SchoolManagementSystem.Migrations
                         });
                 });
 
+            modelBuilder.Entity("SchoolManagementSystem.Models.Student", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AlternateEmailAddress");
+
+                    b.Property<string>("AlternatePhoneNumber");
+
+                    b.Property<string>("ContactAddress");
+
+                    b.Property<long>("CourseYearId");
+
+                    b.Property<string>("DateOfBirth")
+                        .IsRequired();
+
+                    b.Property<long>("DepartmentId");
+
+                    b.Property<string>("EmailAddress")
+                        .IsRequired();
+
+                    b.Property<string>("Firstname")
+                        .IsRequired()
+                        .HasMaxLength(20);
+
+                    b.Property<int>("Gender");
+
+                    b.Property<string>("IdentityUserId");
+
+                    b.Property<string>("Lastname")
+                        .IsRequired()
+                        .HasMaxLength(20);
+
+                    b.Property<int>("MaritalStatus");
+
+                    b.Property<string>("Middlename")
+                        .HasMaxLength(20);
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired();
+
+                    b.Property<string>("ProfilePhotoPath");
+
+                    b.Property<int>("Religion");
+
+                    b.Property<string>("ResidentialAddress")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseYearId");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex("IdentityUserId");
+
+                    b.ToTable("Students");
+                });
+
+            modelBuilder.Entity("SchoolManagementSystem.Models.StudentAccademicInformation", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("NameOfInstitution");
+
+                    b.Property<int>("PreviousLevel");
+
+                    b.Property<long>("StudentId");
+
+                    b.Property<string>("YearEnrolled");
+
+                    b.Property<string>("YearOfGraduation");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("StudentAccademicInformations");
+                });
+
+            modelBuilder.Entity("SchoolManagementSystem.Models.StudentCourse", b =>
+                {
+                    b.Property<long>("CourseId");
+
+                    b.Property<long>("StudentId");
+
+                    b.HasKey("CourseId", "StudentId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("StudentCourses");
+                });
+
+            modelBuilder.Entity("SchoolManagementSystem.Models.StudentNextOfKinInformation", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("EmailOfNextOfKin")
+                        .IsRequired();
+
+                    b.Property<string>("NextOfKinFirstname")
+                        .IsRequired()
+                        .HasMaxLength(20);
+
+                    b.Property<string>("NextOfKinLastname")
+                        .IsRequired()
+                        .HasMaxLength(20);
+
+                    b.Property<string>("PhoneOfNextOfKin")
+                        .IsRequired();
+
+                    b.Property<int>("RelationToNextOfKin");
+
+                    b.Property<long>("StudentId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("StudentNextOfKinInformations");
+                });
+
+            modelBuilder.Entity("SchoolManagementSystem.Models.StudentSponsor", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("SponsorContactAddress")
+                        .IsRequired();
+
+                    b.Property<string>("SponsorEmailAddress")
+                        .IsRequired();
+
+                    b.Property<string>("SponsorFirstname")
+                        .IsRequired()
+                        .HasMaxLength(30);
+
+                    b.Property<string>("SponsorLastname")
+                        .IsRequired()
+                        .HasMaxLength(30);
+
+                    b.Property<string>("SponsorMiddlename")
+                        .HasMaxLength(30);
+
+                    b.Property<string>("SponsorPhoneNumber")
+                        .IsRequired();
+
+                    b.Property<string>("SponsorProffession")
+                        .IsRequired();
+
+                    b.Property<string>("SponsorWorkAddress")
+                        .IsRequired();
+
+                    b.Property<long>("StudentId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("StudentSponsors");
+                });
+
             modelBuilder.Entity("SchoolManagementSystem.Models.Teacher", b =>
                 {
                     b.Property<long>("Id")
@@ -1711,6 +1879,19 @@ namespace SchoolManagementSystem.Migrations
                     b.HasIndex("TeacherId");
 
                     b.ToTable("TeacherContactInformations");
+                });
+
+            modelBuilder.Entity("SchoolManagementSystem.Models.TeacherCourse", b =>
+                {
+                    b.Property<long>("CourseId");
+
+                    b.Property<long>("TeacherId");
+
+                    b.HasKey("CourseId", "TeacherId");
+
+                    b.HasIndex("TeacherId");
+
+                    b.ToTable("TeacherCourses");
                 });
 
             modelBuilder.Entity("SchoolManagementSystem.Models.TeacherHighestDegree", b =>
@@ -1877,6 +2058,60 @@ namespace SchoolManagementSystem.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("SchoolManagementSystem.Models.Student", b =>
+                {
+                    b.HasOne("SchoolManagementSystem.Models.CourseYear", "CourseYear")
+                        .WithMany()
+                        .HasForeignKey("CourseYearId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("SchoolManagementSystem.Models.Department", "Department")
+                        .WithMany()
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
+                        .WithMany()
+                        .HasForeignKey("IdentityUserId");
+                });
+
+            modelBuilder.Entity("SchoolManagementSystem.Models.StudentAccademicInformation", b =>
+                {
+                    b.HasOne("SchoolManagementSystem.Models.Student", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("SchoolManagementSystem.Models.StudentCourse", b =>
+                {
+                    b.HasOne("SchoolManagementSystem.Models.Course", "Course")
+                        .WithMany("StudentCourse")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("SchoolManagementSystem.Models.Student", "Student")
+                        .WithMany("StudentCourse")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("SchoolManagementSystem.Models.StudentNextOfKinInformation", b =>
+                {
+                    b.HasOne("SchoolManagementSystem.Models.Student", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("SchoolManagementSystem.Models.StudentSponsor", b =>
+                {
+                    b.HasOne("SchoolManagementSystem.Models.Student", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("SchoolManagementSystem.Models.Teacher", b =>
                 {
                     b.HasOne("SchoolManagementSystem.Models.Department", "Department")
@@ -1905,6 +2140,19 @@ namespace SchoolManagementSystem.Migrations
 
                     b.HasOne("SchoolManagementSystem.Models.Teacher", "Teacher")
                         .WithMany()
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("SchoolManagementSystem.Models.TeacherCourse", b =>
+                {
+                    b.HasOne("SchoolManagementSystem.Models.Course", "Course")
+                        .WithMany("TeacherCourse")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("SchoolManagementSystem.Models.Teacher", "Teacher")
+                        .WithMany("TeacherCourse")
                         .HasForeignKey("TeacherId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

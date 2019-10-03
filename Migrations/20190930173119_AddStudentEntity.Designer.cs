@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SchoolManagementSystem.Data;
 
 namespace SchoolManagementSystem.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190930173119_AddStudentEntity")]
+    partial class AddStudentEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -118,7 +120,7 @@ namespace SchoolManagementSystem.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "04305d45-73b7-4ba5-a8ac-c1b2632c71ed",
+                            ConcurrencyStamp = "2f256069-d17f-4f09-80c4-42b6366da629",
                             Email = "superadmin@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
@@ -126,7 +128,7 @@ namespace SchoolManagementSystem.Migrations
                             NormalizedUserName = "SUPERADMIN",
                             PasswordHash = "SuperAdmin",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "e93deb73-ad99-4909-96f4-2b7f07c93223",
+                            SecurityStamp = "5bcece2f-8920-4cc6-94b5-e08977722663",
                             TwoFactorEnabled = false,
                             UserName = "SuperAdmin"
                         });
@@ -1605,15 +1607,13 @@ namespace SchoolManagementSystem.Migrations
 
                     b.Property<string>("ContactAddress");
 
-                    b.Property<long>("CourseYearId");
-
                     b.Property<string>("DateOfBirth")
                         .IsRequired();
 
-                    b.Property<long>("DepartmentId");
-
                     b.Property<string>("EmailAddress")
                         .IsRequired();
+
+                    b.Property<long>("FacultyId");
 
                     b.Property<string>("Firstname")
                         .IsRequired()
@@ -1644,9 +1644,7 @@ namespace SchoolManagementSystem.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CourseYearId");
-
-                    b.HasIndex("DepartmentId");
+                    b.HasIndex("FacultyId");
 
                     b.HasIndex("IdentityUserId");
 
@@ -2058,14 +2056,9 @@ namespace SchoolManagementSystem.Migrations
 
             modelBuilder.Entity("SchoolManagementSystem.Models.Student", b =>
                 {
-                    b.HasOne("SchoolManagementSystem.Models.CourseYear", "CourseYear")
+                    b.HasOne("SchoolManagementSystem.Models.Faculty", "Faculty")
                         .WithMany()
-                        .HasForeignKey("CourseYearId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("SchoolManagementSystem.Models.Department", "Department")
-                        .WithMany()
-                        .HasForeignKey("DepartmentId")
+                        .HasForeignKey("FacultyId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")

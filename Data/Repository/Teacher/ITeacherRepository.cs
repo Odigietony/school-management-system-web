@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using SchoolManagementSystem.Models;
 
 namespace SchoolManagementSystem.Data.Repository
@@ -51,5 +52,12 @@ namespace SchoolManagementSystem.Data.Repository
 
         // Update teacher other degree information
         void UpdateTeacherOtherDegreeData(TeacherOtherDegree otherDegree);
+        Task<bool> TeacherTeachesCourse(Teacher teacher, string courseName);
+
+        Task<bool> AddTeacherToCourseAsync(TeacherCourse course);
+
+        Task<bool> RemoveTeacherFromCourse(TeacherCourse course);
+
+        Task<TeacherCourse> FindRelatedTeacherCourses(long courseId, long teacherId);
     }
 }

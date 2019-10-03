@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace SchoolManagementSystem.Models
 {
     public class Course
@@ -12,5 +14,8 @@ namespace SchoolManagementSystem.Models
 
         public long DepartmentId { get; set; }
         public Department Department { get; set; }
+
+        public List<TeacherCourse> TeacherCourse { get; set; }
+        public virtual List<StudentCourse> StudentCourse { get; set; }
     }
 }

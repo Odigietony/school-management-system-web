@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SchoolManagementSystem.Migrations
 {
-    public partial class AddTeacherFacultyDptCourseStudentData : Migration
+    public partial class AddTeacherCourses : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -209,6 +209,30 @@ namespace SchoolManagementSystem.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TeacherCourses",
+                columns: table => new
+                {
+                    TeacherId = table.Column<long>(nullable: false),
+                    CourseId = table.Column<long>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TeacherCourses", x => new { x.CourseId, x.TeacherId });
+                    table.ForeignKey(
+                        name: "FK_TeacherCourses_Courses_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "Courses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_TeacherCourses_Teachers_TeacherId",
+                        column: x => x.TeacherId,
+                        principalTable: "Teachers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TeachersProffesionalInformations",
                 columns: table => new
                 {
@@ -316,7 +340,7 @@ namespace SchoolManagementSystem.Migrations
                 keyColumn: "Id",
                 keyValue: "1",
                 columns: new[] { "ConcurrencyStamp", "SecurityStamp" },
-                values: new object[] { "2ff06f86-1731-44a1-8218-eb0604d9c93f", "808b68c2-6962-40e1-9a3c-8b0f5618a1f4" });
+                values: new object[] { "932d8580-189e-4fa9-a395-65ed534a2060", "5a45450b-5d73-4df6-8f02-4057c05669a8" });
 
             migrationBuilder.InsertData(
                 table: "Countries",
@@ -588,6 +612,11 @@ namespace SchoolManagementSystem.Migrations
                 column: "TeacherId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_TeacherCourses_TeacherId",
+                table: "TeacherCourses",
+                column: "TeacherId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TeacherHighestDegrees_TeacherContactInformationId",
                 table: "TeacherHighestDegrees",
                 column: "TeacherContactInformationId");
@@ -621,28 +650,31 @@ namespace SchoolManagementSystem.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Courses");
-
-            migrationBuilder.DropTable(
                 name: "States");
 
             migrationBuilder.DropTable(
                 name: "TeacherCertificates");
 
             migrationBuilder.DropTable(
+                name: "TeacherCourses");
+
+            migrationBuilder.DropTable(
                 name: "TeacherOtherDegrees");
 
             migrationBuilder.DropTable(
-                name: "CourseYears");
+                name: "TeachersProffesionalInformations");
 
             migrationBuilder.DropTable(
-                name: "TeachersProffesionalInformations");
+                name: "Courses");
 
             migrationBuilder.DropTable(
                 name: "TeacherHighestDegrees");
 
             migrationBuilder.DropTable(
                 name: "Referees");
+
+            migrationBuilder.DropTable(
+                name: "CourseYears");
 
             migrationBuilder.DropTable(
                 name: "TeacherContactInformations");

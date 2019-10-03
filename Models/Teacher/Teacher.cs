@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
 using SchoolManagementSystem.Enums;
@@ -36,5 +37,7 @@ namespace SchoolManagementSystem.Models
 
         public long DepartmentId { get; set; }
         public Department Department { get; set; }
+
+        public List<TeacherCourse> TeacherCourse { get; set; }
     }
 }
