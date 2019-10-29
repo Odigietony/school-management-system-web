@@ -1,0 +1,315 @@
+@model UpdateStudentDataViewModel
+@using SchoolManagementSystem.Enums
+@using System
+@{
+    ViewData["Title"] = "Update Student Data";
+     var photoPath = "~/uploads/" + (Model.ExistingPhotoPath ?? "default-user.png");
+}
+
+<!-- MAIN CONTENT -->
+<div class="main-content" id="content-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 clear-padding-xs">
+                <h5 class="page-title"><i class="fa fa-users"></i>REGISTER STUDENT</h5>
+                <div class="section-divider"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 clear-padding-xs">
+                <div class="col-md-12">
+                    <form method="post" asp-action="UpdateStudentData" asp-controller="student" enctype="multipart/form-data">
+                        <div class="dash-item first-dash-item">
+                           
+                            <div class="item-title">
+                                  <h6 class="item-title"><i class="fa fa-user"></i>STUDENT PERSONAL INFORMATION</h6>
+                                 <img src="@photoPath" alt="Student Image" asp-append-version="true" >
+                            </div>
+                            <div class="inner-item">
+                                <div class="dash-form">
+                                    <div class="col-sm-3">
+                                        <label asp-for="Firstname" class="clear-top-margin"><i class="fa fa-user-circle-o"></i>FIRST NAME</label>
+                                        <input asp-for="Firstname" type="text" placeholder="FIRST NAME" />
+                                        <span asp-validation-for="Firstname" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label asp-for="Middlename" class="clear-top-margin"><i class="fa fa-user-circle-o"></i>MIDDLE NAME</label>
+                                        <input asp-for="Middlename" type="text" placeholder="MIDDLE NAME" />
+                                        <span asp-validation-for="Middlename" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label asp-for="Lastname" class="clear-top-margin"><i class="fa fa-user-circle-o"></i>LAST NAME</label>
+                                        <input asp-for="Lastname" type="text" placeholder="LAST NAME" />
+                                        <span asp-validation-for="Lastname" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label asp-for="Gender" class="clear-top-margin"><i class="fa fa-venus"></i>GENDER</label>
+                                        <select asp-for="Gender" asp-items="Html.GetEnumSelectList<Gender>()"> 
+                                        </select>
+                                        <span asp-validation-for="Gender" class="text-danger"></span>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="col-sm-3">
+                                        <label asp-for="DateOfBirth"><i class="fa fa-calendar"></i>DATE OF BIRTH</label>
+                                        <input asp-for="DateOfBirth" />
+                                        <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label asp-for="PhoneNumber"><i class="fa fa-phone"></i>PHONE NUMBER</label>
+                                        <input asp-for="PhoneNumber" type="text" placeholder="1234567890" />
+                                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label asp-for="EmailAddress"><i class="fa fa-envelope-o"></i>EMAIL</label>
+                                        <input asp-for="EmailAddress" type="text" placeholder="john@example.com" />
+                                        <span asp-validation-for="EmailAddress" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label asp-for="Religion"><i class="fa fa-bell-o"></i>RELIGION</label>
+                                        <select asp-for="Religion" asp-items="Html.GetEnumSelectList<Religion>()"> </select>
+                                        <span asp-validation-for="Religion" class="text-danger"></span>
+                                    </div> 
+                                    <div class="clearfix"></div>
+                                    <div class="col-sm-3">
+                                        <label asp-for="MaritalStatus"><i class="fa fa-diamond"></i>MARITAL STATUS</label>
+                                        <select asp-for="MaritalStatus" asp-items="Html.GetEnumSelectList<MaritalStatus>()"> </select>
+                                        <span asp-validation-for="MaritalStatus" class="text-danger"></span>
+                                    </div> 
+                                    <div class="col-sm-3">
+                                        <label asp-for="Image"><i class="fa fa-file-picture-o"></i>UPLOAD PHOTO</label>
+                                        <input asp-for="Image" />
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+
+
+                        <div class="dash-item ">
+                            <h6 class="item-title"><i class="fa fa-home"></i>CONTACT INFORMATION</h6>
+                            <div class="inner-item">
+                                <div class="dash-form">
+                                    <div class="col-sm-3">
+                                        <label asp-for="ResidentialAddress" class="clear-top-margin"><i class="fa fa-home"></i>RESIDENTIAL ADDRESS</label>
+                                        <input asp-for="ResidentialAddress" placeholder="H/N 42 Street# 10" />
+                                        <span asp-validation-for="ResidentialAddress" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label asp-for="ContactAddress" class="clear-top-margin"><i class="fa fa-home"></i>CONTACT ADDRESS</label>
+                                        <input asp-for="ContactAddress" placeholder="H/N 42 Street# 10" />
+                                        <span asp-validation-for="ContactAddress" class="text-danger"></span>
+                                    </div>  
+                                    <div class="col-sm-3">
+                                        <label asp-for="AlternateEmailAddress" class="clear-top-margin"><i class="fa fa-envelope-o"></i>ALTERNATE EMAIL ADDRESS</label>
+                                        <input asp-for="AlternateEmailAddress" type="text" placeholder="janedoe@example.com" />
+                                        <span asp-validation-for="AlternateEmailAddress" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label asp-for="AlternatePhoneNumber" class="clear-top-margin"><i class="fa fa-phone"></i>ALTERNATE PHONE NUMBER</label>
+                                        <input asp-for="AlternatePhoneNumber" type="text" placeholder="1234567890" />
+                                        <span asp-validation-for="AlternatePhoneNumber" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+
+
+
+                        <div class="dash-item">
+                            <h6 class="item-title"><i class="fa fa-users"></i>NEXT OF KIN INFORMATION</h6>
+                            <div class="inner-item">
+                                <div class="dash-form"> 
+                                    <div class="col-sm-3">
+                                        <label asp-for="NextOfKinFirstname"><i class="fa fa-user-circle-o"></i>NEXT OF KIN FIRSTNAME</label>
+                                        <input asp-for="NextOfKinFirstname" type="text" placeholder="John Doe"/>
+                                        <span asp-validation-for="NextOfKinFirstname" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label asp-for="NextOfKinLastname"><i class="fa fa-user-circle-o"></i>NEXT OF KIN LASTNAME</label>
+                                        <input asp-for="NextOfKinLastname" type="text" placeholder="Jane Doe" />
+                                        <span asp-validation-for="NextOfKinLastname" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label asp-for="RelationToNextOfKin"><i class="fa fa-handshake-o"></i>RELATION TO NEXT OF KIN</label>
+                                        <select asp-for="RelationToNextOfKin" asp-items="Html.GetEnumSelectList<RelationToNextOfKin>()"></select>
+                                        <span asp-validation-for="RelationToNextOfKin" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label asp-for="PhoneOfNextOfKin"><i class="fa fa-phone-square"></i>PHONE NUMBER TO NEXT OF KIN</label>
+                                        <input asp-for="PhoneOfNextOfKin" type="text" placeholder="1234567890" />
+                                        <span asp-validation-for="PhoneOfNextOfKin" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <label asp-for="EmailOfNextOfKin"><i class="fa fa-envelope-o"></i>NEXT OF KIN EMAIL ADDRESS</label>
+                                        <input asp-for="EmailOfNextOfKin" type="text" placeholder="john@example.com" />
+                                        <span asp-validation-for="EmailOfNextOfKin" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+
+
+
+                        
+                        <div class="dash-item">
+                            <h6 class="item-title"><i class="fa fa-users"></i>SPONSOR INFORMATION</h6>
+                            <div class="inner-item">
+                                <div class="dash-form"> 
+                                    <div class="col-sm-3">
+                                        <label asp-for="SponsorFirstname"><i class="fa fa-user-circle-o"></i>SPONSOR FIRSTNAME</label>
+                                        <input asp-for="SponsorFirstname" type="text" placeholder="First Name" />
+                                        <span asp-validation-for="SponsorFirstname" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label asp-for="SponsorMiddlename"><i class="fa fa-user-circle-o"></i>SPONSOR MIDDLENAME</label>
+                                        <input asp-for="SponsorMiddlename" type="text" placeholder="Middle Name" />
+                                        <span asp-validation-for="SponsorMiddlename" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label asp-for="SponsorLastname"><i class="fa fa-user-circle-o"></i>SPONSOR LASTNAME</label>
+                                        <input asp-for="SponsorLastname" type="text" placeholder="Last Name" />
+                                        <span asp-validation-for="SponsorLastname" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label asp-for="RelationToNextOfKin"><i class="fa fa-handshake-o"></i>RELATION TO NEXT OF KIN</label>
+                                        <select asp-for="RelationToNextOfKin" asp-items="Html.GetEnumSelectList<RelationToNextOfKin>()"></select>
+                                        <span asp-validation-for="RelationToNextOfKin" class="text-danger"></span>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="col-sm-3">
+                                        <label asp-for="SponsorPhoneNumber"><i class="fa fa-phone-square"></i>SPONSOR PHONE NUMBER</label>
+                                        <input asp-for="SponsorPhoneNumber" type="text" placeholder="0700123456" />
+                                        <span asp-validation-for="SponsorPhoneNumber" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label asp-for="SponsorContactAddress"><i class="fa fa-home"></i>SPONSOR CONTACT ADDRESS</label>
+                                        <input asp-for="SponsorContactAddress" type="text" placeholder="Address" />
+                                        <span asp-validation-for="SponsorContactAddress" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label asp-for="SponsorWorkAddress"><i class="fa fa-home"></i>SPONSOR WORK ADDRESS</label>
+                                        <input asp-for="SponsorWorkAddress" type="text" placeholder="Address" />
+                                        <span asp-validation-for="SponsorWorkAddress" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label asp-for="SponsorProffession"><i class="fa fa-briefcase"></i>SPONSOR PROFFESSION</label>
+                                        <input asp-for="SponsorProffession" type="text" placeholder="Address" />
+                                        <span asp-validation-for="SponsorProffession" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <label asp-for="SponsorEmailAddress"><i class="fa fa-envelope-o"></i>SPONSOR EMAIL ADDRESS</label>
+                                        <input asp-for="SponsorEmailAddress" type="text" placeholder="john@example.com" />
+                                        <span asp-validation-for="SponsorEmailAddress" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+
+
+                        <div class="dash-item">
+                            <h6 class="item-title"><i class="fa fa-book"></i>ACADEMIC INFO</h6>
+                            <div class="inner-item">
+                                <div class="dash-form"> 
+                                    <div class="col-sm-3">
+                                        <label asp-for="FacultyId" ><i class="fa fa-flag"></i>PROGRAM</label>
+                                        <select asp-for="FacultyId" asp-items="Model.Faculties" id="facultyId">
+                                            <option value="">----- Select a Program -----</option>
+                                        </select> 
+                                        <span asp-validation-for="FacultyId" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label  asp-for="DepartmentId"><i class="fa fa-id-card"></i>COURSE</label>
+                                        <select asp-for="DepartmentId" asp-items="Model.Departments" id="departmentId">
+                                            <option value="">----- Select a Course -----</option>
+                                        </select>
+                                        <span asp-validation-for="DepartmentId" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <label asp-for="NameOfInstitution" ><i class="fa fa-building"></i>UNIVERSITY/COLLEGE</label>
+                                        <input asp-for="NameOfInstitution"/>
+                                        <span asp-validation-for="NameOfInstitution" class="text-danger"></span>
+                                    </div> 
+                                    
+                                    <div class="col-sm-3">
+                                        <label asp-for="YearEnrolled" ><i class="fa fa-calendar"></i>YEAR ENROLLED</label>
+                                        <input asp-for="YearEnrolled" />
+                                        <span asp-validation-for="YearEnrolled" class="text-danger"></span>
+                                    </div>
+                                    <div class="clearfix"></div> 
+                                    <div class="col-sm-3">
+                                        <label asp-for="YearOfGraduation" ><i class="fa fa-calendar"></i>YEAR OF GRADUATION</label>
+                                        <input asp-for="YearOfGraduation" />
+                                        <span asp-validation-for="YearOfGraduation" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <label asp-for="PreviousLevel" ><i class="fa fa-puzzle-piece"></i>PREVIOUS LEVEL/YEAR</label>
+                                        <select asp-for="PreviousLevel" asp-items="Html.GetEnumSelectList<StudentPreviousLevel>()"></select>
+                                        <span asp-validation-for="PreviousLevel" class="text-danger"></span>
+                                    </div> 
+
+
+                                    <!-- <div class="clearfix"></div>  -->
+                                    <div asp-validation-summary="All" class="text-danger"></div>
+                                    <div class="clearfix"></div> 
+                                    <div class="col-sm-12" style="margin-top: 30px;">
+                                        <button type="submit" class="btn btn-success"><i class="fa fa-paper-plane"></i> SAVE</button>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div> 
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="dash-footer col-lg-12">
+        <p>Copyright New Haven</p>
+    </div>
+</div>
+<div class="menu-togggle-btn">
+    <a href="#menu-toggle" id="menu-toggle"><i class="fa fa-bars"></i></a>
+</div>
+
+@section Scripts
+{
+    <script>
+        $(() => {
+            $('#facultyId').on('change', () => {
+                if($('#facultyId').val() != 0)
+                {
+                    let url = "/Student/AjaxGetDepartments/";
+                    let facultyId = $('#facultyId').val();
+                    $.getJSON(url, { facultyId: facultyId }, (data)=> {
+                        var items = "";
+                        $('#departmentId').empty();
+                        $('#departmentId').removeAttr('disabled');
+                        $.each(data, function(index, name){
+                            items += "<option value='" + name.value + "'>"+ name.text + "</option>";
+                        });
+                        $('#departmentId').html(items);
+                    });
+                }
+                else {
+                    $("#departmentId").empty();
+                    $("#departmentId").prop("disabled", true);
+                }
+            });
+        })
+    </script>
+}

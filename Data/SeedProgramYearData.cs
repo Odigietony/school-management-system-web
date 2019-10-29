@@ -8,12 +8,7 @@ namespace SchoolManagementSystem.Data
         public static void SeedProgramYear(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<CourseYear>().HasData(
-                new CourseYear
-                {
-                    Id = 0, 
-                    YearTitle = "None",
-                    YearNumberRepresentation = 0
-                },
+               
                 new CourseYear
                 {
                     Id = 1, 
@@ -35,8 +30,14 @@ namespace SchoolManagementSystem.Data
                  new CourseYear
                 {
                     Id = 4, 
-                    YearTitle = "Final year",
+                    YearTitle = "Fourth year",
                     YearNumberRepresentation = 400
+                },
+                new CourseYear
+                {
+                    Id = 5,
+                    YearTitle = "Final Year",
+                    YearNumberRepresentation = 500
                 }
             );
         }

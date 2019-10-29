@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
@@ -26,7 +27,10 @@ namespace SchoolManagementSystem.ViewModels
         [Required]
         public Gender? Gender { get; set; }
         [Required]
-        public string DateOfBirth { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{dd-MM-yyyy}")]
+        [Display(Name = "DATE OF BIRTH ")]
+        public DateTime DateOfBirth { get; set; }  
         [Required]
         [Phone]
         public string PhoneNumber { get; set; }
@@ -67,8 +71,15 @@ namespace SchoolManagementSystem.ViewModels
 
         // Student Accademic information
         public string NameOfInstitution { get; set; }
-        public string YearEnrolled { get; set; }
-        public string YearOfGraduation { get; set; }
+       [Required]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{dd-MM-yyy}")]
+        public DateTime YearEnrolled { get; set; }
+
+        [Required]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{dd-MM-yyy}")]
+        public DateTime YearOfGraduation { get; set; }
         [Required]
         public StudentPreviousLevel? PreviousLevel { get; set; }
 

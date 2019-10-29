@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,6 +13,9 @@ namespace SchoolManagementSystem.Data.Repository
         StudentAccademicInformation FindStudentAccademicInformationById(long Id);
         StudentNextOfKinInformation FindStudentNextofKinById(long Id);
         StudentSponsor FindStudentSponsorById(long Id);
+        Faculty GetFacultyByDepartmentId(long Id);
+        string GetLastInputtedMatriculationNumber();
+        IQueryable<string> GetAllMatricNumbers();
         void InsertStudent(Student student);
         void InsertStudentAccademicInformation(StudentAccademicInformation accademicInformation);
         void InsertStudentNextOfKin(StudentNextOfKinInformation nextOfKinInformation);
@@ -23,7 +27,7 @@ namespace SchoolManagementSystem.Data.Repository
         void DeleteStudent(Student student);
         void InsertStudentCourse(StudentCourse studentCourse);
         ICollection<Department> GetDepartmentsByFacultyId(long Id);
-        Task<ICollection<Course>> GetAllCoursesByDepartmentId(long Id);
-        void SaveAsync();
+        ICollection<Course> GetAllCoursesByDepartmentId(long Id);
+        void Save();
     }
 }

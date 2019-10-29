@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using SchoolManagementSystem.Data.Repository;
 using SchoolManagementSystem.Enums;
 using SchoolManagementSystem.Helpers;
@@ -43,7 +44,8 @@ namespace SchoolManagementSystem.Controllers
         [HttpGet]
         public IActionResult AllStudents()
         {
-            var model = studentRepository.FindAllStudent();
+            var model = studentRepository.FindAllStudent()
+                        .Include(s => s.IdentityUser).Include(s =>s.CourseYear);
             return View(model);
         }
 
@@ -74,7 +76,7 @@ namespace SchoolManagementSystem.Controllers
                     Middlename = model.Middlename,
                     Lastname = model.Lastname,
                     Gender = model.Gender,
-                    DateOfBirth = model.DateOfBirth,
+                    DateOfBirth = model.DateOfBirth.ToLongDateString(),
                     PhoneNumber = model.PhoneNumber,
                     AlternateEmailAddress = model.AlternateEmailAddress,
                     EmailAddress = model.EmailAddress,
@@ -86,20 +88,21 @@ namespace SchoolManagementSystem.Controllers
                     IdentityUserId = user.Id,
                     DepartmentId = model.DepartmentId,
                     CourseYearId = SetStudentCurrentYear(model.PreviousLevel.Value.ToString()),
-                    ProfilePhotoPath = uniqueName
+                    ProfilePhotoPath = uniqueName,
+                    MatriculationNumber = SetMatriculationNumber(model.FacultyId, model.DepartmentId)
                 };
                 studentRepository.InsertStudent(student);
-                studentRepository.SaveAsync();
+                studentRepository.Save();
                 StudentAccademicInformation accademicInformation = new StudentAccademicInformation
                 {
                     NameOfInstitution = model.NameOfInstitution,
-                    YearEnrolled = model.YearEnrolled,
-                    YearOfGraduation = model.YearOfGraduation,
+                    YearEnrolled = model.YearEnrolled.ToLongDateString(),
+                    YearOfGraduation = model.YearOfGraduation.ToLongDateString(),
                     PreviousLevel = model.PreviousLevel,
                     StudentId = student.Id
                 };
                 studentRepository.InsertStudentAccademicInformation(accademicInformation);
-                studentRepository.SaveAsync();
+                studentRepository.Save();
                 StudentNextOfKinInformation nextOfKinInformation = new StudentNextOfKinInformation
                 {
                     NextOfKinFirstname = model.NextOfKinFirstname,
@@ -110,7 +113,7 @@ namespace SchoolManagementSystem.Controllers
                     StudentId = student.Id
                 };
                 studentRepository.InsertStudentNextOfKin(nextOfKinInformation);
-                studentRepository.SaveAsync();
+                studentRepository.Save();
                 StudentSponsor studentSponsor = new StudentSponsor
                 {
                     SponsorFirstname = model.SponsorFirstname,
@@ -125,10 +128,12 @@ namespace SchoolManagementSystem.Controllers
                 };
                 SetStudentCourses(student.Id, student.DepartmentId, student.CourseYearId);
                 studentRepository.InsertStudentSponsor(studentSponsor);
-                studentRepository.SaveAsync();
-                ListAllFaculties(model);
+                studentRepository.Save();
+                
                 return Redirect("allstudents");
             }
+            ListAllFaculties(model);
+            ListAllDepartments(model);
             return View(model);
         }
 
@@ -144,6 +149,7 @@ namespace SchoolManagementSystem.Controllers
             StudentAccademicInformation accademicInformation = studentRepository.FindStudentAccademicInformationById(student.Id);
             StudentNextOfKinInformation nextOfKinInformation = studentRepository.FindStudentNextofKinById(student.Id);
             StudentSponsor studentSponsor = studentRepository.FindStudentSponsorById(student.Id);
+            Faculty faculty = studentRepository.GetFacultyByDepartmentId(student.DepartmentId);
             if (student == null)
             {
                 ViewBag.ErrorMessage = $"The Student with Id = { Id } could not be found";
@@ -157,7 +163,7 @@ namespace SchoolManagementSystem.Controllers
                 Middlename = student.Middlename,
                 Lastname = student.Lastname,
                 Gender = student.Gender,
-                DateOfBirth = student.DateOfBirth,
+                DateOfBirth = Convert.ToDateTime(student.DateOfBirth),
                 PhoneNumber = student.PhoneNumber,
                 AlternateEmailAddress = student.AlternateEmailAddress,
                 EmailAddress = student.EmailAddress,
@@ -168,11 +174,12 @@ namespace SchoolManagementSystem.Controllers
                 AlternatePhoneNumber = student.AlternatePhoneNumber,
                 ExistingPhotoPath = student.ProfilePhotoPath,
                 DepartmentId = student.DepartmentId,
+                FacultyId = faculty.Id,
 
                 // Student Accademic Information
                 NameOfInstitution = accademicInformation.NameOfInstitution,
-                YearEnrolled = accademicInformation.YearEnrolled,
-                YearOfGraduation = accademicInformation.YearOfGraduation,
+                YearEnrolled = Convert.ToDateTime(accademicInformation.YearEnrolled),
+                YearOfGraduation = Convert.ToDateTime(accademicInformation.YearOfGraduation),
                 PreviousLevel = accademicInformation.PreviousLevel,
 
                 // Student Next of kin information
@@ -192,6 +199,7 @@ namespace SchoolManagementSystem.Controllers
                 SponsorProffession = studentSponsor.SponsorProffession,
                 SponsorWorkAddress = studentSponsor.SponsorWorkAddress,
             };
+            ListAllDepartments(model);
             return View(model);
         }
 
@@ -220,7 +228,7 @@ namespace SchoolManagementSystem.Controllers
                     student.Middlename = model.Middlename;
                     student.Lastname = model.Lastname;
                     student.Gender = model.Gender;
-                    student.DateOfBirth = model.DateOfBirth;
+                    student.DateOfBirth = model.DateOfBirth.ToLongDateString();
                     student.PhoneNumber = model.PhoneNumber;
                     student.AlternatePhoneNumber = model.AlternatePhoneNumber;
                     student.EmailAddress = model.EmailAddress;
@@ -230,6 +238,7 @@ namespace SchoolManagementSystem.Controllers
                     student.ContactAddress = model.ContactAddress;
                     student.AlternateEmailAddress = model.AlternateEmailAddress;
                     student.DepartmentId = model.DepartmentId;
+                    student.CourseYearId = SetStudentCurrentYear(model.PreviousLevel.Value.ToString());
                     if (model.Image != null)
                     {
                         if (model.ExistingPhotoPath != null)
@@ -240,15 +249,15 @@ namespace SchoolManagementSystem.Controllers
                         student.ProfilePhotoPath = processFileUpload.UploadImage(model.Image);
                     }
                     studentRepository.UpdateStudent(student);
-                    studentRepository.SaveAsync();
+                    studentRepository.Save();
 
                     // Update Student Accademic information
                     accademicInformation.NameOfInstitution = model.NameOfInstitution;
-                    accademicInformation.YearEnrolled = model.YearEnrolled;
-                    accademicInformation.YearOfGraduation = model.YearOfGraduation;
+                    accademicInformation.YearEnrolled = model.YearEnrolled.ToLongDateString();
+                    accademicInformation.YearOfGraduation = model.YearOfGraduation.ToLongDateString();
                     accademicInformation.PreviousLevel = model.PreviousLevel;
                     studentRepository.UpdateStudentAccademicInformation(accademicInformation);
-                    studentRepository.SaveAsync();
+                    studentRepository.Save();
 
                     // Update Student Next of kin information
                     nextOfKinInformation.NextOfKinFirstname = model.NextOfKinFirstname;
@@ -257,7 +266,7 @@ namespace SchoolManagementSystem.Controllers
                     nextOfKinInformation.PhoneOfNextOfKin = model.PhoneOfNextOfKin;
                     nextOfKinInformation.RelationToNextOfKin = model.RelationToNextOfKin;
                     studentRepository.UpdateStudentNextofKinformation(nextOfKinInformation);
-                    studentRepository.SaveAsync();
+                    studentRepository.Save();
 
                     // Update student sponsor information
                     studentSponsor.SponsorFirstname = model.SponsorFirstname;
@@ -269,7 +278,7 @@ namespace SchoolManagementSystem.Controllers
                     studentSponsor.SponsorProffession = model.SponsorProffession;
                     studentSponsor.SponsorWorkAddress = model.SponsorWorkAddress;
                     studentRepository.UpdateStudentSponsorformation(studentSponsor);
-                    studentRepository.SaveAsync();
+                    studentRepository.Save();
 
                     return RedirectToAction("allstudents"); 
                 }
@@ -282,9 +291,11 @@ namespace SchoolManagementSystem.Controllers
         }
 
         [HttpGet]
-        public IActionResult StudentDetails(long Id)
+        public async Task<IActionResult> StudentDetails(long Id)
         {
             Student student = studentRepository.FindStudentById(Id);
+            IdentityUser user = await userManager.FindByIdAsync(student.IdentityUserId);
+            student.IdentityUser = user;
             StudentAccademicInformation accademicInformation = studentRepository.FindStudentAccademicInformationById(student.Id);
             StudentNextOfKinInformation nextOfKinInformation = studentRepository.FindStudentNextofKinById(student.Id);
             StudentSponsor studentSponsor = studentRepository.FindStudentSponsorById(student.Id);
@@ -321,6 +332,7 @@ namespace SchoolManagementSystem.Controllers
                     System.IO.File.Delete(filePath);
                 }
                 studentRepository.DeleteStudent(student);
+                studentRepository.Save();
                 return Json(new {success = true });
             }
             else
@@ -354,7 +366,7 @@ namespace SchoolManagementSystem.Controllers
             return model;
         }
 
-        private JsonResult AjaxGetDepartments(long facultyId)
+        public JsonResult AjaxGetDepartments(long facultyId)
         {
             List<Department> department = new List<Department>();
             department = studentRepository.GetDepartmentsByFacultyId(facultyId).ToList();
@@ -362,9 +374,9 @@ namespace SchoolManagementSystem.Controllers
             return Json(new SelectList(department, "Id", "DepartmentName"));
         }
 
-        private async void SetStudentCourses(long studentId, long departmentId, long courseYearId)
+        private void SetStudentCourses(long studentId, long departmentId, long courseYearId)
         {
-            var courses = await studentRepository.GetAllCoursesByDepartmentId(departmentId);
+            var courses =  studentRepository.GetAllCoursesByDepartmentId(departmentId);
             foreach(var course in courses)
             {
                 if(course.CourseYearId == courseYearId)
@@ -375,7 +387,7 @@ namespace SchoolManagementSystem.Controllers
                         CourseId = course.Id
                     };
                     studentRepository.InsertStudentCourse(studentCourse);
-                    studentRepository.SaveAsync();
+                    studentRepository.Save();
                 }
                 
             }
@@ -396,16 +408,73 @@ namespace SchoolManagementSystem.Controllers
                 {
                     currentYear = (course.Id - 1);
                 }
+                else if(previousYear == "FourthYear" && course.YearTitle == "Fourth Year")
+                {
+                    currentYear = (course.Id - 1);
+                }
                 else if(previousYear == "FinalYear" && course.YearTitle == "Final Year")
                 {
                     currentYear = (course.Id - 1);
                 }
-                else
-                {
-                    currentYear = 1;
-                }
             }
             return currentYear;
+        }
+
+        private string SetMatriculationNumber(long facultyId, long departmentId)
+        {
+            Faculty faculty = facultyRepository.GetById(facultyId);
+            Department department = departmentRepository.GetById(departmentId);
+            string lastMatricNumber = studentRepository.GetLastInputtedMatriculationNumber();
+            var listOfMatricNumbers = studentRepository.GetAllMatricNumbers();
+            string schoolNameAbrv = "NHU";
+            string currentYear = DateTime.Now.Year.ToString();
+            string matricNumberFormat = schoolNameAbrv + "/" + currentYear.Substring(2) + "/" + faculty.FacultyCode + "/" + department.DepartmentCode + "/";
+            string newValue = InitialMatricValue();
+            if(String.IsNullOrEmpty(lastMatricNumber))
+            {
+                return MatricNumberWithInintialNumbericValue(matricNumberFormat); 
+            }
+            else
+            {
+                string yearFromMatric = lastMatricNumber.Substring(4);
+                if(currentYear.Substring(2) == yearFromMatric.Substring(0, yearFromMatric.IndexOf("/")))
+                {
+                    foreach(var numbers in listOfMatricNumbers)
+                    {
+                        string removeSchAbrandYr = numbers.Substring(7);
+                        string getFacultyCode = removeSchAbrandYr.Substring(0, removeSchAbrandYr.IndexOf("/"));
+                        string rmvSchAbrandSlash = removeSchAbrandYr.Substring(removeSchAbrandYr.IndexOf("/") + 1);
+                        string getDptCode = rmvSchAbrandSlash.Substring(0, rmvSchAbrandSlash.IndexOf("/"));
+                        string getLastDigits = numbers.Substring(numbers.Length - 5);
+
+                        if(Int32.Parse(getFacultyCode) == faculty.FacultyCode)
+                        {
+                            if(Int32.Parse(getDptCode) == department.DepartmentCode)
+                            { 
+                                int valueFromLastDigits = Int32.Parse(getLastDigits) + 1;
+                                newValue = valueFromLastDigits.ToString().PadLeft(5, '0'); 
+                            }   
+                        } 
+                    }
+                    return matricNumberFormat += newValue;
+                } 
+                return MatricNumberWithInintialNumbericValue(matricNumberFormat);
+            }
+        }
+
+        protected string MatricNumberWithInintialNumbericValue(string matricNumberFormat)
+        {
+            int initialValue = Int32.Parse(new String('0', 4) + "1");
+            string newValueString = initialValue.ToString().PadLeft(5, '0');
+            matricNumberFormat += newValueString;
+            return matricNumberFormat;
+        }
+
+        protected string InitialMatricValue()
+        {
+            int initialValue = Int32.Parse(new String('0', 4));
+            string newValueString = initialValue.ToString().PadLeft(5, '0');
+            return newValueString; 
         }
 
     }

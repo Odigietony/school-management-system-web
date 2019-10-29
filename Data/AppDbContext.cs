@@ -16,7 +16,7 @@ namespace SchoolManagementSystem.Data
             modelBuilder.SeedAdmin();
             modelBuilder.SeedCountry();
             modelBuilder.SeedStates();
-            modelBuilder.SeedProgramYear();
+            // modelBuilder.SeedProgramYear();
             //Add the hasKey to the bridge table to prevent the (no primary key error)
             modelBuilder.Entity<TeacherCourse>()
                         .HasKey(x => new { x.CourseId, x.TeacherId });

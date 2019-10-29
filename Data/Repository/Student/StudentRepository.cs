@@ -45,14 +45,30 @@ namespace SchoolManagementSystem.Data.Repository
             return context.StudentSponsors.FirstOrDefault(s => s.StudentId == Id);
         }
 
-        public async Task<ICollection<Course>> GetAllCoursesByDepartmentId(long Id)
+        public ICollection<Course> GetAllCoursesByDepartmentId(long Id)
         {
-            return await context.Courses.Where(c => c.DepartmentId == Id).ToListAsync();
+            return context.Courses.Where(c => c.DepartmentId == Id).ToList();
+        }
+
+        public IQueryable<string> GetAllMatricNumbers()
+        {
+            return context.Students.Select(s => s.MatriculationNumber);
         }
 
         public ICollection<Department> GetDepartmentsByFacultyId(long Id)
         {
             return context.Departments.Where(d => d.FacultyId == Id).ToList();
+        }
+
+        public Faculty GetFacultyByDepartmentId(long Id)
+        {
+            var department = context.Departments.FirstOrDefault(d => d.Id == Id);
+            return context.Faculties.FirstOrDefault(f => f.Id == department.FacultyId);
+        }
+
+        public string GetLastInputtedMatriculationNumber()
+        {
+            return context.Students.Select(s => s.MatriculationNumber).LastOrDefault();
         }
 
         public void InsertStudent(Student student)
@@ -80,9 +96,9 @@ namespace SchoolManagementSystem.Data.Repository
             context.StudentSponsors.Add(studentSponsor);
         }
 
-        public async void SaveAsync()
+        public void Save()
         {
-            await context.SaveChangesAsync();
+            context.SaveChanges();
         }
 
         public void UpdateStudent(Student student)

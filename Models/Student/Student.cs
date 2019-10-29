@@ -8,6 +8,10 @@ namespace SchoolManagementSystem.Models
     public class Student
     {
         public long Id { get; set; }
+
+        [Required]
+        public string MatriculationNumber { get; set; }
+
         [Required]
         [StringLength(20)]
         public string Firstname { get; set; } 
