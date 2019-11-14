@@ -25,6 +25,9 @@ namespace SchoolManagementSystem.Areas.Administrator.ViewModels
         public string EmailAddress { get; set; }
         [Phone]
         public string PhoneNumber { get; set; }
+        [Required]
+        // [DataType(DataType.Password)]
+        public string Password { get; set; }
 
         public IFormFile Image { get; set; }
         public IdentityRole Role { get; set; }

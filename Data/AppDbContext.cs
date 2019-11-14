@@ -24,18 +24,23 @@ namespace SchoolManagementSystem.Data
                         .HasKey(s => new { s.CourseId, s.StudentId });
         } 
         public DbSet<Admin> Admins {get; set;}
+        public DbSet<AdminTask> AdminTasks { get; set; }
         public DbSet<Course> Courses {get; set;}
         public DbSet<CourseYear> CourseYears { get; set;}
         public DbSet<Department> Departments { get; set;}
         public DbSet<Faculty> Faculties { get; set;}
         public DbSet<Teacher> Teachers { get; set; }
+        public DbSet<TeacherTask> TeacherTasks { get; set; }
         public DbSet<Country> Countries { get; set; }
+        public DbSet<Location> Locations { get; set; }
+        public DbSet<LocationCategory> LocationCategories { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<MessageAttachment> MessageAttachments { get; set; }
         public DbSet<ReceivedMessage> ReceivedMessages { get; set; }
         public DbSet<Referee> Referees { get; set; }
         public DbSet<State> States { get; set; }
         public DbSet<Student> Students { get; set; }
+        public DbSet<StudentTask> StudentTasks { get; set; }
         public DbSet<StudentAccademicInformation> StudentAccademicInformations { get; set; }
         public DbSet<StudentCourse> StudentCourses { get; set;}
         public DbSet<StudentNextOfKinInformation> StudentNextOfKinInformations { get; set; }

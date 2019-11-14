@@ -28,7 +28,8 @@ namespace SchoolManagementSystem.Controllers
         public async Task<IActionResult> AllCourses()
         {
             AllCoursesViewModel model = new AllCoursesViewModel();
-            model.Courses = await entityRepository.GetAll().Include(c => c.CourseYear).Include(c => c.Department).ToListAsync();
+            model.Courses = await entityRepository.GetAll()
+            .Include(c => c.CourseYear).Include(c => c.Department).ToListAsync();
             GetAllCourseYears(model);
             GetAllDepartments(model);
             return View(model);

@@ -48,6 +48,12 @@
 								<input asp-for="EmailAddress" placeholder="john@pathshala.com" />
 								<span asp-validation-for="EmailAddress" class="text-danger"></span>
 							</div> 
+							<div class="col-sm-3">
+								<label asp-for="Password"><i class="fa fa-key" ></i>PASSWORD</label>
+								<input asp-for="Password" />
+								<em><i class="fa fa-info-circle"></i><b>Save this password</b> or create a new one.</em>
+								<span asp-validation-for="Password" class="text-danger"></span>
+							</div> 
 							<div class="clearfix"></div>
 							<div class="col-sm-3">
 								<label asp-for="Image" ><i class="fa fa-file-picture-o"></i>UPLOAD PHOTO</label>

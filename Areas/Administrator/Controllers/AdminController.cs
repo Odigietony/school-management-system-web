@@ -50,7 +50,10 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
         List<IdentityRole> list = new List<IdentityRole>();
         list = roleManager.Roles.ToList();
         ViewBag.list = list;
-        return View();
+        string generatedPassword = passwordGenerator.GeneratePassword(15);
+        CreateAdminViewModel model = new CreateAdminViewModel();
+        model.Password = generatedPassword;
+        return View(model);
     }
 
     [HttpPost]
@@ -58,8 +61,7 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
     {
         if (ModelState.IsValid)
         {
-            string uniqueFileName = processFileUpload.UploadImage(model.Image);
-            string generatedPassword = passwordGenerator.GeneratePassword(15);
+            string uniqueFileName = processFileUpload.UploadImage(model.Image); 
             var role = await roleManager.FindByIdAsync(model.Role.Id); 
                 IdentityUser user = new IdentityUser
                 {
@@ -67,7 +69,7 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
                     Email = model.EmailAddress,
                     PhoneNumber = model.PhoneNumber,
                 };
-                IdentityResult result = await userManager.CreateAsync(user, generatedPassword);
+                IdentityResult result = await userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     IdentityResult roleAddedResult = await userManager.AddToRoleAsync(user, role.Name);
