@@ -12,5 +12,7 @@ namespace SchoolManagementSystem.Models
         public DateTime Date { get; set; }
         [DataType(DataType.Time)]
         public DateTime Time { get; set; }
+        public long LocationId { get; set; }
+        public Location Location { get; set; }
     }
 }

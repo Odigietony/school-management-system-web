@@ -1,0 +1,43 @@
+@model CreateNewTaskViewModel 
+    
+@{
+    ViewData["Title"] = "CreateNewTask";
+}
+
+<div class="dash-item first-dash-item">
+        <h6 class="item-title"><i class="fa fa-calendar-plus-o"></i>ADD TASK</h6>
+        <form asp-area="administrator" asp-action="createnewtask" asp-controller="admintask" method="post">
+            <div class="inner-item">
+            <div class="dash-form">
+                <label class="clear-top-margin" asp-for="Title"><i class="fa fa-tag"></i>TITLE</label>
+                <input asp-for="Title" placeholder="04" />
+                <span class="text-danger" asp-validation-for="Title"></span>
+                
+                <label asp-for="Description"><i class="fa fa-calendar-plus-o"></i>DESCRIPTION</label>
+                <textarea asp-for="Description" placeholder="Description"  row="4" col="5"></textarea>
+                <span class="text-danger" asp-validation-for="Description"></span>
+
+                <label asp-for="Date"><i class="fa fa-calendar"></i>DATE</label>
+                <input asp-for="Date" id='datetimepicker7'/>
+                <span class="text-danger" asp-validation-for="Date"></span>
+
+                <label asp-for="Time"><i class="fa fa-clock-o"></i>TIME</label>
+                <input asp-for="Time" id="time"/>
+                <span class="text-danger" asp-validation-for="Time"></span>
+               
+                <label asp-for="LocationId"><i class="fa fa-map-marker"></i>LOCATION</label>
+                <select asp-for="LocationId" asp-items="Model.Locations">
+                    <option value="">----- Select a Location -----</option>
+                </select>
+                <span class="text-danger" asp-validation-for="LocationId"></span>
+
+                <div style="margin-top:20px;">
+                    <button type="submit" class="btn btn-success"><i class="fa fa-paper-plane"></i> CREATE</button>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        </form>
+     <div class="clearfix"></div>
+ </div>
+ 

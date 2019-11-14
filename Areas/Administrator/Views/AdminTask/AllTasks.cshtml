@@ -1,0 +1,136 @@
+@model AllTasksViewModel
+@{
+    ViewData["Title"] = "All Tasks";
+}
+
+<div class="main-content" id="content-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 clear-padding-xs">
+                <h5 class="page-title"><i class="fa fa-calendar"></i>ALL TASKS</h5>
+                <div class="section-divider"></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12 clear-padding-xs">
+                <!-- Add tasks -->
+                <div class="col-sm-4">
+                    <partial name="CreateNewTask"  > 
+                </div>
+                <!-- Add tasks -->
+
+                <!-- All TASKS -->
+                <div class="col-sm-8">
+                    <div class="dash-item first-dash-item">
+                        <h6 class="item-title"><i class="fa fa-calendar"></i>ALL TASKS</h6>
+                        <div class="inner-item">
+                            <table id="attendenceDetailedTable" class="display responsive nowrap" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th><i class="fa fa-hashtag"></i>ID</th>
+                                        <th><i class="fa fa-tag"></i>TITLE</th>
+                                        <th><i class="fa fa-calendar"></i>DESCRIPTION</th> 
+                                        <th><i class="fa fa-calendar"></i>DATE</th>
+                                        <th><i class="fa fa-clock-o"></i>TIME</th> 
+                                        <th><i class="fa fa-map-marker"></i>LOCATION</th> 
+                                        <th><i class="fa fa-briefcase"></i>ACTION</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if(Model.AdminTask.Any())
+                                    {
+                                        foreach(var tasks in Model.AdminTask)
+                                        {
+                                            <tr>
+                                                <td>@tasks.Id</td>
+                                                <td>@tasks.Title</td>
+                                                <td>@tasks.Description</td>
+                                                <td>@tasks.Date</td>
+                                                <td>@tasks.Time</td>
+                                                <td>@tasks.Location.Title</td>
+                                                <td class="action-link">
+                                                    <a class="edit" href="javascript:void(0)" onclick="UpdateData('@tasks.Id')" title="Edit tasks Data"><i class="fa fa-edit"></i></a>
+                                                    <a class="delete" href="#" title="Delete" data-toggle="modal" data-target="#deleteDetailModal_@tasks.Id"><i class="fa fa-remove"></i></a>
+                                                </td>
+                                            </tr>  
+
+                                            <!-- Delete Modal -->
+                                            <div id="deleteDetailModal_@tasks.Id" class="modal fade" role="dialog">
+                                                <div class="modal-dialog">
+                                                    <!-- Modal content-->
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                            <h4 class="modal-title"><i class="fa fa-trash"></i>DELETE tasks</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form asp-action="deletetasks" asp-controller="tasks" id="deleteForm">
+                                                                    <h3 class="text-danger text-center"><i class="fa fa-exclamation-triangle"> </i>
+                                                                         Are you sure you want to<strong> Delete @tasks.Title? </strong>
+                                                                    </h3>
+                                                            </form> 
+                                                            <div class="clearfix"></div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                             <div class="table-action-box">
+                                                                <a href="javascript:void(0)" class="save" onclick="DeleteData('@tasks.Id')"><i class="fa fa-check"></i>YES</a>
+                                                                <a href="#" class="cancel" data-dismiss="modal"><i class="fa fa-ban"></i>CLOSE</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <td colspan="4"><h4 class="text-center"><b>No Task Data to Display</b></h4></td>
+                                        </tr>
+                                    } 
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="menu-togggle-btn">
+        <a href="#menu-toggle" id="menu-toggle"><i class="fa fa-bars"></i></a>
+    </div>
+     
+    
+    
+    
+    <!--Edit tasks modal-->     
+            <div id="editResourceData" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title"><i class="fa fa-edit"></i>EDIT tasks DATA</h4>
+                        </div> 
+                        <div class="modal-body dash-form">
+                        <form asp-action="updatetasksdata" asp-controller="tasks" id="editForm">
+                        </form>
+                        </div> 
+                        <div class="modal-footer">
+                            <div class="table-action-box">
+                                <a type="button" class="btn btn-success" onclick="UpdatePostData()"><i class="fa fa-check"></i>SAVE</a>
+                                <a href="#" class="cancel" data-dismiss="modal"><i class="fa fa-ban"></i>CLOSE</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+    <!-- Edit tasks modal	-->
+</div>
+
+@section Scripts
+{
+    <script src="~/dashboard/assets/js/Custom.js"></script> 
+}
+ 

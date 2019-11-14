@@ -14,6 +14,7 @@ namespace SchoolManagementSystem.Areas.Administrator.ViewModels
         [Required]
         [StringLength(30)]
         public string Title { get; set; }
+        [MaxLength(5000)]
         public string Description { get; set; }
         [Required]
         [DataType(DataType.Date)]
