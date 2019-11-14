@@ -7,36 +7,6 @@ namespace SchoolManagementSystem.Data
 {
     public static class ModelBuilderExtension
     {
-        public static void SeedUser(this ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<IdentityUser>().HasData(
-                new IdentityUser
-                {
-                    Id = "1",
-                    UserName = "SuperAdmin",
-                    Email = "superadmin@gmail.com",
-                    PasswordHash = "SuperAdmin",
-                    NormalizedEmail = "SUPERADMIN@GMAIL.COM",
-                    NormalizedUserName = "SUPERADMIN",
-                    SecurityStamp = Guid.NewGuid().ToString(),
-                }
-            );
-        }
-
-        public static void SeedAdmin(this ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Admin>().HasData(
-                new Admin
-                {
-                    Id = 1,
-                    Firstname = "Anthony", 
-                    Lastname = "Russo",
-                    IdentityUserId = "1",
-                    
-                }
-            );
-        }
-
         public static void SeedCountry(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Country>().HasData(

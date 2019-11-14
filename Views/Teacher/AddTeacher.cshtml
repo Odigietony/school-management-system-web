@@ -276,6 +276,7 @@
 
 @section Scripts
 {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script>
         $(() => {
             $('#countryId').on('change', () => {

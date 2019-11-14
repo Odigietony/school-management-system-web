@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SchoolManagementSystem.Enums;
 
@@ -39,6 +40,7 @@ namespace SchoolManagementSystem.ViewModels
 
         [Required]
         [EmailAddress]
+        [Remote(action: "IsEmailInUse", controller: "Admin")]
         public string EmailAddress { get; set; }
         [Required]
         public Religion? Religion { get; set; }

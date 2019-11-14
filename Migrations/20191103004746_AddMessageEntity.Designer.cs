@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SchoolManagementSystem.Data;
 
 namespace SchoolManagementSystem.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191103004746_AddMessageEntity")]
+    partial class AddMessageEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -118,7 +120,7 @@ namespace SchoolManagementSystem.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "41922748-4fd6-4b07-8a15-663bd40a9138",
+                            ConcurrencyStamp = "f7f93cc6-b52d-4291-8d9c-4e834a984ca8",
                             Email = "superadmin@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
@@ -126,7 +128,7 @@ namespace SchoolManagementSystem.Migrations
                             NormalizedUserName = "SUPERADMIN",
                             PasswordHash = "SuperAdmin",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "a3aa8583-7a63-4e2e-9c4b-711f215dc7c5",
+                            SecurityStamp = "62a93b1f-4e8b-4c2c-9e47-24582efaea6a",
                             TwoFactorEnabled = false,
                             UserName = "SuperAdmin"
                         });
@@ -832,8 +834,6 @@ namespace SchoolManagementSystem.Migrations
                     b.Property<string>("DateAndTime");
 
                     b.Property<string>("IdentityUserId");
-
-                    b.Property<bool>("IsDelivered");
 
                     b.Property<string>("Subject")
                         .HasMaxLength(20);

@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,13 +31,29 @@ namespace SchoolManagementSystem
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            // services.AddMvc(options => {
+            //     var policy = new AuthorizationPolicyBuilder()
+            //     .RequireAuthenticatedUser()
+            //     .Build();
+            // options.Filters.Add(new AuthorizeFilter(policy));
+            // });
+            services.Configure<CookiePolicyOptions>(options => {
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            }); 
             services.AddDbContextPool<AppDbContext>(options =>
                 options.UseSqlServer(_configuration.GetConnectionString("SchoolManagementDB"))
             );
             services.AddIdentity<IdentityUser, IdentityRole>()
-            .AddEntityFrameworkStores<AppDbContext>();
+            .AddEntityFrameworkStores<AppDbContext>(); 
+            
+           services.ConfigureApplicationCookie(options =>{
+               options.LoginPath = "/Administrator/Account/Login";
+               options.Cookie.IsEssential = true;
+           });
+            services.AddMvc();
             services.AddTransient<IStudentRepository, StudentRepository>();
+            services.AddTransient<IMessageRepository, MessageRepository>();
             services.AddTransient<IEntityRepository<Admin>, EntityRepository<Admin>>();
             services.AddTransient<IEntityRepository<Faculty>, EntityRepository<Faculty>>();
             services.AddTransient<IEntityRepository<Department>, EntityRepository<Department>>();
@@ -44,12 +63,14 @@ namespace SchoolManagementSystem
             services.AddTransient<ICountryRepository, CountryRepository>();
             services.AddScoped<IPasswordGenerator, PasswordGenerator>();
             services.AddScoped<IProcessFileUpload, ProcessUploadFile>();
-            services.AddTransient<IStateRepository, StateRepository>();
+            services.AddTransient<IStateRepository, StateRepository>(); 
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -58,12 +79,19 @@ namespace SchoolManagementSystem
             {
                 app.UseStatusCodePagesWithReExecute("/Error");
             }
-
-            app.UseStaticFiles();
+            
+            
+          
+            app.UseStaticFiles(); 
+            app.UseAuthentication();
             app.UseMvc(routes =>
             {
+                routes.MapRoute(
+                    name: "Administrator",
+                    template: "{area:exists}/{controller=dashboard}/{action=index}/{id?}"
+                );
                 routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
-            });
+            }); 
         }
     }
 }

@@ -1,0 +1,136 @@
+@{
+    ViewData["Title"] = "My Inbox";
+}
+
+
+<!-- MAIN CONTENT --> 
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 clear-padding-xs">
+                <h5 class="page-title"><i class="fa fa-users"></i>INBOX</h5>
+                <div class="section-divider"></div>
+            </div>
+        </div>
+        
+
+ 
+        <!-- <div class="alert alert-success alert-dismissable" id="alert" role="alert">
+        <strong>Deleted Successfully!</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div> -->
+
+
+ 
+
+@if(Model.Any())
+{ 
+        <div class="row">
+            <div class="col-lg-12 clear-padding-xs">
+                <div class="col-lg-12">
+                    <div class="dash-item first-dash-item">
+                        <h6 class="item-title"><i class="fa fa-users"></i>STUDENTS</h6>
+                        <div class="inner-item">
+                            <div class="chart">
+		                        <a class="save btn btn-success" style="width:auto;" asp-action="addstudent" asp-controller="student">
+                                    <i class="fa fa-plus"> </i>
+                                    <span><strong>  REGISTER NEW STUDENTS </strong></span>
+                                </a>
+                            </div>
+                            <div class="clearfix" style="margin-bottom: 25px;"></div>
+                            <table id="attendenceDetailedTable" class="display responsive nowrap" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th><i class="fa fa-hashtag"></i>FROM</th>
+                                        <th><i class="fa fa-hashtag"></i>SUBJECT</th>
+                                        <th><i class="fa fa-id-card"></i>CONTENT</th>
+                                        <th><i class="fa fa-id-card"></i>DATE</th>
+                                        <th><i class="fa fa-envelope"></i>STATUS</th>
+                                        <th><i class="fa fa-photo"></i>SENDER IMAGE</th> 
+                                        <th><i class="fa fa-tasks"></i>STATUS</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach(var student in Model)
+                                    {
+										var photoPath = "~/uploads/" + (student.ProfilePhotoPath ?? "default-user.png");
+                                        <tr>
+                                            <td>@student.Id</td>
+                                            <td>@student.MatriculationNumber</td>
+                                            <td>@student.Firstname</td>
+                                            <td>@student.Lastname</td>
+                                            <td>@student.IdentityUser.Email</td>
+                                            <td>@student.PhoneNumber</td>
+                                            <td>@student.Gender</td>
+                                            <td>@student.CourseYear.YearTitle</td>
+                                            <td><img class="Thumbnail" src="@photoPath" alt="student image"  asp-append-version="true" /></td> 
+
+                                            <td class="action-link">
+                                                <a asp-controller="student" asp-action="updatestudentdata" asp-route-Id="@student.Id" class="edit" title="Edit Student Data"  >
+                                                    <i class="fa fa-edit"></i>
+                                                 </a>
+
+                                                <a class="delete" href="javascript:void(0)" title="Delete Student" data-toggle="modal" data-target="#deleteDetailModal_@student.Id">
+                                                    <i class="fa fa-remove"></i>
+                                                </a>
+
+                                                <a asp-controller="student" asp-action="studentdetails" asp-route-Id="@student.Id" class="details" title="Student Details"  >
+                                                    <i class="fa fa fa-vcard"></i>
+                                                 </a>
+                                            </td>
+                                        </tr>  
+ 
+                                         <!-- Delete Modal -->
+                                        <div id="deleteDetailModal_@student.Id" class="modal fade" role="dialog">
+                                            <div class="modal-dialog">
+                                                <!-- Modal content-->
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                        <h4 class="modal-title"><i class="fa fa-trash"></i>DELETE STUDENT RECORD</h4>
+                                                    </div>
+                                                        <form asp-controller="student" asp-action="deletestudent" id="deleteForm">
+                                                            <div class="modal-body">
+                                                                <h3 class="text-danger text-center"><i class="fa fa-exclamation-triangle"></i>
+                                                                    Are you sure you want to<strong> Delete @student.Firstname @student.Middlename  @student.Lastname</strong>??
+                                                                </h3> 
+                                                            </div>
+                                                        </form>
+                                                    <div class="modal-footer">
+                                                        <div class="table-action-box">
+                                                            <a type="button" class="btn btn-success" onclick="DeleteData('@student.Id')"><i class="fa fa-check"></i>YES</a>
+                                                            <a href="#" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-ban"></i>CLOSE</a>
+                                                        </div>
+                                                    </div> 
+                                                </div>
+                                            </div>
+                                        </div> 
+                                    } 
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>   
+}
+else
+{
+    <div class="chart-title">
+		<h4 class="bottom-title">NO STUDENT DATA TO DISPLAY</h4>
+	</div>
+    <div class="chart-legends">
+		<a class="btn btn-large" asp-action="addstudent" asp-controller="student"><span>REGISTER NEW STUDENT</span></a> 
+	</div>
+}
+ </div>
+ <div class="menu-togggle-btn">
+    <a href="#menu-toggle" id="menu-toggle"><i class="fa fa-bars"></i></a>
+ </div>
+
+@section Scripts
+{
+    <script src="~/dashboard/assets/js/Custom.js"></script> 
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

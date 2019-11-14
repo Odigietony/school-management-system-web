@@ -2,6 +2,7 @@ using System;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SchoolManagementSystem.Models;
+using SchoolManagementSystem.Models.Message;
 
 namespace SchoolManagementSystem.Data
 {
@@ -12,8 +13,6 @@ namespace SchoolManagementSystem.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.SeedUser();
-            modelBuilder.SeedAdmin();
             modelBuilder.SeedCountry();
             modelBuilder.SeedStates();
             // modelBuilder.SeedProgramYear();
@@ -31,6 +30,9 @@ namespace SchoolManagementSystem.Data
         public DbSet<Faculty> Faculties { get; set;}
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<Country> Countries { get; set; }
+        public DbSet<Message> Messages { get; set; }
+        public DbSet<MessageAttachment> MessageAttachments { get; set; }
+        public DbSet<ReceivedMessage> ReceivedMessages { get; set; }
         public DbSet<Referee> Referees { get; set; }
         public DbSet<State> States { get; set; }
         public DbSet<Student> Students { get; set; }

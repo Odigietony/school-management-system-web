@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>New Haven - @ViewBag.Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <environment include="Development">
+         <!-- Styles -->
+        <link href="~/assets/css/bootstrap.min.css" rel="stylesheet" media="screen"> 
+		<link href="~/assets/css/owl.carousel.min.css" rel="stylesheet" media="screen">
+		<link href="~/assets/css/owl.theme.default.min.css" rel="stylesheet" media="screen">   
+        <link href="~/assets/css/style.css" rel="stylesheet" media="screen">
+        <link href="~/assets/css/site.css" rel="stylesheet" media="screen">
+       
+
+        <!-- Fonts -->
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+        <link href="~/assets/fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet" media="screen">
+    </environment>
+</head>
+<body>
+    <partial name="~/Views/Shared/Backend/Login/_DashboardLoginJumbotron.cshtml" />
+
+     <!-- body row -->
+    <div class="row contact-row">
+        @RenderBody()
+    </div>
+
+
+    <environment include="Development">
+        <!-- Scripts -->
+        <script src="~/assets/js/jQuery_v3_2_0.min.js"></script> 
+        <script src="~/lib/jquery-validate/jquery.validate.js"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+		<script src="~/assets/js/jquery-ui.min.js"></script>
+        <script src="~/assets/js/bootstrap.min.js"></script>
+		<script src="~/assets/plugins/owl.carousel.min.js"></script>
+        <script src="~/assets/js/js.js"></script>
+    </environment>
+    @RenderSection("Scripts", required:false)
+</body>
+</html>

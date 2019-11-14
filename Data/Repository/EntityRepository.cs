@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using SchoolManagementSystem.Models;
 
 namespace SchoolManagementSystem.Data.Repository
 {
@@ -24,6 +25,12 @@ namespace SchoolManagementSystem.Data.Repository
         public IQueryable<TEntity> GetAll()
         {
             return entity;
+        }
+
+        public Admin GetByUserId(string Id)
+        {
+            Admin admin = _context.Admins.FirstOrDefault(x => x.IdentityUserId == Id);
+            return admin;
         }
 
         public TEntity GetById(object Id)

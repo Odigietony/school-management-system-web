@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SchoolManagementSystem.Enums;
 
@@ -34,6 +35,7 @@ namespace SchoolManagementSystem.ViewModels
         public string Lastname { get; set; }
         [Required]
         [EmailAddress]
+        [Remote(action: "IsEmailInUse", controller: "Admin")]
         [Display(Name = "PERSONAL EMAIL ADDRESS")]
         public string EmailAddress { get; set; }
         [Required]

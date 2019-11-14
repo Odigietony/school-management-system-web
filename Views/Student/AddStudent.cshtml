@@ -282,6 +282,7 @@
 
 @section Scripts
 {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script>
         $(() => {
             $('#facultyId').on('change', () => {
