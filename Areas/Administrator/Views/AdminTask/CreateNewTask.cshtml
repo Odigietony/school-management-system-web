@@ -1,5 +1,18 @@
 @model CreateNewTaskViewModel 
-    
+ <link rel="stylesheet" href="~/lib/jqueryui/jquery-ui.min.css"> 
+ <link rel="stylesheet" href="~/lib/wickedpicker.min.css"> 
+        <script src="~/lib/jquery.js"></script>
+        <script src="~/lib/jqueryui/jquery-ui.min.js"></script>
+        <script src="~/lib/wickedpicker.min.js"></script>
+        <script>
+            $(function() {
+                $("#datepicker").datepicker({ minDate: 0});
+                });
+        </script>
+        <script>
+            $('.timepicker').wickedpicker();
+        </script>
+
 @{
     ViewData["Title"] = "CreateNewTask";
 }
@@ -18,11 +31,11 @@
                 <span class="text-danger" asp-validation-for="Description"></span>
 
                 <label asp-for="Date"><i class="fa fa-calendar"></i>DATE</label>
-                <input asp-for="Date" id='datetimepicker7'/>
+                <input asp-for="Date" id='datepicker' type="text" placeholder=""/>
                 <span class="text-danger" asp-validation-for="Date"></span>
 
                 <label asp-for="Time"><i class="fa fa-clock-o"></i>TIME</label>
-                <input asp-for="Time" id="time"/>
+                <input asp-for="Time"  />
                 <span class="text-danger" asp-validation-for="Time"></span>
                
                 <label asp-for="LocationId"><i class="fa fa-map-marker"></i>LOCATION</label>
