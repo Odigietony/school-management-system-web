@@ -12,5 +12,6 @@ namespace SchoolManagementSystem.Data.Repository
         void Save();
         Location GetById(long Id); 
         Location GetByTitle(string title);
+        LocationCategory GetCategoryByTitle(string title);
     }
 }

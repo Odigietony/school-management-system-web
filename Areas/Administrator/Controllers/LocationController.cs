@@ -36,6 +36,7 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
             AllLocationsViewModel model = new AllLocationsViewModel();
             model.Locations = locationRepository.GetAll().Include(l => l.LocationCategory)
             .Include(l => l.Admin);
+            GetAllCategories(model);
             return View(model);
         }
 
@@ -156,7 +157,7 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
          [HttpGet]
         public IActionResult EditCategory(long Id)
         {
-            var location = locationRepository.GetById(Id);
+            var location = categoryRepository.GetById(Id);
             if (location == null)
             {
                 ViewBag.ErrorMessage = $"location resource with { Id } not found";
@@ -174,12 +175,12 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
         {
             if (ModelState.IsValid)
             {
-                Location location = new Location
+                LocationCategory category = new LocationCategory
                 {
                     Title = model.Title,
                 };
-                locationRepository.Update(location);
-                locationRepository.Save();
+                categoryRepository.Update(category);
+                categoryRepository.Save();
                 return Json(new { success = true });
             }
             return PartialView(model);
@@ -224,12 +225,18 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
 
         [AcceptVerbs("Get", "Post")]
         [AllowAnonymous]
-        private IActionResult LocationInUse(string title)
+        public IActionResult LocationInUse(string Title)
         {
-            Location location = locationRepository.GetByTitle(title);
-            return location == null ? Json(true) : Json($"The location { title } is already registered");
+            Location location = locationRepository.GetByTitle(Title);
+            return location == null ? Json(true) : Json($"The location { Title } is already registered");
         }
 
-       
+        [AcceptVerbs("Get", "Post")]
+        [AllowAnonymous]
+        public IActionResult LocationCategoryInUse(string Title)
+        {
+            LocationCategory category = locationRepository.GetCategoryByTitle(Title);
+            return category == null ? Json(true) : Json($"The category { Title } is already registered");
+        }
     }
 }

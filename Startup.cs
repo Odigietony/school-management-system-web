@@ -60,7 +60,7 @@ namespace SchoolManagementSystem
             services.AddTransient<IEntityRepository<Department>, EntityRepository<Department>>();
             services.AddTransient<IEntityRepository<CourseYear>, EntityRepository<CourseYear>>();
             services.AddTransient<IEntityRepository<Course>, EntityRepository<Course>>();
-            services.AddTransient<IEntityRepository<Location>, EntityRepository<Location>>();
+            services.AddTransient<ILocation, LocationRepository>();
             services.AddTransient<IEntityRepository<LocationCategory>, EntityRepository<LocationCategory>>();
             services.AddTransient<ITeacherRepository, TeacherRepository>();
             services.AddTransient<ICountryRepository, CountryRepository>();

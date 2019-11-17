@@ -63,10 +63,9 @@
                                                 <td>@location.LocationCategory.Title</td> 
                                                 <td>@location.Admin.Lastname</td> 
                                                 <td class="action-link">
-                                                    <a class="edit" href="javascript:void(0)" onclick="UpdateData('@location.Id')" title="Edit location Data"><i class="fa fa-edit"></i></a>
+                                                    <a class="edit" href="javascript:void(0)" onclick="updateLocation('@location.Id')" title="Edit location Data"><i class="fa fa-edit"></i></a>
                                                     <a class="delete" href="#" title="Delete" data-toggle="modal" data-target="#deleteDetailModal_@location.Id"><i class="fa fa-remove"></i></a>
-                                                    <a href="javascript:void(0)" onclick="updateteacherlocation('@location.Id')" class="edit" title="Add or Remove teacher from this location"  >
-                                                    <i class="fa fa-pencil"></i>
+                                                    
                                                  </a>
                                                 </td>
                                             </tr>  

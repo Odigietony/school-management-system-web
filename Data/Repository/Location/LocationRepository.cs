@@ -31,6 +31,11 @@ namespace SchoolManagementSystem.Data.Repository
             return context.Locations.FirstOrDefault(l => l.Title == title);
         }
 
+        public LocationCategory GetCategoryByTitle(string title)
+        {
+            return context.LocationCategories.FirstOrDefault(l => l.Title == title);
+        }
+
         public void Insert(Location location)
         {
             context.Locations.Add(location);
