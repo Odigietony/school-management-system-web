@@ -1,0 +1,20 @@
+@model EditLocationViewModel
+<form asp-area="administrator" asp-action="editlocation" asp-controller="location" method="post" id="editForm">  
+    <div class="col-sm-4">
+        <input type="hidden" value="@Model.Id" id="resourceId">
+        <label  class="clear-top-margin"><i class="fa fa-barcode"></i>TITLE</label>
+        <input asp-for="Title" value="@Model.Title"  id="Title" />
+        <span class="text-danger" asp-validation-for="Title"></span>
+    </div>
+    <div class="col-sm-4">
+        <label   class="clear-top-margin"><i class="fa fa-institution"></i>NUMBER</label>
+        <input asp-for="Number" value="@Model.Number"  id="Number"/>
+        <span class="text-danger" asp-validation-for="Number"></span>
+    </div> 
+    <div class="col-sm-4">
+        <label   class="clear-top-margin"><i class="fa fa-institution"></i>CATEGORY</label>
+        <select asp-for="CategoryId" asp-items="@Model.Categories"></select>
+        <span class="text-danger" asp-validation-for="CategoryId"></span>
+    </div> 
+    <div class="clearfix"></div> 
+</form>

@@ -1,3 +1,7 @@
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -9,24 +13,29 @@ using SchoolManagementSystem.Models;
 namespace SchoolManagementSystem.Areas.Administrator.Controllers
 {
     [Area("Administrator")]
+    [Authorize(Roles = "Administrator")]
     public class LocationController : Controller
     {
-        private readonly IEntityRepository<Location> locationRepository;
+        private readonly ILocation locationRepository;
         private readonly IEntityRepository<LocationCategory> categoryRepository;
-        private readonly SignInManager<IdentityUser> signInManager;
-        public LocationController(IEntityRepository<Location> locationRepository, SignInManager<IdentityUser> signInManager,
+        private readonly IEntityRepository<Admin> adminRepository;
+        private readonly UserManager<IdentityUser> userManager;
+        public LocationController(ILocation locationRepository, IEntityRepository<Admin> adminRepository,
+        UserManager<IdentityUser> userManager,
         IEntityRepository<LocationCategory> categoryRepository)
         {
-            this.signInManager = signInManager;
+            this.userManager = userManager;
             this.categoryRepository = categoryRepository;
             this.locationRepository = locationRepository;
+            this.adminRepository = adminRepository;
         }
 
         [HttpGet]
         public IActionResult AllLocations()
         {
             AllLocationsViewModel model = new AllLocationsViewModel();
-            model.Locations = locationRepository.GetAll().Include(l => l.LocationCategory);
+            model.Locations = locationRepository.GetAll().Include(l => l.LocationCategory)
+            .Include(l => l.Admin);
             return View(model);
         }
 
@@ -39,16 +48,16 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddNewLocation(AddNewLocationViewModel model)
+        public async Task<IActionResult> AddNewLocation(AddNewLocationViewModel model)
         {
             if (ModelState.IsValid)
-            { 
+            {  
                 Location location = new Location
                 {
                     Title = model.Title,
                     Number = model.Number,
                     CategoryId = model.CategoryId,
-                    // AdminId = model.AdminId
+                    AdminId = await GetCurrentLoggedInUserId()
                 };
                 locationRepository.Insert(location);
                 locationRepository.Save();
@@ -69,8 +78,7 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
             }
             EditLocationViewModel model = new EditLocationViewModel
             {
-                Title = location.Title,
-                // AdminId = model.AdminId,
+                Title = location.Title, 
                 Number = location.Number,
                 CategoryId = location.CategoryId
             };
@@ -79,14 +87,14 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditLocation(EditLocationViewModel model)
+        public async Task<IActionResult> EditLocation(EditLocationViewModel model)
         {
             if (ModelState.IsValid)
             {
                 Location location = new Location
                 {
                     Title = model.Title,
-                    // AdminId = model.AdminId,
+                    AdminId = await GetCurrentLoggedInUserId(),
                     Number = model.Number,
                     CategoryId = model.CategoryId
                 };
@@ -115,22 +123,12 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
             locationRepository.Delete(location.Id);
             locationRepository.Save();
             return Json(new { success = true });
-        }
-
-        public AddNewLocationViewModel GetAllCategories(AddNewLocationViewModel model)
-        {
-            var categories = categoryRepository.GetAll();
-            foreach(var category in categories)
-            {
-                model.Categories.Add(new SelectListItem { Value = category.Id.ToString(), Text = category.Title });
-            }
-            return model;
-        }
+        } 
 
         public IActionResult AllCategories()
         {
             AllCategories model = new AllCategories();
-            model.Categories = categoryRepository.GetAll();
+            model.Categories = categoryRepository.GetAll().OrderBy(c => c.Title);
             return View(model);
         }
 
@@ -206,5 +204,32 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
             return Json(new { success = true });
         }
 
+        private async Task<long> GetCurrentLoggedInUserId()
+        {
+            IdentityUser user = await GetUserId();
+            Admin admin = adminRepository.GetByUserId(user.Id);
+            return admin.Id;
+        }
+
+        private Task<IdentityUser> GetUserId() => userManager.GetUserAsync(HttpContext.User);
+        private AddNewLocationViewModel GetAllCategories(AddNewLocationViewModel model)
+        {
+            var categories = categoryRepository.GetAll();
+            foreach(var category in categories)
+            {
+                model.Categories.Add(new SelectListItem { Value = category.Id.ToString(), Text = category.Title });
+            }
+            return model;
+        }
+
+        [AcceptVerbs("Get", "Post")]
+        [AllowAnonymous]
+        private IActionResult LocationInUse(string title)
+        {
+            Location location = locationRepository.GetByTitle(title);
+            return location == null ? Json(true) : Json($"The location { title } is already registered");
+        }
+
+       
     }
 }

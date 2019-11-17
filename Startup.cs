@@ -61,6 +61,7 @@ namespace SchoolManagementSystem
             services.AddTransient<IEntityRepository<CourseYear>, EntityRepository<CourseYear>>();
             services.AddTransient<IEntityRepository<Course>, EntityRepository<Course>>();
             services.AddTransient<IEntityRepository<Location>, EntityRepository<Location>>();
+            services.AddTransient<IEntityRepository<LocationCategory>, EntityRepository<LocationCategory>>();
             services.AddTransient<ITeacherRepository, TeacherRepository>();
             services.AddTransient<ICountryRepository, CountryRepository>();
             services.AddScoped<IPasswordGenerator, PasswordGenerator>();

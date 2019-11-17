@@ -1,0 +1,31 @@
+@model AddNewLocationViewModel
+
+
+<div class="dash-item first-dash-item">
+        <h6 class="item-title"><i class="fa fa-map-marker"></i>ADD LOCATION</h6>
+        <form asp-area="administator" asp-action="addnewlocation" asp-controller="location" method="post">
+            <div class="inner-item">
+                <div class="dash-form">
+                    <label class="clear-top-margin" asp-for="Title"><i class="fa fa-tag"></i>TITLE</label>
+                    <input asp-for="Title" placeholder="e.g Physics hall" />
+                    <span class="text-danger" asp-validation-for="Title"></span>
+                    
+                    <label asp-for="Number"><i class="fa fa-hashtag"></i>ROOM NUMBER</label>
+                    <input asp-for="Number" placeholder="e.g 100" />
+                    <span class="text-danger" asp-validation-for="Number"></span>
+                
+                    <label asp-for="CategoryId"><i class="fa fa-map-pin"></i>CATEGORY</label>
+                    <select asp-for="CategoryId" asp-items="Model.Categories">
+                        <option value="">----- Select a Category -----</option>
+                    </select>
+                    <span class="text-danger" asp-validation-for="CategoryId"></span>
+
+                    <div style="margin-top:20px;">
+                        <button type="submit" class="btn btn-success"><i class="fa fa-paper-plane"></i> CREATE</button>
+                    </div>
+                </div> 
+            </div>
+            <div class="clearfix"></div>
+        </form>
+     <div class="clearfix"></div>
+</div>

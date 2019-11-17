@@ -1,0 +1,10 @@
+@model EditCategoryViewModel
+<form asp-area="administrator" asp-action="editcategory" asp-controller="location" method="post" id="editForm">  
+    <div class="col-sm-4">
+        <input type="hidden" value="@Model.Id" id="resourceId">
+        <label  class="clear-top-margin"><i class="fa fa-tag"></i>TITLE</label>
+        <input asp-for="Title" value="@Model.Title"  id="Title"/>
+        <span class="text-danger" asp-validation-for="Title"></span>
+    </div>
+    <div class="clearfix"></div> 
+</form>

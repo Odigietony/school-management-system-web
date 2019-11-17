@@ -1,0 +1,21 @@
+@model AddNewCategoryViewModel
+
+
+<div class="dash-item first-dash-item">
+        <h6 class="item-title"><i class="fa fa-map-pin"></i>ADD NEW CATEGORY</h6>
+        <form asp-area="administrator" asp-action="addnewcategory" asp-controller="location" method="post">
+            <div class="inner-item">
+                <div class="dash-form">
+                    <label class="clear-top-margin" asp-for="Title"><i class="fa fa-tag"></i>TITLE</label>
+                    <input asp-for="Title" placeholder="e.g Physics hall" />
+                    <span class="text-danger" asp-validation-for="Title"></span>
+
+                    <div style="margin-top:20px;">
+                        <button type="submit" class="btn btn-success"><i class="fa fa-paper-plane"></i> CREATE</button>
+                    </div>
+                </div> 
+            </div>
+            <div class="clearfix"></div>
+        </form>
+     <div class="clearfix"></div>
+</div>

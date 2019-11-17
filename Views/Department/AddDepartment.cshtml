@@ -8,28 +8,28 @@
         <h6 class="item-title"><i class="fa fa-plus-circle"></i>ADD DEPARTMENT</h6>
         <form asp-action="adddepartment" asp-controller="department" method="post">
             <div class="inner-item">
-            <div class="dash-form">
-                <label class="clear-top-margin" asp-for="DepartmentCode"><i class="fa fa-barcode"></i>DEPARTMENT CODE</label>
-                <input asp-for="DepartmentCode" placeholder="04" />
-                <span class="text-danger" asp-validation-for="DepartmentCode"></span>
+                <div class="dash-form">
+                    <label class="clear-top-margin" asp-for="DepartmentCode"><i class="fa fa-barcode"></i>DEPARTMENT CODE</label>
+                    <input asp-for="DepartmentCode" placeholder="04" />
+                    <span class="text-danger" asp-validation-for="DepartmentCode"></span>
+                    
+                    <label asp-for="DepartmentName"><i class="fa fa-institution"></i>DEPARTMENT NAME</label>
+                    <input asp-for="DepartmentName" placeholder="Department of Science and Tech" />
+                    <span class="text-danger" asp-validation-for="DepartmentName"></span>
                 
-                <label asp-for="DepartmentName"><i class="fa fa-institution"></i>DEPARTMENT NAME</label>
-                <input asp-for="DepartmentName" placeholder="Department of Science and Tech" />
-                <span class="text-danger" asp-validation-for="DepartmentName"></span>
-               
-                <label asp-for="FacultyId"><i class="fa fa-institution"></i>FACULTY</label>
-                <select asp-for="FacultyId" asp-items="Model.Faculties">
-                    <option value="">----- Select a Faculty -----</option>
-                </select>
-                <span class="text-danger" asp-validation-for="FacultyId"></span>
+                    <label asp-for="FacultyId"><i class="fa fa-institution"></i>FACULTY</label>
+                    <select asp-for="FacultyId" asp-items="Model.Faculties">
+                        <option value="">----- Select a Faculty -----</option>
+                    </select>
+                    <span class="text-danger" asp-validation-for="FacultyId"></span>
 
-                <div style="margin-top:20px;">
-                    <button type="submit" class="btn btn-success"><i class="fa fa-paper-plane"></i> CREATE</button>
-                </div>
+                    <div style="margin-top:20px;">
+                        <button type="submit" class="btn btn-success"><i class="fa fa-paper-plane"></i> CREATE</button>
+                    </div>
+                </div> 
             </div>
             <div class="clearfix"></div>
-        </div>
         </form>
      <div class="clearfix"></div>
- </div>
+</div>
  
