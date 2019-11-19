@@ -8,7 +8,7 @@ namespace SchoolManagementSystem.Data.Repository
         IQueryable<Location> GetAll();
         void Insert(Location location);
         void Update(Location location);
-        void Delete(long Id);
+        void Delete(Location location);
         void Save();
         Location GetById(long Id); 
         Location GetByTitle(string title);

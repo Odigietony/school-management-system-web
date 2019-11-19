@@ -120,7 +120,7 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
                 ViewBag.ErrorMessage = $"The location Resource with Id = { Id } could not be found";
                 return View("NotFound");
             }
-            locationRepository.Delete(location.Id);
+            locationRepository.Delete(location);
             locationRepository.Save();
             return Json(new { success = true });
         } 

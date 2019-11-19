@@ -11,9 +11,9 @@ namespace SchoolManagementSystem.Data.Repository
         {
             this.context = context;
         }
-        public void Delete(long Id)
+        public void Delete(Location location)
         {
-            context.Remove(Id);
+            context.Locations.Remove(location);
         }
 
         public IQueryable<Location> GetAll()
