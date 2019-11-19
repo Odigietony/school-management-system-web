@@ -8,7 +8,7 @@ namespace SchoolManagementSystem.Models
 
         //Foreign Keys
         //[Location Category]
-        public long CategoryId { get; set; }
+        public long LocationCategoryId { get; set; }
         public LocationCategory LocationCategory { get; set; }
 
         //[Admin]

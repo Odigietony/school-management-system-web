@@ -34,9 +34,9 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
         public IActionResult AllLocations()
         {
             AllLocationsViewModel model = new AllLocationsViewModel();
-            model.Locations = locationRepository.GetAll().Include(l => l.LocationCategory)
-            .Include(l => l.Admin);
-            GetAllCategories(model);
+            model.Locations = locationRepository.GetAll().Include(l => l.Admin)
+            .Include(l => l.LocationCategory);
+            GetAllCategories(model); 
             return View(model);
         }
 
@@ -57,7 +57,7 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
                 {
                     Title = model.Title,
                     Number = model.Number,
-                    CategoryId = model.CategoryId,
+                    LocationCategoryId = model.CategoryId,
                     AdminId = await GetCurrentLoggedInUserId()
                 };
                 locationRepository.Insert(location);
@@ -79,9 +79,10 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
             }
             EditLocationViewModel model = new EditLocationViewModel
             {
+                Id = location.Id,
                 Title = location.Title, 
                 Number = location.Number,
-                CategoryId = location.CategoryId
+                CategoryId = location.LocationCategoryId
             };
             GetAllCategories(model);
             return PartialView(model);
@@ -92,13 +93,11 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
         {
             if (ModelState.IsValid)
             {
-                Location location = new Location
-                {
-                    Title = model.Title,
-                    AdminId = await GetCurrentLoggedInUserId(),
-                    Number = model.Number,
-                    CategoryId = model.CategoryId
-                };
+                Location location = locationRepository.GetById(model.Id); 
+                location.Title = model.Title;
+                location.AdminId = await GetCurrentLoggedInUserId();
+                location.Number = model.Number;
+                location.LocationCategoryId = model.CategoryId;
                 locationRepository.Update(location);
                 locationRepository.Save();
                 return Json(new { success = true });
@@ -157,15 +156,16 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
          [HttpGet]
         public IActionResult EditCategory(long Id)
         {
-            var location = categoryRepository.GetById(Id);
-            if (location == null)
+            var category = categoryRepository.GetById(Id);
+            if (category == null)
             {
-                ViewBag.ErrorMessage = $"location resource with { Id } not found";
+                ViewBag.ErrorMessage = $"category resource with { Id } not found";
                 return View("Error");
             }
             EditCategoryViewModel model = new EditCategoryViewModel
             {
-                Title = location.Title,
+                Id = category.Id,
+                Title = category.Title,
             };
             return PartialView(model);
         }
@@ -175,10 +175,8 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
         {
             if (ModelState.IsValid)
             {
-                LocationCategory category = new LocationCategory
-                {
-                    Title = model.Title,
-                };
+                LocationCategory category = categoryRepository.GetById(model.Id);
+                category.Title = model.Title;
                 categoryRepository.Update(category);
                 categoryRepository.Save();
                 return Json(new { success = true });
