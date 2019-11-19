@@ -69,6 +69,7 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
             }
             EditTaskViewModel model = new EditTaskViewModel
             {
+                Id = task.Id,
                 Title = task.Title,
                 Date = task.Date,
                 Time = task.Time,
@@ -84,14 +85,12 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
         {
             if (ModelState.IsValid)
             {
-                AdminTask task = new AdminTask
-                {
-                    Title = model.Title,
-                    Time = model.Time,
-                    Date = model.Date,
-                    Description = model.Description,
-                    LocationId = model.LocationId
-                };
+                AdminTask task = taskRepository.GetById(model.Id);
+                task.Title = model.Title;
+                task.Time = model.Time;
+                task.Date = model.Date;
+                task.Description = model.Description;
+                task.LocationId = model.LocationId; 
                 taskRepository.Update(task);
                 taskRepository.Save();
                 return Json(new { success = true });
