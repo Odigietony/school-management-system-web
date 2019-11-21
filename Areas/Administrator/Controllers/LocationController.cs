@@ -60,12 +60,14 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
                     LocationCategoryId = model.CategoryId,
                     AdminId = await GetCurrentLoggedInUserId()
                 };
+                string location_title = model.Title;
                 locationRepository.Insert(location);
                 locationRepository.Save();
+                TempData["created"] = $"New Location { location_title } was created successfully.";
                 return Redirect("alllocations");
             }
             GetAllCategories(model);
-            return View(model);
+            return RedirectToAction("alllocations", model);
         }
 
         [HttpGet]
@@ -100,6 +102,7 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
                 location.LocationCategoryId = model.CategoryId;
                 locationRepository.Update(location);
                 locationRepository.Save();
+                TempData["edited"] = $"Location { model.Title } has been successfully updated.";
                 return Json(new { success = true });
             }
             GetAllCategories(model);
@@ -120,8 +123,10 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
                 ViewBag.ErrorMessage = $"The location Resource with Id = { Id } could not be found";
                 return View("NotFound");
             }
+            string location_title = location.Title;
             locationRepository.Delete(location);
             locationRepository.Save();
+            TempData["deleted"] = $"The Location { location_title }, was successfully deleted.";
             return Json(new { success = true });
         } 
 
@@ -148,9 +153,10 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
                 };
                 categoryRepository.Insert(category);
                 categoryRepository.Save();
+                TempData["created_category"] = $"New Location Category { model.Title }, was created successfully.";
                 return Redirect("allcategories");
             }
-            return View(model);
+            return RedirectToAction("allcategories", model);
         }
 
          [HttpGet]
@@ -179,6 +185,7 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
                 category.Title = model.Title;
                 categoryRepository.Update(category);
                 categoryRepository.Save();
+                TempData["edited_category"] = $"Location Category { model.Title }, was successfully updated.";
                 return Json(new { success = true });
             }
             return PartialView(model);
@@ -198,8 +205,10 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
                 ViewBag.ErrorMessage = $"The category Resource with Id = { Id } could not be found";
                 return View("NotFound");
             }
+            string category_title = category.Title;
             categoryRepository.Delete(category.Id);
             categoryRepository.Save();
+            TempData["deleted_category"] = $"The Location Category{ category_title }, was successfully deleted.";
             return Json(new { success = true });
         }
 

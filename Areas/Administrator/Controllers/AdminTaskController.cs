@@ -53,8 +53,8 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
                 string task_title = model.Title;
                 taskRepository.Insert(task);
                 taskRepository.Save();
-                ViewBag.Success = $"Task { task_title } was created successfully.";
-                return RedirectToAction("alltasks",  ViewBag.Success );
+                TempData["created"] = $"Task { task_title } was created successfully.";
+                return Redirect("alltasks");
             }
             GetLocations(model);
             return RedirectToAction("alltasks", model);
@@ -97,7 +97,7 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
                 taskRepository.Save();
                 return Json(new { success = true });
             }
-            ViewBag.Success = "Task Updated Successfully.";
+            TempData["edited"] = "Task Updated Successfully.";
             GetLocations(model);
             return PartialView(model);
         }
@@ -119,7 +119,7 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
             string task_title = task.Title;
             taskRepository.Delete(task.Id);
             taskRepository.Save();
-            ViewBag.Success = $"Task { task_title } was deleted successfully.";
+            TempData["deleted"] = $"Task { task_title } was deleted successfully.";
             return Json(new { success = true });
         }
 
