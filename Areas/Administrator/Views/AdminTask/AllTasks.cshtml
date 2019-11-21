@@ -10,6 +10,12 @@
                 <h5 class="page-title"><i class="fa fa-calendar"></i>ALL TASKS</h5>
                 <div class="section-divider"></div>
             </div>
+             @if(ViewBag.Success != null)
+                        {
+                            <div class="alert alert-success">
+                                <strong>@ViewBag.Success</strong>
+                            </div>
+                        }
         </div>
 
         <div class="row">
@@ -24,6 +30,7 @@
                 <div class="col-sm-8">
                     <div class="dash-item first-dash-item">
                         <h6 class="item-title"><i class="fa fa-calendar"></i>ALL TASKS</h6>
+                       
                         <div class="inner-item">
                             <table id="attendenceDetailedTable" class="display responsive nowrap" cellspacing="0" width="100%">
                                 <thead>

@@ -13,9 +13,9 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
     public class AdminTaskController : Controller
     {
         private readonly IEntityRepository<AdminTask> taskRepository;
-        private readonly IEntityRepository<Location> locationRepository;
+        private readonly ILocation locationRepository;
         public AdminTaskController(IEntityRepository<AdminTask> taskRepository, 
-        IEntityRepository<Location> locationRepository)
+        ILocation locationRepository)
         {
             this.locationRepository = locationRepository;
             this.taskRepository = taskRepository;
@@ -50,12 +50,14 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
                     Description = model.Description,
                     LocationId = model.LocationId
                 };
+                string task_title = model.Title;
                 taskRepository.Insert(task);
                 taskRepository.Save();
-                return Redirect("alltasks");
+                ViewBag.Success = $"Task { task_title } was created successfully.";
+                return RedirectToAction("alltasks",  ViewBag.Success );
             }
             GetLocations(model);
-            return View(model);
+            return RedirectToAction("alltasks", model);
         }
 
         [HttpGet]
@@ -95,6 +97,7 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
                 taskRepository.Save();
                 return Json(new { success = true });
             }
+            ViewBag.Success = "Task Updated Successfully.";
             GetLocations(model);
             return PartialView(model);
         }
@@ -113,8 +116,10 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
                 ViewBag.ErrorMessage = $"The task Resource with Id = { Id } could not be found";
                 return View("NotFound");
             }
+            string task_title = task.Title;
             taskRepository.Delete(task.Id);
             taskRepository.Save();
+            ViewBag.Success = $"Task { task_title } was deleted successfully.";
             return Json(new { success = true });
         }
 
