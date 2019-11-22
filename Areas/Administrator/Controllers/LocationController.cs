@@ -137,10 +137,7 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
             return View(model);
         }
 
-        public IActionResult AddNewCategory()
-        {
-            return View();
-        }
+        public IActionResult AddNewCategory() => RedirectToAction("allcategories");
 
         [HttpPost]
         public IActionResult AddNewCategory(AddNewCategoryViewModel model)
@@ -156,7 +153,7 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
                 TempData["created_category"] = $"New Location Category { model.Title }, was created successfully.";
                 return Redirect("allcategories");
             }
-            return RedirectToAction("allcategories", model);
+            return View(model);
         }
 
          [HttpGet]

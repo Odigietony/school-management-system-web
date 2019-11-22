@@ -1,5 +1,5 @@
 @model EditRoleViewModel
-<form method="post" asp-controller="UserRoles" asp-action="EditRoles" id="editForm">
+<form method="post" asp-area="Administrator" asp-controller="UserRoles" asp-action="EditRoles" id="editForm">
     <div class="form-group row">
         <label asp-for="@Model.Id" class="col-sm-2 form-label"><i class="fa fa-hashtag"></i>ID</label> 
         <div class="col-sm-12">

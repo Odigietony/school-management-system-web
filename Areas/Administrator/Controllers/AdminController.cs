@@ -84,6 +84,7 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
                         };
                         _entityRepository.Insert(admin);
                         _entityRepository.Save();
+                        TempData["created"] = $"Admin { model.Firstname } { model.Lastname }, was created successfully.";
                         return RedirectToAction("index");
                     }
                     foreach (var error in roleAddedResult.Errors)
@@ -161,6 +162,7 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
             {
                 _entityRepository.Update(admin);
                 _entityRepository.Save();
+                TempData["edited"] = $"Admin { model.Firstname } { model.Lastname }, was updated successfully.";
                 return RedirectToAction("index");
             }
             foreach (var error in result.Errors)
@@ -217,8 +219,10 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
                 string filePath = Path.Combine(hostingEnvironment.WebRootPath, "uploads", admin.ImagePath);
                 System.IO.File.Delete(filePath);
             }
+            string admin_name = admin.Firstname + " " + admin.Lastname;
             _entityRepository.Delete(admin.Id);
             _entityRepository.Save();
+            TempData["deleted"] = $"Admin { admin_name }, was permanently deleted";
             return Json(new { success = true });
         }
         else

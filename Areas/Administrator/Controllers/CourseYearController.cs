@@ -38,6 +38,7 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
                 };
                 entityRepository.Insert(courseYear);
                 entityRepository.Save();
+                TempData["created"] = $"Admin { model.YearTitle }, was created successfully.";
                 return RedirectToAction("allregisteredcourseyears");
             }
             return View(model);
@@ -81,6 +82,7 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
                 courseYear.YearNumberRepresentation = model.YearNumberRepresentation;
                 entityRepository.Update(courseYear);
                 entityRepository.Save();
+                TempData["edited"] = $"Year { model.YearTitle }, was updated successfully.";
                 return Json(new { success = true });
             }
             return PartialView(model);
@@ -102,8 +104,10 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
                     ViewBag.ErrorMessage = $"The course Year with Reference Id = { Id } could not be found";
                     return View("NotFound");
                 }
+                string course_year = courseYear.YearTitle;
                 entityRepository.Delete(courseYear.Id);
                 entityRepository.Save();
+                TempData["deleted"] = $"Year { course_year }, was permanently deleted";
                 return Json(new {success = true });
             }
         }

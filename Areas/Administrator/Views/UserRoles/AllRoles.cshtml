@@ -31,12 +31,42 @@
         
 
  
-    <div class="alert alert-success alert-dismissable" id="alert" role="alert">
-       <strong>Updated Successfully!</strong>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
+     @if(TempData["created"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade-in" role="alert">
+                <strong>@TempData["created"]</strong>  
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        }
+        else if(TempData["edited"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade-in" role="alert">
+                <strong>@TempData["edited"]</strong>  
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        }
+        else if(TempData["deleted"] != null)
+        {
+            <div class="alert alert-warning alert-dismissible fade-in" role="alert">
+                <strong>@TempData["deleted"]</strong>  
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        }
+        else if(TempData["edited_user_role"] != null)
+        {
+            <div class="alert alert-warning alert-dismissible fade-in" role="alert">
+                <strong>@TempData["edited_user_role"]</strong>  
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        }
  
 
 @if(Model.Roles.Any())

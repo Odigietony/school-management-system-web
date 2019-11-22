@@ -8,7 +8,7 @@ $(document).ready(function () {
 
 function editUser(id)
 { 
-    let url = '/UserRoles/EditRoles/';
+    let url = '/Administrator/UserRoles/EditRoles/';
     let $modal = $("#editDetailModal");
     $modal.find('.modal-body').load(url + id, function(){
         $modal.modal('show');
@@ -17,7 +17,7 @@ function editUser(id)
 
 function editUserRole(roleId)
 {
-    let url1 = '/UserRoles/UpdateUserRole/'; 
+    let url1 = '/Administrator/UserRoles/UpdateUserRole/'; 
     let $modal1 = $("#editUserRole");
     $modal1.find('.modal-body').load(url1 + roleId, function(){
         $modal1.modal('show');
@@ -28,7 +28,7 @@ function updateUserData()
 {
     let id = $('#userRoleId').val();
     let rolename = $('#userRoleName').val();  
-    let url = '/UserRoles/EditRoles/';
+    let url = '/Administrator/UserRoles/EditRoles/';
     let modelData = ({'Id': id, 'RoleName': rolename}); 
     
     
@@ -57,7 +57,7 @@ function updateUserData()
 function updateUserRoleData()
 {
     let id = $('#roleId').val();  
-    let url = '/UserRoles/UpdateUserRole/';
+    let url = '/Administrator/UserRoles/UpdateUserRole/';
     let model = $('#UserRoleForm').serializeArray();
     model.push({name: 'Id', value: id}); 
     $.ajax({
@@ -81,7 +81,7 @@ function updateUserRoleData()
 
 function ConfirmDelete(uniqueId)
 {
-    url = "/UserRoles/DeleteRole/" + uniqueId;
+    url = "/Administrator/UserRoles/DeleteRole/" + uniqueId;
     $.ajax({
         type: "POST",
         url: url,
@@ -100,7 +100,7 @@ function ConfirmDelete(uniqueId)
 
 function ConfirmAdminDelete(uniqueId)
 {
-    url = "/Admin/Delete/" + uniqueId;
+    url = "/Administrator/Admin/Delete/" + uniqueId;
     $.ajax({
         type: "POST",
         url: url,

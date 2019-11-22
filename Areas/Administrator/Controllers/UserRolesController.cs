@@ -43,6 +43,7 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
                 var result = await roleManager.CreateAsync(role);
                 if (result.Succeeded)
                 {
+                    TempData["created"] = $"Role { model.RoleName }, was created successfully";
                     return RedirectToAction("allroles");
                 }
                 foreach (var errors in result.Errors)
@@ -87,7 +88,7 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
                     var result = await roleManager.UpdateAsync(role);
                     if (result.Succeeded)
                     {
-                         ViewBag.success = "The Update was successful!";
+                        TempData["edited"]= $"Role { role.Name }, was updated successfully.";
                         return Json(new { success = true });
                     }
                     foreach (var error in result.Errors)
@@ -161,6 +162,7 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
                         continue;
                     }else
                     {  
+                        TempData["edited_user_role"] = $"Role { role.Name }, was assigned to user { user.UserName }, successfully.";
                         return Json( new {success = true} );
                     }
                 } 
@@ -179,9 +181,11 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
             }
             else
             {
+                string rolename = role.Name;
                 IdentityResult result = await roleManager.DeleteAsync(role);
                 if(result.Succeeded)
                 {
+                    TempData["deleted"] = $"Role { rolename }, was permanently deleted.";
                     return Json(new { success = true });
                 }
                 foreach(var error in result.Errors)
