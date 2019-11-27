@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using SchoolManagementSystem.Models;
+
 namespace SchoolManagementSystem.Areas.Administrator.ViewModels
 {
     public class DashboardViewModel
@@ -6,6 +9,6 @@ namespace SchoolManagementSystem.Areas.Administrator.ViewModels
         public long AllTeachers { get; set; }
         public long AllEvents { get; set; }
         public long AllMessages { get; set; }
-        public IList<Task> TodaysTasks { get; set; }
+        public IList<AdminTask> TodaysTasks { get; set; }
     }
 }

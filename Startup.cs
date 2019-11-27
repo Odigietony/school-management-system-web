@@ -67,6 +67,7 @@ namespace SchoolManagementSystem
             services.AddScoped<IPasswordGenerator, PasswordGenerator>();
             services.AddScoped<IProcessFileUpload, ProcessUploadFile>();
             services.AddTransient<IStateRepository, StateRepository>(); 
+            services.AddTransient<ITaskRepository, TaskRepository>(); 
             
         }
 

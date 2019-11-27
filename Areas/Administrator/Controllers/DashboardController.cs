@@ -38,7 +38,7 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
                 AllActiveStudents = studentRepository.FindAllStudent().Count(),
                 AllTeachers = teacherRepository.GetAllTeachers().Count(),
                 AllMessages = messageRepository.GetAllReceivedMessagesByUser().Count(),
-                TodaysTask = taskRepository.GetTodaysTasks(),
+                TodaysTasks = taskRepository.GetTodaysTasks().ToList(),
             };
             return View(model);
         }

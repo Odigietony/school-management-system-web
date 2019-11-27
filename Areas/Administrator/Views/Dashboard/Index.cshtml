@@ -114,17 +114,17 @@
                         <div class="my-msg dash-item">
                             <h6 class="item-title"><i class="fa fa-calendar"></i>TODAY'S TASK</h6>
                             <div class="inner-item">
-                                @if (Model.TodaysTask.Any())
+                                @if (Model.TodaysTasks.Any())
                                 {
-                                    foreach (var task in Model.TodaysTask)
+                                    foreach (var task in Model.TodaysTasks)
                                     {
                                         <div class="timetable-item">
                                             <div class="col-xs-3 clear-padding">
-                                                <p><span class="time">10 AM</span></p>
+                                                <p><span class="time">@task.Time.ToShortTimeString()</span></p>
                                             </div>
                                             <div class="col-xs-9">
-                                                <p class="title">Teacher Meeting</p>
-                                                <p class="sent-by"><i class="fa fa-map-marker"></i> ROOM NO - 601</p>
+                                                <p class="title">@task.Title</p>
+                                                <p class="sent-by"><i class="fa fa-map-marker"></i> @task.Location.Title @task.Location.Number</p>
                                             </div>
                                             <div class="clearfix"></div>
                                         </div>

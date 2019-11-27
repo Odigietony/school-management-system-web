@@ -1,5 +1,8 @@
 using System;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using SchoolManagementSystem.Models;
+
 namespace SchoolManagementSystem.Data.Repository
 {
     public class TaskRepository : ITaskRepository
@@ -26,7 +29,7 @@ namespace SchoolManagementSystem.Data.Repository
 
         public IQueryable<AdminTask> GetTodaysTasks()
         {
-            return context.AdminTasks.Where(t => t.Date == DateTime.Now.Date);
+            return context.AdminTasks.Where(t => t.Date == DateTime.Now.Date).Include(t => t.Location);
         }
 
         public void Insert(AdminTask adminTask)
