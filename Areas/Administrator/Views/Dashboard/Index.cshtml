@@ -114,59 +114,27 @@
                         <div class="my-msg dash-item">
                             <h6 class="item-title"><i class="fa fa-calendar"></i>TODAY'S TASK</h6>
                             <div class="inner-item">
-                                <div class="timetable-item">
-                                    <div class="col-xs-3 clear-padding">
-                                        <p><span class="time">10 AM</span></p>
-                                    </div>
-                                    <div class="col-xs-9">
-                                        <p class="title">Teacher Meeting</p>
-                                        <p class="sent-by"><i class="fa fa-map-marker"></i> ROOM NO - 601</p>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                                <div class="timetable-item">
-                                    <div class="col-xs-3 clear-padding">
-                                        <p><span class="time">11 AM</span></p>
-                                    </div>
-                                    <div class="col-xs-9">
-                                        <p class="title">Campus Tour</p>
-                                        <p class="sent-by"><i class="fa fa-map-marker"></i> CAMPUS</p>
-                                        
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                                <div class="timetable-item">
-                                    <div class="col-xs-3 clear-padding">
-                                        <p><span class="time">12 PM</span></p>
-                                    </div>
-                                    <div class="col-xs-9">
-                                        <p class="title">Parent Meeting</p>
-                                        <p class="sent-by"><i class="fa fa-map-marker"></i> ROOM NO - 601</p>
-                                        
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                                <div class="timetable-item">
-                                    <div class="col-xs-3 clear-padding">
-                                        <p><span class="time">01 PM</span></p>
-                                    </div>
-                                    <div class="col-xs-9">
-                                        <p class="title">Guest Lecture</p>
-                                        <p class="sent-by"><i class="fa fa-map-marker"></i> ROOM NO - 601</p>
-                                        
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                                <div class="timetable-item">
-                                    <div class="col-xs-3 clear-padding">
-                                        <p><span class="time">02 PM</span></p>
-                                    </div>
-                                    <div class="col-xs-9">
-                                        <p class="title">Teacher Meeting</p>
-                                        <p class="sent-by"><i class="fa fa-map-marker"></i> ROOM NO - 601</p>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
+                                @if (Model.TodaysTask.Any())
+                                {
+                                    foreach (var task in Model.TodaysTask)
+                                    {
+                                        <div class="timetable-item">
+                                            <div class="col-xs-3 clear-padding">
+                                                <p><span class="time">10 AM</span></p>
+                                            </div>
+                                            <div class="col-xs-9">
+                                                <p class="title">Teacher Meeting</p>
+                                                <p class="sent-by"><i class="fa fa-map-marker"></i> ROOM NO - 601</p>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <h6 class="item-title"><i class="fa fa-calendar"></i>No Task Today</h6>
+                                }
+                                
                                 
                             </div>
                         </div>

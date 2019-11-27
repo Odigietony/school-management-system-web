@@ -16,7 +16,9 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
         private readonly IStudentRepository studentRepository;
         private readonly ITeacherRepository teacherRepository;
         private readonly IMessageRepository messageRepository;
-        public DashboardController(IEntityRepository<Admin> entityRepository, IMessageRepository messageRepository, 
+        private readonly ITaskRepository taskRepository;
+        public DashboardController(IEntityRepository<Admin> entityRepository, ITaskRepository taskRepository,
+        IMessageRepository messageRepository, 
         ITeacherRepository teacherRepository,
         IStudentRepository studentRepository)
         {
@@ -24,6 +26,7 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
             this.studentRepository = studentRepository;
             this.entityRepository = entityRepository;
             this.messageRepository = messageRepository;
+            this.taskRepository = taskRepository;
         }
 
         [HttpGet]
@@ -34,7 +37,8 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
             {
                 AllActiveStudents = studentRepository.FindAllStudent().Count(),
                 AllTeachers = teacherRepository.GetAllTeachers().Count(),
-                AllMessages = messageRepository.GetAllReceivedMessagesByUser().Count()
+                AllMessages = messageRepository.GetAllReceivedMessagesByUser().Count(),
+                TodaysTask = taskRepository.GetTodaysTasks(),
             };
             return View(model);
         }
