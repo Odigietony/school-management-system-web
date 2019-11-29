@@ -28,6 +28,8 @@ namespace SchoolManagementSystem.Data
         public DbSet<Course> Courses {get; set;}
         public DbSet<CourseYear> CourseYears { get; set;}
         public DbSet<Department> Departments { get; set;}
+        public DbSet<Event> Events { get; set; }
+        public DbSet<EventCategory> EventCategories { get; set; }
         public DbSet<Faculty> Faculties { get; set;}
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<TeacherTask> TeacherTasks { get; set; }
