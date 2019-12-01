@@ -13,12 +13,12 @@ namespace SchoolManagementSystem.Helpers
             this.hostingEnvironment = hostingEnvironment;
 
         }
-        public string UploadImage(IFormFile file)
+        public string UploadImage(IFormFile file, string location)
         {
             string uniqueFileName = null;
             if (file != null)
             {
-                string folderPath = Path.Combine(hostingEnvironment.WebRootPath, "uploads");
+                string folderPath = Path.Combine(hostingEnvironment.WebRootPath, location);
                 uniqueFileName = Guid.NewGuid() + "_" + file.FileName;
                 string filePath = Path.Combine(folderPath, uniqueFileName);
                 using(var filestream = new FileStream(filePath, FileMode.Create))

@@ -69,7 +69,7 @@ namespace SchoolManagementSystem.Controllers
                     PhoneNumber = model.PhoneNumber
                 };
                 IdentityResult result = await userManager.CreateAsync(user, passwordGenerator.GeneratePassword(15));
-                string uniqueName = processFileUpload.UploadImage(model.Image);
+                string uniqueName = processFileUpload.UploadImage(model.Image, "uploads");
                 Student student = new Student
                 {
                     Firstname = model.Firstname,
@@ -246,7 +246,7 @@ namespace SchoolManagementSystem.Controllers
                             string filePath = Path.Combine(hostingEnvironment.WebRootPath, "uploads", model.ExistingPhotoPath);
                             System.IO.File.Delete(filePath);
                         }
-                        student.ProfilePhotoPath = processFileUpload.UploadImage(model.Image);
+                        student.ProfilePhotoPath = processFileUpload.UploadImage(model.Image, "uploads");
                     }
                     studentRepository.UpdateStudent(student);
                     studentRepository.Save();

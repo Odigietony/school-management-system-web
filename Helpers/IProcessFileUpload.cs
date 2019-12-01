@@ -4,6 +4,6 @@ namespace SchoolManagementSystem.Helpers
 {
     public interface IProcessFileUpload
     {
-        string UploadImage(IFormFile file);
+        string UploadImage(IFormFile file, string folderLocation);
     }
 }

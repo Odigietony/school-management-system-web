@@ -61,7 +61,7 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
     {
         if (ModelState.IsValid)
         {
-            string uniqueFileName = processFileUpload.UploadImage(model.Image); 
+            string uniqueFileName = processFileUpload.UploadImage(model.Image, "uploads"); 
             var role = await roleManager.FindByIdAsync(model.Role.Id); 
                 IdentityUser user = new IdentityUser
                 {
@@ -155,7 +155,7 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
                     string filePath = Path.Combine(hostingEnvironment.WebRootPath, "uploads", model.ExistingPhotoPath);
                     System.IO.File.Delete(filePath);
                 }
-                admin.ImagePath = processFileUpload.UploadImage(model.Image);
+                admin.ImagePath = processFileUpload.UploadImage(model.Image, "uploads");
             }
             IdentityResult result = await userManager.UpdateAsync(user);
             if (result.Succeeded)

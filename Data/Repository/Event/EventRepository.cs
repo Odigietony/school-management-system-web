@@ -24,7 +24,8 @@ namespace SchoolManagementSystem.Data.Repository
 
         public IQueryable<Event> GetAll()
         {
-            return context.Events.Include(e => e.Location).Include(e => e.EventCategory);
+            return context.Events.Include(e => e.Location)
+            .Include(e => e.EventCategory).OrderByDescending(e => e.Id);
         }
 
         public IQueryable<EventCategory> GetAllEventCategories()
