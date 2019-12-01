@@ -7,6 +7,7 @@ using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SchoolManagementSystem.ViewModels;
+using System;
 
 namespace SchoolManagementSystem.Controllers
 {
@@ -43,6 +44,10 @@ namespace SchoolManagementSystem.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
+        public IActionResult TodaysEvent() => View(eventRepository.GetTodaysEvents());
+
+        [HttpGet]
         [Authorize]
         public IActionResult AddEvent()
         {
@@ -75,7 +80,7 @@ namespace SchoolManagementSystem.Controllers
                 };
                 eventRepository.InsertEvent(events);
                 eventRepository.Save();
-                TempData['event_created'] = $"Event { events.Title } was created successfully";
+                TempData["event_created"] = $"Event { events.Title } was created successfully";
                 return Redirect("index");
             }
             GetAllEventCategories(model);
@@ -92,6 +97,7 @@ namespace SchoolManagementSystem.Controllers
                 ViewBag.ErrorMessage = $"The event with reference id = { eventId } could not be found";
                 return View("error");
             }
+            
             EditEventViewModel model = new EditEventViewModel
             {
                 Id = events.Id,
@@ -101,7 +107,7 @@ namespace SchoolManagementSystem.Controllers
                 StartTime = events.StartTime,
                 EndTime = events.EndTime,
                 EventGuests = events.EventGuests,
-                Fee = events.Fee,
+                Fee = Convert.ToDecimal(events.Fee),
                 ExistingPhotoPath = events.Image,
                 Sponsor = events.Sponsor,
                 Speaker = events.Speaker,
@@ -131,7 +137,7 @@ namespace SchoolManagementSystem.Controllers
                 events.StartTime = model.StartTime;
                 events.EndTime = model.EndTime;
                 events.EventGuests = model.EventGuests;
-                events.Fee = model.Fee;
+                events.Fee = model.Fee.ToString();
                 events.Speaker = model.Speaker;
                 events.Sponsor = model.Sponsor;
                 events.EventCategoryId = model.EventCategoryId;
@@ -152,7 +158,7 @@ namespace SchoolManagementSystem.Controllers
                 }
                 eventRepository.UpdateEvent(events);
                 eventRepository.Save();
-                TempData['event_updated'] = $"Event, { events.Title }, was updated successfully";
+                TempData["event_updated"] = $"Event, { events.Title }, was updated successfully";
                 return Redirect("index");
             }
             GetAllEventCategories(model);
@@ -170,12 +176,13 @@ namespace SchoolManagementSystem.Controllers
                 ViewBag.ErrorMessage = $"The event with reference Id = { Id } could not be found";
                 return View("error");
             }
-            EventtDetailsViewModel model = new EventtDetailsViewModel
+            EventDetailsViewModel model = new EventDetailsViewModel
             {
                 GetEvent = events,
                 EventLocation = locationRepository.GetById(events.LocationId),
                 EventCat = eventRepository.GetEventCategoryById(events.EventCategoryId)
-            }
+            };
+            return View(model);
         }
 
         [HttpPost]
@@ -196,7 +203,7 @@ namespace SchoolManagementSystem.Controllers
             }
             eventRepository.DeleteEvent(events);
             eventRepository.Save();
-            TempData['event_deleted'] = $"Event { event_title } was permanently deleted";
+            TempData["event_deleted"] = $"Event { event_title } was permanently deleted";
             return View("index");
         }
 
