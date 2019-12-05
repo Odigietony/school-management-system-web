@@ -29,19 +29,11 @@ namespace SchoolManagementSystem.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult Index()
-        {
-            var model = eventRepository.GetAll();
-            return View(model);
-        }
+        public IActionResult Index() => View(eventRepository.GetAll());
 
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult UpcomingEvents()
-        {
-            var model = eventRepository.GetAllUpcomingEvents();
-            return View(model);
-        }
+        public IActionResult UpcomingEvents() => View(eventRepository.GetAllUpcomingEvents()); 
 
         [HttpGet]
         [AllowAnonymous]
@@ -217,7 +209,7 @@ namespace SchoolManagementSystem.Controllers
             return model;
         }
 
-         private AddEventViewModel GetAllLocations(AddEventViewModel model)
+        private AddEventViewModel GetAllLocations(AddEventViewModel model)
         {
             var locations = locationRepository.GetAll();
             foreach (var location in locations)
