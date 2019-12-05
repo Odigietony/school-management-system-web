@@ -1,0 +1,133 @@
+@model IEnumerable<Event>
+@{
+    ViewData["Title"] = "All Events";
+}
+
+<!-- MAIN CONTENT --> 
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 clear-padding-xs">
+                <h5 class="page-title"><i class="fa fa-calendar"></i>ALL EVENTS</h5>
+                <div class="section-divider"></div>
+            </div>
+        </div>
+        
+
+ 
+    <!-- <div class="alert alert-success alert-dismissable" id="alert" role="alert">
+       <strong>Deleted Successfully!</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div> -->
+
+
+ 
+
+@if(Model.Any())
+{ 
+        <div class="row">
+            <div class="col-lg-12 clear-padding-xs">
+                <div class="col-lg-12">
+                    <div class="dash-item first-dash-item">
+                        <h6 class="item-title"><i class="fa fa-calendar"></i>EVENTS</h6>
+                        <div class="inner-item">
+                            <div class="chart">
+		                        <a class="save btn btn-success" style="width:auto;" asp-action="addevent" asp-controller="event">
+                                    <i class="fa fa-plus"> </i>
+                                    <span><strong>  ADD NEW EVENT </strong></span>
+                                </a>
+                            </div>
+                            <div class="clearfix" style="margin-bottom: 25px;"></div>
+                            <table id="attendenceDetailedTable" class="display responsive nowrap" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th><i class="fa fa-hashtag"></i>ID</th>
+                                        <th><i class="fa fa-tag"></i>TITLE/th>
+                                        <th><i class="fa fa-calendar-plus-o"></i>DATE</th>
+                                        <th><i class="fa fa-time"></i>TIME</th>
+                                        <th><i class="fa fa-location"></i>LOCATION</th>
+                                        <th><i class="fa fa-user"></i>ATTENDED BY</th> 
+                                        
+                                        <th><i class="fa fa-tasks"></i>ACTION</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach(var events in Model)
+                                    {
+                                        <tr>
+                                            <td>@events.Id</td>
+                                            <td>@events.Title</td>
+                                            <td>@events.Date</td>
+                                            <td>@events.StartTime</td>
+                                            <td>@events.Location.Title</td>
+                                            <td>@events.EventGuests/td>
+
+                                            <td class="action-link">
+                                                <a asp-controller="events" asp-action="editeventsdata" asp-route-Id="@events.Id" class="edit" title="Edit Event Data"  >
+                                                    <i class="fa fa-edit"></i>
+                                                 </a>
+
+                                                <a class="delete" href="javascript:void(0)" title="Delete Event" data-toggle="modal" data-target="#deleteDetailModal_@events.Id">
+                                                    <i class="fa fa-remove"></i>
+                                                </a>
+
+                                                <a asp-controller="events" asp-action="eventsdetails" asp-route-Id="@events.Id" class="details" title="Event Details"  >
+                                                    <i class="fa fa fa-vcard"></i>
+                                                 </a>
+                                            </td>
+                                        </tr>  
+ 
+                                         <!-- Delete Modal -->
+                                        <div id="deleteDetailModal_@events.Id" class="modal fade" role="dialog">
+                                            <div class="modal-dialog">
+                                                <!-- Modal content-->
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                        <h4 class="modal-title"><i class="fa fa-trash"></i>DELETE EVENT RECORD</h4>
+                                                    </div>
+                                                        <form asp-controller="events" asp-action="deleteeventsdata" id="deleteForm">
+                                                            <div class="modal-body">
+                                                                <h3 class="text-danger text-center"><i class="fa fa-exclamation-triangle"></i>
+                                                                    Are you sure you want to<strong> Delete @events.Title</strong>??
+                                                                </h3> 
+                                                            </div>
+                                                        </form>
+                                                    <div class="modal-footer">
+                                                        <div class="table-action-box">
+                                                            <a type="button" class="btn btn-success" onclick="DeleteData('@events.Id')"><i class="fa fa-check"></i>YES</a>
+                                                            <a href="#" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-ban"></i>CLOSE</a>
+                                                        </div>
+                                                    </div> 
+                                                </div>
+                                            </div>
+                                        </div> 
+                                    } 
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>   
+}
+else
+{
+    <div class="chart-title">
+		<h4 class="bottom-title">NO EVENT DATA TO DISPLAY</h4>
+	</div>
+    <div class="chart-legends">
+		<a class="btn btn-large" asp-action="addevent" asp-controller="event"><span>ADD NEW EVENT</span></a> 
+	</div>
+}
+ 
+ <div class="menu-togggle-btn">
+    <a href="#menu-toggle" id="menu-toggle"><i class="fa fa-bars"></i></a>
+ </div>
+
+@section Scripts
+{
+    <script src="~/dashboard/assets/js/Custom.js"></script> 
+}
+ 

@@ -1,0 +1,112 @@
+@model AddEventViewModel
+@using SchoolManagementSystem.Enums;
+
+
+<link rel="stylesheet" href="~/lib/jqueryui/jquery-ui.min.css"> 
+<link rel="stylesheet" href="~/lib/wickedpicker.min.css"> 
+<script src="~/lib/jquery.js"></script>
+<script src="~/lib/jqueryui/jquery-ui.min.js"></script>
+<script src="~/lib/wickedpicker.min.js"></script>
+<script>
+    $(function() {
+        $("#datepicker").datepicker({ minDate: 0, dateFormat:"dd/mm/yy",});
+        });
+</script>
+<script>
+    $('.timepicker').wickedpicker();
+</script>
+
+
+@{
+    ViewData["Title"] = "Add Event";
+}
+
+
+<!-- MAIN CONTENT -->
+<div class="main-content" id="content-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 clear-padding-xs">
+                <h5 class="page-title"><i class="fa fa-calendar"></i>ADD EVENT</h5>
+                <div class="section-divider"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 clear-padding-xs">
+                <div class="col-md-12">
+                    <form method="post" asp-action="addevent" asp-controller="event" enctype="multipart/form-data">
+                        <div class="dash-item first-dash-item">
+                            <h6 class="item-title"><i class="fa fa-calendar"></i>NEW EVENT</h6>
+                            <div class="inner-item">
+                                <div class="dash-form">
+                                    <div class="col-sm-3">
+                                        <label asp-for="Title" class="clear-top-margin"><i class="fa fa-tag"></i>TITLE</label>
+                                        <input asp-for="Title" type="text" placeholder="Event Title" />
+                                        <span asp-validation-for="Title" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label asp-for="Description" class="clear-top-margin"><i class="fa fa-edit"></i>EVENT DESCRIPTION</label>
+                                        <textarea rows="5" asp-for="Description" type="text" placeholder="Event Description"></textarea>
+                                        <span asp-validation-for="Description" class="text-danger"></span>
+                                    </div>
+                                     <div class="col-sm-3">
+                                        <label asp-for="Date"><i class="fa fa-calendar"></i>DATE</label>
+                                        <input asp-for="Date" id='datepicker' type="text" placeholder="dd/mm/yy"/>
+                                        <span class="text-danger" asp-validation-for="Date"></span>
+                                    </div>
+                                     <div class="col-sm-3">
+                                        <label asp-for="StartTime"><i class="fa fa-clock-o"></i>EVENT STARTS AT</label>
+                                        <input asp-for="StartTime" />
+                                        <span class="text-danger" asp-validation-for="StartTime"></span>
+                                    </div>
+                                     <div class="col-sm-3">
+                                        <label asp-for="EndTime"><i class="fa fa-clock-o"></i>EVENT ENDS AT</label>
+                                        <input asp-for="EndTime"  />
+                                        <span class="text-danger" asp-validation-for="EndTime"></span>
+                                    </div> 
+
+                                    <div class="clearfix"></div>  
+                                    <div class="col-sm-3">
+                                        <label asp-for="EventGuests"><i class="fa fa-user"></i>WHO IS INVITED</label>
+                                        <select asp-for="EventGuests" asp-items="Html.GetEnumSelectList<EventGuests>()"> </select>
+                                        <span asp-validation-for="EventGuests" class="text-danger"></span>
+                                    </div>
+                                    
+                                    <div class="clearfix"></div>
+                                    <div class="col-sm-3">
+                                        <label asp-for="Fee"><i class="fa fa-momey"></i>ADMITANCE FEE</label>
+                                        <input asp-for="Fee" type="text" placeholder="Fee" />
+                                        <em>If the attendance fee is free please enter zero (0)</em>
+                                        <span asp-validation-for="Fee" class="text-danger"></span>
+                                    </div>
+                                     <div class="col-sm-3">
+                                        <label asp-for="Sponsor" class="clear-top-margin"><i class="fa fa-user-circle-o"></i>SPONSOR OF THIS EVENT (IF ANY)</label>
+                                        <input asp-for="Sponsor" type="text" placeholder="Event Sponsor" />
+                                        <span asp-validation-for="Sponsor" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label asp-for="Speaker" class="clear-top-margin"><i class="fa fa-user-circle-o"></i>CHIEF SPEAKER (IF ANY)</label>
+                                        <input asp-for="Speaker" type="text" placeholder="Event Speaker" />
+                                        <span asp-validation-for="Speaker" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label asp-for="Image"><i class="fa fa-file-picture-o"></i>UPLOAD EVENT BANNER</label>
+                                        <input asp-for="Image" />
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="menu-togggle-btn">
+        <a href="#menu-toggle" id="menu-toggle"><i class="fa fa-bars"></i></a>
+    </div>
+    <div class="dash-footer col-lg-12">
+        <p>Copyright New Haven</p>
+    </div>
+</div> 

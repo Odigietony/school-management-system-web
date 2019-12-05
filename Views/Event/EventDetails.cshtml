@@ -1,0 +1,106 @@
+@model EventDetailsViewModel
+@using SchoolManagementSystem.Enums
+@{
+    ViewData["Title"] = "Event Details";
+    string photoPath = "~/event_images/" + (Model.GetEvent.Image ?? "default-event-image.png"); 
+}
+
+<!-- MAIN CONTENT --> 
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-lg-12 clear-padding-xs">
+			<h5 class="page-title"><i class="fa fa-calendar"></i>EVENT DETAILS</h5>
+			<div class="section-divider"></div>
+		</div>
+	</div>
+    <div class="row">
+        <div class="col-lg-12 clear-padding-xs">
+            <div class="col-sm-4">
+                <div class="my-msg dash-item">
+                    <h6 class="item-title"><i class="fa fa-address-book-o"></i>PERSONAL INFORMATION</h6>
+                    <div class="inner-item">
+                        <div class="profile-intro">
+                            <div class="col-xs-4 col-sm-12 col-md-4 clear-padding">
+                                <img src="@photoPath" alt="user" asp-append-version="true"/>
+                            </div>
+                            <div class="col-xs-8 col-sm-12 col-md-8">
+                                <h5 class="fa fa-tag">@Model.GetEvent.Title  </h5>
+                                <strong><h6>@Model.EventCat.Title</h6></strong>
+                                <h6 class="fa fa-location">Location: @Model.EventLocation.Title</h6>
+                                <h6>Dte: @Model.GetEvent.Date</h6> 
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="profile-details">
+                            <div class="detail-row">
+                                <div class="col-md-6 col-sm-12 col-xs-6 clear-padding">
+                                    <strong><span>TITLE</span></strong>
+                                    <p>@Model.GetEvent.Title</p>
+                                </div>
+                                <div class="col-md-6 col-sm-12 col-xs-6 clear-padding">
+                                    <strong><span>SPEAKER</span></strong>
+                                    <p>@Model.GetEvent.Speaker</p>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+
+                            <div class="clearfix"></div>
+
+                            <div class="detail-row">
+                                <div class="col-md-6 col-sm-12 col-xs-6 clear-padding">
+                                    <strong><span>LOCATION</span></strong>
+                                    <p>@Model.EventLocation.Title</p>
+                                </div>
+                                <div class="col-md-6 col-sm-12 col-xs-6 clear-padding">
+                                    <strong><span>DATE </span></strong>
+                                    <p> @Model.GetEvent.Date</p>
+                                </div>
+                                <div class="col-md-6 col-sm-12 col-xs-6 clear-padding">
+                                    <strong><span>TIME </span></strong>
+                                    <p>@Model.GetEvent.StartTime - @Model.GetEvent.EndTime</p>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+
+                            <div class="clearfix"></div>  
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4"> 
+                    <div class="my-msg dash-item">
+                        <h6 class="item-title"><i class="fa fa-home"></i>DESCRIPTION</h6>
+                        <div class="inner-item">
+                            <div class="profile-intro">
+                            <div class="col-xs-4 col-sm-12 col-md-4 clear-padding">
+                                <!-- <img src="@photoPath" alt="user" asp-append-version="true"/> --> 
+                                <i class="fa fa-home" style="font-size:100px"></i>
+                            </div>
+                            <div class="col-xs-8 col-sm-12 col-md-8">
+                                <h4>@Model.GetEvent.Description</h4> 
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="profile-details">
+                            @if(Model.GetEvent.Sponsor != null)
+                            {
+                                <div class="detail-row">
+                                    <div class="col-md-6 col-sm-12 col-xs-6 clear-padding">
+                                        <strong><span>SPONSOR</span></strong>
+                                        <p>@Model.GetEvent.Sponsor/p>
+                                    </div> 
+                                </div>
+                            } 
+                            <div class="clearfix"></div> 
+                        </div>    
+                        </div>
+                    </div>
+                </div> 
+        </div>
+    </div>
+
+</div>
+
+<div class="menu-togggle-btn">
+    <a href="#menu-toggle" id="menu-toggle"><i class="fa fa-bars"></i></a>
+</div>

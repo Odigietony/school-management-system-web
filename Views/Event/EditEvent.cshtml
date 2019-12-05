@@ -1,0 +1,114 @@
+@model EditEventViewModel
+@using SchoolManagementSystem.Enums
+
+<link rel="stylesheet" href="~/lib/jqueryui/jquery-ui.min.css"> 
+<link rel="stylesheet" href="~/lib/wickedpicker.min.css"> 
+<script src="~/lib/jquery.js"></script>
+<script src="~/lib/jqueryui/jquery-ui.min.js"></script>
+<script src="~/lib/wickedpicker.min.js"></script>
+<script>
+    $(function() {
+        $("#datepicker").datepicker({ minDate: 0, dateFormat:"dd/mm/yy",});
+        });
+</script>
+<script>
+    $('.timepicker').wickedpicker();
+</script>
+
+
+@{
+    ViewData["Title"] = "Edit Event";
+    var photoPath = "~/event_images/" + (Model.ExistingPhotoPath ?? "default-event-image.png");
+}
+
+<!-- MAIN CONTENT -->
+<div class="main-content" id="content-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 clear-padding-xs">
+                <h5 class="page-title"><i class="fa fa-calendar-plus-o"></i>EDIT EVENT</h5>
+                <div class="section-divider"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 clear-padding-xs">
+                <div class="col-md-12">
+                    <form method="post" asp-action="editevent" asp-controller="event" enctype="multipart/form-data">
+                        <div class="dash-item first-dash-item">
+                            <div class="item-title">
+                                 <h6 class="item-title"><i class="fa fa-user"></i>TEACHER INFO</h6>
+                                 <img src="@photoPath" alt="Teacher Image" asp-append-version="true" >
+                            </div> 
+                           <div class="inner-item">
+                                <div class="dash-form">
+                                    <div class="col-sm-3">
+                                        <label asp-for="@Model.Title" class="clear-top-margin"><i class="fa fa-tag"></i>TITLE</label>
+                                        <input asp-for="@Model.Title" type="text" placeholder="Event Title" />
+                                        <span asp-validation-for="@Model.Title" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label asp-for="@Model.Description" class="clear-top-margin"><i class="fa fa-edit"></i>EVENT DESCRIPTION</label>
+                                        <textarea rows="5" asp-for="@Model.Description" type="text" placeholder="Event Description"></textarea>
+                                        <span asp-validation-for="@Model.Description" class="text-danger"></span>
+                                    </div>
+                                     <div class="col-sm-3">
+                                        <label asp-for="@Model.Date"><i class="fa fa-calendar"></i>DATE</label>
+                                        <input asp-for="@Model.Date" id='datepicker' type="text" placeholder="dd/mm/yy"/>
+                                        <span class="text-danger" asp-validation-for="@Model.Date"></span>
+                                    </div>
+                                     <div class="col-sm-3">
+                                        <label asp-for="@Model.StartTime"><i class="fa fa-clock-o"></i>EVENT STARTS AT</label>
+                                        <input asp-for="@Model.StartTime" />
+                                        <span class="text-danger" asp-validation-for="@Model.StartTime"></span>
+                                    </div>
+                                     <div class="col-sm-3">
+                                        <label asp-for="@Model.EndTime"><i class="fa fa-clock-o"></i>EVENT ENDS AT</label>
+                                        <input asp-for="@Model.EndTime"  />
+                                        <span class="text-danger" asp-validation-for="@Model.EndTime"></span>
+                                    </div> 
+
+                                    <div class="clearfix"></div>  
+                                    <div class="col-sm-3">
+                                        <label asp-for="@Model.EventGuests"><i class="fa fa-user"></i>WHO IS INVITED</label>
+                                        <select asp-for="@Model.EventGuests" asp-items="Html.GetEnumSelectList<EventGuests>()"> </select>
+                                        <span asp-validation-for="@Model.EventGuests" class="text-danger"></span>
+                                    </div>
+                                    
+                                    <div class="clearfix"></div>
+                                    <div class="col-sm-3">
+                                        <label asp-for="@Model.Fee"><i class="fa fa-momey"></i>ADMITANCE FEE</label>
+                                        <input asp-for="@Model.Fee" type="text" placeholder="Fee" />
+                                        <em>If the attendance fee is free please enter zero (0)</em>
+                                        <span asp-validation-for="@Model.Fee" class="text-danger"></span>
+                                    </div>
+                                     <div class="col-sm-3">
+                                        <label asp-for="@Model.Sponsor" class="clear-top-margin"><i class="fa fa-user-circle-o"></i>SPONSOR OF THIS EVENT (IF ANY)</label>
+                                        <input asp-for="@Model.Sponsor" type="text" placeholder="Event Sponsor" />
+                                        <span asp-validation-for="@Model.Sponsor" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label asp-for="@Model.Speaker" class="clear-top-margin"><i class="fa fa-user-circle-o"></i>CHIEF SPEAKER (IF ANY)</label>
+                                        <input asp-for="@Model.Speaker" type="text" placeholder="Event Speaker" />
+                                        <span asp-validation-for="@Model.Speaker" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label asp-for="@photoPath"><i class="fa fa-file-picture-o"></i>UPLOAD EVENT BANNER</label>
+                                        <input asp-for="@photoPath" />
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div> 
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="menu-togggle-btn">
+        <a href="#menu-toggle" id="menu-toggle"><i class="fa fa-bars"></i></a>
+    </div>
+    <div class="dash-footer col-lg-12">
+        <p>Copyright New Haven</p>
+    </div>
+</div> 
