@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SchoolManagementSystem.ViewModels;
 using SchoolManagementSystem.Data.Repository;
 using SchoolManagementSystem.Models;
 
@@ -42,7 +44,7 @@ namespace SchoolManagementSystem.Controllers
                 ViewBag.ErrorMessage = $"Unknowm event category resource";
                 return View("error");
             }
-            EditCategoryViewModel model = new EditCategoryViewModel
+            EditEventViewModel model = new EditEventViewModel
             {
                 Title = category.Title,
                 Id = category.Id
@@ -51,7 +53,7 @@ namespace SchoolManagementSystem.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditCategory(EditFacultyViewModel model)
+        public IActionResult EditCategory(EditEventViewModel model)
         {
             EventCategory category = eventRepository.GetEventCategoryById(model.Id);
             if(category != null && ModelState.IsValid)
@@ -90,6 +92,14 @@ namespace SchoolManagementSystem.Controllers
                 ViewBag.ErrorMessage = $"Unknowm Category resource";
                 return View("error");
             }
+        }
+
+        [AcceptVerbs("Get", "Post")]
+        [AllowAnonymous]
+        public IActionResult CategoryTitleInUse(string title)
+        {
+            EventCategory category = eventRepository.GetEventCategoryByTitle(title);
+            return category == null ? Json(true) : Json($"The category { title } is already registered");
         }
     }
 }
