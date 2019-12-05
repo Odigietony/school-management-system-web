@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SchoolManagementSystem.ViewModels;
 using SchoolManagementSystem.Data.Repository;
 using SchoolManagementSystem.Models;
+using System.Linq;
 
 namespace SchoolManagementSystem.Controllers
 {
@@ -16,7 +17,12 @@ namespace SchoolManagementSystem.Controllers
 
          //Event Categories
         [HttpGet]
-        public IActionResult AllCategories() => View(eventRepository.GetAllEventCategories());
+        public IActionResult AllCategories() 
+        {
+            AllCategoriesViewModel model = new AllCategoriesViewModel();
+            model.EventCategories = eventRepository.GetAllEventCategories().ToList();
+            return View(model);
+        }
         [HttpGet]
         public IActionResult NewCategory() => Redirect("allcategories");
         [HttpPost]

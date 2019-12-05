@@ -27,6 +27,24 @@
 							</ul>
 							<div class="clearfix"></div>
 						</li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+								<i class="fa fa-map-marker menu-icon"></i>EVENT <span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu"> 
+								<li>							
+									<a asp-action="allcategories" asp-controller="eventcategory">
+										<i class="fa fa-caret-right"></i>EVENT CATEGORY</a>
+								</li>
+								<li>
+									<a asp-action="index" asp-controller="event"><i class="fa fa-caret-right"></i>ALL EVENTS</a>
+								</li>
+								<li>
+									<a asp-action="adevent" asp-controller="event"><i class="fa fa-caret-right"></i>NEW EVENT</a>
+								</li>
+							</ul>
+							<div class="clearfix"></div>
+						</li>
 					}else
 					{
 						<li>
