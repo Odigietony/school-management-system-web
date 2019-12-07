@@ -102,10 +102,10 @@ namespace SchoolManagementSystem.Controllers
 
         [AcceptVerbs("Get", "Post")]
         [AllowAnonymous]
-        public IActionResult CategoryTitleInUse(string title)
+        public IActionResult CategoryTitleInUse(string Title)
         {
-            EventCategory category = eventRepository.GetEventCategoryByTitle(title);
-            return category == null ? Json(true) : Json($"The category { title } is already registered");
+            EventCategory category = eventRepository.GetEventCategoryByTitle(Title);
+            return category == null ? Json(true) : Json($"The category { Title } is already registered");
         }
     }
 }

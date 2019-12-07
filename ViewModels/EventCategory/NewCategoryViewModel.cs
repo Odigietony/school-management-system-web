@@ -6,7 +6,7 @@ namespace SchoolManagementSystem.ViewModels
     public class NewCategoryViewModel
     {
         [Required]
-        [Remote(action: "CategoryTitleInUse", controller: "EventCategoryController")]
+        [Remote(action: "CategoryTitleInUse", controller: "EventCategory")]
         public string Title { get; set; }
     }
 }

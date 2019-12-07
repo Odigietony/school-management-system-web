@@ -40,15 +40,11 @@
                             <div class="inner-item">
                                 <div class="dash-form">
                                     <div class="col-sm-3">
-                                        <label asp-for="Title" class="clear-top-margin"><i class="fa fa-tag"></i>TITLE</label>
+                                        <label asp-for="Title"  ><i class="fa fa-tag"></i>TITLE</label>
                                         <input asp-for="Title" type="text" placeholder="Event Title" />
                                         <span asp-validation-for="Title" class="text-danger"></span>
                                     </div>
-                                    <div class="col-sm-3">
-                                        <label asp-for="Description" class="clear-top-margin"><i class="fa fa-edit"></i>EVENT DESCRIPTION</label>
-                                        <textarea rows="5" asp-for="Description" type="text" placeholder="Event Description"></textarea>
-                                        <span asp-validation-for="Description" class="text-danger"></span>
-                                    </div>
+                                    
                                      <div class="col-sm-3">
                                         <label asp-for="Date"><i class="fa fa-calendar"></i>DATE</label>
                                         <input asp-for="Date" id='datepicker' type="text" placeholder="dd/mm/yy"/>
@@ -70,28 +66,56 @@
                                         <label asp-for="EventGuests"><i class="fa fa-user"></i>WHO IS INVITED</label>
                                         <select asp-for="EventGuests" asp-items="Html.GetEnumSelectList<EventGuests>()"> </select>
                                         <span asp-validation-for="EventGuests" class="text-danger"></span>
-                                    </div>
-                                    
-                                    <div class="clearfix"></div>
+                                    </div> 
                                     <div class="col-sm-3">
-                                        <label asp-for="Fee"><i class="fa fa-momey"></i>ADMITANCE FEE</label>
+                                        <label asp-for="Fee"><i class="fa fa-money"></i>ADMITANCE FEE</label>
                                         <input asp-for="Fee" type="text" placeholder="Fee" />
                                         <em>If the attendance fee is free please enter zero (0)</em>
                                         <span asp-validation-for="Fee" class="text-danger"></span>
                                     </div>
                                      <div class="col-sm-3">
-                                        <label asp-for="Sponsor" class="clear-top-margin"><i class="fa fa-user-circle-o"></i>SPONSOR OF THIS EVENT (IF ANY)</label>
+                                        <label asp-for="Sponsor" ><i class="fa fa-user-circle-o"></i>SPONSOR OF THIS EVENT (IF ANY)</label>
                                         <input asp-for="Sponsor" type="text" placeholder="Event Sponsor" />
                                         <span asp-validation-for="Sponsor" class="text-danger"></span>
                                     </div>
                                     <div class="col-sm-3">
-                                        <label asp-for="Speaker" class="clear-top-margin"><i class="fa fa-user-circle-o"></i>CHIEF SPEAKER (IF ANY)</label>
+                                        <label asp-for="Speaker" ><i class="fa fa-user-circle-o"></i>CHIEF SPEAKER (IF ANY)</label>
                                         <input asp-for="Speaker" type="text" placeholder="Event Speaker" />
                                         <span asp-validation-for="Speaker" class="text-danger"></span>
                                     </div>
+                                    <div class="clearfix"></div>  
+                                    <div class="col-sm-3 col-lg-12">
+                                        <label asp-for="Description" ><i class="fa fa-edit"></i>EVENT DESCRIPTION</label>
+                                        <textarea rows="5" asp-for="Description" type="text" placeholder="Event Description"></textarea>
+                                        <span asp-validation-for="Description" class="text-danger"></span>
+                                    </div>
+                                   
                                     <div class="col-sm-3">
                                         <label asp-for="Image"><i class="fa fa-file-picture-o"></i>UPLOAD EVENT BANNER</label>
                                         <input asp-for="Image" />
+                                    </div> 
+
+                                     <div class="col-sm-3">
+                                        <label  asp-for="EventCategoryId"><i class="fa fa-id-card"></i>EVENT TYPE</label>
+                                        <select asp-for="EventCategoryId" asp-items="Model.EventCategories" id="EventCategoryId">
+                                            <option value="">----- Select an Event type -----</option>
+                                        </select>
+                                        <span asp-validation-for="EventCategoryId" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label  asp-for="LocationId"><i class="fa fa-id-card"></i>LOCATION OF EVENT</label>
+                                        <select asp-for="LocationId" asp-items="Model.Locations" id="LocationId">
+                                            <option value="">----- Select a Location -----</option>
+                                        </select>
+                                        <span asp-validation-for="LocationId" class="text-danger"></span>
+                                    </div>
+
+
+                                    <!-- <div class="clearfix"></div>  -->
+                                    <div asp-validation-summary="All" class="text-danger"></div>
+                                    <div class="clearfix"></div> 
+                                    <div class="col-sm-12" style="margin-top: 30px;">
+                                        <button type="submit" class="btn btn-success"><i class="fa fa-paper-plane"></i> SAVE</button>
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>

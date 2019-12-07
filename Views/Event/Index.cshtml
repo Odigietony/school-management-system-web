@@ -61,10 +61,10 @@
                                             <td>@events.Date</td>
                                             <td>@events.StartTime</td>
                                             <td>@events.Location.Title</td>
-                                            <td>@events.EventGuests/td>
+                                            <td>@events.EventGuests</td>
 
                                             <td class="action-link">
-                                                <a asp-controller="events" asp-action="editeventsdata" asp-route-Id="@events.Id" class="edit" title="Edit Event Data"  >
+                                                <a asp-controller="events" asp-action="editevent" asp-route-Id="@events.Id" class="edit" title="Edit Event Data"  >
                                                     <i class="fa fa-edit"></i>
                                                  </a>
 
@@ -72,7 +72,7 @@
                                                     <i class="fa fa-remove"></i>
                                                 </a>
 
-                                                <a asp-controller="events" asp-action="eventsdetails" asp-route-Id="@events.Id" class="details" title="Event Details"  >
+                                                <a asp-controller="events" asp-action="eventdetails" asp-route-Id="@events.Id" class="details" title="Event Details"  >
                                                     <i class="fa fa fa-vcard"></i>
                                                  </a>
                                             </td>
@@ -114,12 +114,15 @@
 }
 else
 {
-    <div class="chart-title">
+    <div style="margin-top: 250px;">
+        <div class="chart-title">
 		<h4 class="bottom-title">NO EVENT DATA TO DISPLAY</h4>
-	</div>
-    <div class="chart-legends">
-		<a class="btn btn-large" asp-action="addevent" asp-controller="event"><span>ADD NEW EVENT</span></a> 
-	</div>
+        </div>
+        <div class="chart-legends">
+            <a class="btn btn-large" asp-action="addevent" asp-controller="event"><span>ADD NEW EVENT</span></a> 
+        </div>
+    </div>
+    
 }
  
  <div class="menu-togggle-btn">

@@ -1,3 +1,56 @@
+@model IEnumerable<Event>
 @{
-    ViewData["Title"] = "TodaysEvent";
+    ViewData["Title"] = "Todays Event";
 }
+
+
+
+@if(Model.Any())
+{ 
+<!-- MAIN CONTENT -->
+<div class="main-content" id="content-wrapper">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12 clear-padding-xs">
+            <h5 class="page-title"><i class="fa fa-calendar"></i>TODAY'S EVENTS </h5>
+            <div class="section-divider"></div>
+            <div class="dashboard-stats">
+                @foreach(var task in Model)
+                {
+                    string eventImage = "~/event_images/" + (task.Image?? "default-event-image.png");
+                    <div class="col-sm-6 col-md-3">
+                        <div class="stat-item">
+                            <div class="stats"> 
+                                <img src="@eventImage" alt="Image of Event" asp-append-version="true"> <!-- ****** STYLE THIS IMAGE  *****-->
+                                <div class="col-xs-8 count">
+                                    <h1>@task.Title</h1>
+                                    <p>@task.Date</p>
+                                </div>
+                                <div class="col-xs-4 icon">
+                                    <i class="fa fa-calendar ex-icon"></i>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="status">
+                                <p class="text-ex"><i class="fa fa-pencil-square-o"></i>@task.StartTime - @task.EndTime</p>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div> 
+                } 
+            </div>
+        </div>
+    </div> 
+</div> 
+</div>
+}
+else
+{
+    <div class="chart-title" style="margin-top: 250px;">
+		<h1 class="bottom-title">NO EVENT TODAY</h1>
+	</div>
+}
+  <div class="menu-togggle-btn">
+    <a href="#menu-toggle" id="menu-toggle"><i class="fa fa-bars"></i></a>
+ </div>
+     
