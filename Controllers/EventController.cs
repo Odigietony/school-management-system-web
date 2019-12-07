@@ -196,7 +196,7 @@ namespace SchoolManagementSystem.Controllers
             eventRepository.DeleteEvent(events);
             eventRepository.Save();
             TempData["event_deleted"] = $"Event { event_title } was permanently deleted";
-            return View("index");
+            return Json(new { success = true });
         }
 
         private AddEventViewModel GetAllEventCategories(AddEventViewModel model)

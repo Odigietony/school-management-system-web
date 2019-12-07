@@ -52,8 +52,9 @@
                         <div class="stat-item">
                             <div class="stats">
                                 <div class="col-xs-8 count">
-                                    <h1>900</h1>
-                                    <p>EVENTS</p>
+                                     @{  string event_title = Model.AllEvents > 1 ? "EVENTS" : "EVENT"; }
+                                    <h1>@Model.AllEvents</h1>
+                                    <p>@event_title</p>
                                 </div>
                                 <div class="col-xs-4 icon">
                                     <i class="fa fa-flag look-icon"></i>
@@ -61,7 +62,11 @@
                                 <div class="clearfix"></div>
                             </div>
                             <div class="status">
-                                <p class="text-look"><i class="fa fa-clock-o"></i>1 Event tomorrow</p>
+                                @{  string event_string = Model.TodaysEvents > 1 ? "Events" : "Event"; }
+                               
+                                <a asp-action="todaysevent" asp-controller="event" asp-area="" style="text-decoration:none">
+                                    <p class="text-look"><i class="fa fa-clock-o"></i> 
+                                @Model.TodaysEvents @event_string today</p></a> 
                             </div>
                             <div class="clearfix"></div>
                         </div>

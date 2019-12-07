@@ -43,7 +43,7 @@
                                                 <td>@category.Id</td>
                                                 <td>@category.Title</td> 
                                                 <td class="action-link">
-                                                    <a class="edit" href="javascript:void(0)" onclick="GetcategoryDataById('@category.Id')" title="Edit category Data"><i class="fa fa-edit"></i></a>
+                                                    <a class="edit" href="javascript:void(0)" onclick="updateLocation('@category.Id')" title="Edit category Data"><i class="fa fa-edit"></i></a>
                                                     <a class="delete" href="#" title="Delete" data-toggle="modal" data-target="#deleteDetailModal_@category.Id"><i class="fa fa-remove"></i></a>
                                                 </td>
                                             </tr>  
@@ -58,7 +58,7 @@
                                                             <h4 class="modal-title"><i class="fa fa-trash"></i>DELETE CATEGORY</h4>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <form asp-action="deletecategorydata" asp-controller="category" id="deleteForm">
+                                                            <form asp-action="deletecategory" asp-controller="eventcategory" id="deleteForm">
                                                                     <h3 class="text-danger text-center"><i class="fa fa-exclamation-triangle"> </i>
                                                                          Are you sure you want to<strong> Delete @category.Title ? </strong>
                                                                     </h3>
@@ -98,7 +98,7 @@
     
     
     <!--Edit category modal-->     
-            <div id="editcategoryData" class="modal fade" role="dialog">
+            <div id="editResourceData" class="modal fade" role="dialog">
                 <div class="modal-dialog">
                     <!-- Modal content-->
                     <div class="modal-content">
@@ -111,7 +111,7 @@
                         </div>
                         <div class="modal-footer">
                             <div class="table-action-box">
-                                <a type="button" class="btn btn-success" onclick="EditData()"><i class="fa fa-check"></i>SAVE</a>
+                                <a type="button" class="btn btn-success" onclick="UpdatePostData()"><i class="fa fa-check"></i>SAVE</a>
                                 <a href="#" class="cancel" data-dismiss="modal"><i class="fa fa-ban"></i>CLOSE</a>
                             </div>
                         </div>

@@ -8,6 +8,7 @@ namespace SchoolManagementSystem.Areas.Administrator.ViewModels
         public long AllActiveStudents { get; set; }
         public long AllTeachers { get; set; }
         public long AllEvents { get; set; }
+        public long TodaysEvents { get; set; }
         public long AllMessages { get; set; }
         public IList<AdminTask> TodaysTasks { get; set; }
     }

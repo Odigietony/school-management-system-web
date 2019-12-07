@@ -14,7 +14,7 @@ namespace SchoolManagementSystem.Data.Repository
         }
         public void DeleteEvent(Event events)
         {
-            context.Events.Remove(events);
+            context.Remove(events);
         }
 
         public void DeleteEventCategory(EventCategory category)

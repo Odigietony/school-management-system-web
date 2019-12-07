@@ -13,11 +13,12 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
     public class DashboardController : Controller
     {
         private readonly IEntityRepository<Admin> entityRepository;
+        private readonly IEventRepository eventRepository;
         private readonly IStudentRepository studentRepository;
         private readonly ITeacherRepository teacherRepository;
         private readonly IMessageRepository messageRepository;
         private readonly ITaskRepository taskRepository;
-        public DashboardController(IEntityRepository<Admin> entityRepository, ITaskRepository taskRepository,
+        public DashboardController(IEntityRepository<Admin> entityRepository, ITaskRepository taskRepository, IEventRepository eventRepository,
         IMessageRepository messageRepository, 
         ITeacherRepository teacherRepository,
         IStudentRepository studentRepository)
@@ -27,6 +28,7 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
             this.entityRepository = entityRepository;
             this.messageRepository = messageRepository;
             this.taskRepository = taskRepository;
+            this.eventRepository = eventRepository;
         }
 
         [HttpGet]
@@ -39,6 +41,8 @@ namespace SchoolManagementSystem.Areas.Administrator.Controllers
                 AllTeachers = teacherRepository.GetAllTeachers().Count(),
                 AllMessages = messageRepository.GetAllReceivedMessagesByUser().Count(),
                 TodaysTasks = taskRepository.GetTodaysTasks().ToList(),
+                AllEvents = eventRepository.GetAll().Count(),
+                TodaysEvents = eventRepository.GetTodaysEvents().Count(),
             };
             return View(model);
         }

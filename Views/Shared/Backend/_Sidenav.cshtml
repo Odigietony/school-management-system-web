@@ -33,14 +33,14 @@
 							</a>
 							<ul class="dropdown-menu"> 
 								<li>							
-									<a asp-action="allcategories" asp-controller="eventcategory">
+									<a asp-action="allcategories" asp-controller="eventcategory" asp-area="">
 										<i class="fa fa-caret-right"></i>EVENT CATEGORY</a>
 								</li>
 								<li>
-									<a asp-action="index" asp-controller="event"><i class="fa fa-caret-right"></i>ALL EVENTS</a>
+									<a asp-action="index" asp-controller="event" asp-area=""><i class="fa fa-caret-right"></i>ALL EVENTS</a>
 								</li>
 								<li>
-									<a asp-action="adevent" asp-controller="event"><i class="fa fa-caret-right"></i>NEW EVENT</a>
+									<a asp-action="addevent" asp-controller="event" asp-area=""><i class="fa fa-caret-right"></i>NEW EVENT</a>
 								</li>
 							</ul>
 							<div class="clearfix"></div>

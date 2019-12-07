@@ -253,10 +253,10 @@ function addteachertocourse()
 
 function updateLocation(Id)
 {
-    url = url = $('#editForm').attr('action');
-    let $modal = $('#editResourceData') 
+    url = $('#editForm').attr('action'); 
+    let $modal = $('#editResourceData');
     $modal.find('.modal-body').load(url +"/"+ Id, function(){
         $modal.modal('show');
-          }); 
+    }); 
 }
  

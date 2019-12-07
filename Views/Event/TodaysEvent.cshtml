@@ -21,7 +21,8 @@
                     <div class="col-sm-6 col-md-3">
                         <div class="stat-item">
                             <div class="stats"> 
-                                <img src="@eventImage" alt="Image of Event" asp-append-version="true"> <!-- ****** STYLE THIS IMAGE  *****-->
+                                <img class="img-fluid img-thumbnail" src="@eventImage" alt="Image of Event" 
+                                asp-append-version="true" style="width:300px; height:300px;"> <!-- ****** STYLE THIS IMAGE  *****-->
                                 <div class="col-xs-8 count">
                                     <h1>@task.Title</h1>
                                     <p>@task.Date</p>

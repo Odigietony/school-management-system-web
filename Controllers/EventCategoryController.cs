@@ -47,19 +47,19 @@ namespace SchoolManagementSystem.Controllers
             EventCategory category = eventRepository.GetEventCategoryById(Id);
             if(category == null)
             {
-                ViewBag.ErrorMessage = $"Unknowm event category resource";
+                ViewBag.ErrorMessage = $"Unknown event category resource";
                 return View("error");
             }
-            EditEventViewModel model = new EditEventViewModel
+            EditEventCategoryViewModel model = new EditEventCategoryViewModel
             {
                 Title = category.Title,
                 Id = category.Id
             };
-            return PartialView(model);
+            return PartialView("EditCategory", model);
         }
 
         [HttpPost]
-        public IActionResult EditCategory(EditEventViewModel model)
+        public IActionResult EditCategory(EditEventCategoryViewModel model)
         {
             EventCategory category = eventRepository.GetEventCategoryById(model.Id);
             if(category != null && ModelState.IsValid)
@@ -72,7 +72,7 @@ namespace SchoolManagementSystem.Controllers
             }
             else
             {
-                return PartialView(model);
+                return PartialView("EditCategory",model);
             }
         }
 

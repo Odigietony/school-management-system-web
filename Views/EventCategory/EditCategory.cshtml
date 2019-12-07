@@ -1,5 +1,5 @@
 @model EditEventCategoryViewModel
-<form asp-action="editcategory" asp-controller="eventcategory" method="post" id="editForm">   
+<form  asp-controller="eventcategory" asp-action="editcategory" method="post" id="editForm">   
     <div class="col-sm-4">
         <label class="clear-top-margin"><i class="fa fa-institution"></i>TITLE</label>
         <input asp-for="Title" value="@Model.Title"  id="Title"/>
