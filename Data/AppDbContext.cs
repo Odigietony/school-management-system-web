@@ -25,6 +25,7 @@ namespace SchoolManagementSystem.Data
         } 
         public DbSet<Admin> Admins {get; set;}
         public DbSet<AdminTask> AdminTasks { get; set; }
+        public DbSet<Attendance> Attendances { get; set; }
         public DbSet<Course> Courses {get; set;}
         public DbSet<CourseYear> CourseYears { get; set;}
         public DbSet<Department> Departments { get; set;}
