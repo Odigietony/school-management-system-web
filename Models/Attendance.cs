@@ -1,11 +1,12 @@
 using System;
+using SchoolManagementSystem.Enums;
 
 namespace SchoolManagementSystem.Models
 {
     public class Attendance
     {
         public long Id { get; set; }
-        public bool IsPresent { get; set; }
+        public AttendanceStatus IsPresent { get; set; }
         public DateTime Date { get; set; }
         public string Remarks { get; set; }
 
