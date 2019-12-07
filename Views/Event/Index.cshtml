@@ -64,7 +64,7 @@
                                             <td>@events.EventGuests</td>
 
                                             <td class="action-link">
-                                                <a asp-controller="events" asp-action="editevent" asp-route-Id="@events.Id" class="edit" title="Edit Event Data"  >
+                                                <a asp-controller="event" asp-action="editevent" asp-route-Id="@events.Id" class="edit" title="Edit Event Data"  >
                                                     <i class="fa fa-edit"></i>
                                                  </a>
 
@@ -72,7 +72,7 @@
                                                     <i class="fa fa-remove"></i>
                                                 </a>
 
-                                                <a asp-controller="events" asp-action="eventdetails" asp-route-Id="@events.Id" class="details" title="Event Details"  >
+                                                <a asp-controller="event" asp-action="eventdetails" asp-route-Id="@events.Id" class="details" title="Event Details"  >
                                                     <i class="fa fa fa-vcard"></i>
                                                  </a>
                                             </td>

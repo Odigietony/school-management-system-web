@@ -81,12 +81,12 @@ namespace SchoolManagementSystem.Controllers
         }
 
         [HttpGet]
-        public IActionResult EditEvent(long eventId)
+        public IActionResult EditEvent(long Id)
         {
-            Event events = eventRepository.GetEventById(eventId);
+            Event events = eventRepository.GetEventById(Id);
             if (events == null)
             {
-                ViewBag.ErrorMessage = $"The event with reference id = { eventId } could not be found";
+                ViewBag.ErrorMessage = $"The event with reference id = { Id } could not be found";
                 return View("error");
             }
             
