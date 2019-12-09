@@ -10,6 +10,7 @@ namespace SchoolManagementSystem.Data.Repository
     {
         IQueryable<Student> FindAllStudent();
         Student FindStudentById(long Id);
+        Student FindStudentByUserId(string Id);
         StudentAccademicInformation FindStudentAccademicInformationById(long Id);
         StudentNextOfKinInformation FindStudentNextofKinById(long Id);
         StudentSponsor FindStudentSponsorById(long Id);

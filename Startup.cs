@@ -52,6 +52,7 @@ namespace SchoolManagementSystem
                options.Cookie.IsEssential = true;
            });
             services.AddMvc();
+            services.AddTransient<IAttendanceRepository, AttendanceRepository>();
             services.AddTransient<IStudentRepository, StudentRepository>();
             services.AddTransient<IMessageRepository, MessageRepository>();
             services.AddTransient<IEntityRepository<Admin>, EntityRepository<Admin>>();

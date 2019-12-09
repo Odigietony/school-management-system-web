@@ -35,6 +35,11 @@ namespace SchoolManagementSystem.Data.Repository
             return context.Students.FirstOrDefault(s => s.Id == Id);
         }
 
+        public Student FindStudentByUserId(string Id)
+        {
+            return context.Students.FirstOrDefault(s => s.IdentityUserId == Id);
+        }
+
         public StudentNextOfKinInformation FindStudentNextofKinById(long Id)
         {
             return context.StudentNextOfKinInformations.FirstOrDefault(s => s.StudentId == Id);
