@@ -1,8 +1,10 @@
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SchoolManagementSystem.Data.Repository;
 using SchoolManagementSystem.Models;
+using SchoolManagementSystem.ViewModels;
 
 namespace SchoolManagementSystem.Controllers
 {
@@ -30,6 +32,7 @@ namespace SchoolManagementSystem.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Student")]
         public async Task<IActionResult> StudentAttendance()
         {
             long studentId = 0;
@@ -40,7 +43,9 @@ namespace SchoolManagementSystem.Controllers
                 studentId = student.Id;
             }
             var model = attendanceRepository.GetAllAttendanceByStudent(studentId);
-            return View();
+            return View(model);
         }
+
+         
     }
 }
