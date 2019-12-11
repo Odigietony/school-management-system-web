@@ -15,6 +15,9 @@ namespace SchoolManagementSystem.Models
         public long DepartmentId { get; set; }
         public Department Department { get; set; }
 
+        public long SchoolSemesterId { get; set; }
+        public SchoolSemester SchoolSemester { get; set; }
+
         public List<TeacherCourse> TeacherCourse { get; set; }
         public virtual List<StudentCourse> StudentCourse { get; set; }
     }

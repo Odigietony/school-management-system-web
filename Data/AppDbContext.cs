@@ -41,6 +41,8 @@ namespace SchoolManagementSystem.Data
         public DbSet<MessageAttachment> MessageAttachments { get; set; }
         public DbSet<ReceivedMessage> ReceivedMessages { get; set; }
         public DbSet<Referee> Referees { get; set; }
+        public DbSet<SchoolYear> SchoolYears { get; set; }
+        public DbSet<SchoolSemester> SchoolSemesters { get; set; }
         public DbSet<State> States { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<StudentTask> StudentTasks { get; set; }
